@@ -7,8 +7,8 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import Constants from 'expo-constants';
 import MapViewDirections from 'react-native-maps-directions';
 import RenderHtml from 'react-native-render-html';
-import { findNearestSafetyScore, daytimeKDTree, eveningKDTree } from 'C:/Users/loisp/Documents/Year3/Diss/Proutect-Application/mobile-application/data_structures/KDTree.js';
-import { aStar } from 'C:/Users/loisp/Documents/Year3/Diss/Proutect-Application/mobile-application/data_structures/aStar';
+import { findNearestSafetyScore, daytimeKDTree, eveningKDTree } from '../data_structures/KDTree.js';
+import { aStar } from '../data_structures/aStar';
  
 export default function MapScreen( {navigation} ) {
 
