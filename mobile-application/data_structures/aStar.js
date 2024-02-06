@@ -9,7 +9,7 @@ export function aStar(startNode, goalNode, nodes) {
     let gScore = {}; // Cost from start to node
     let fScore = {}; // estimated cost from start to goal through node
 
-    console.log("STARTING A*");
+    console.log("-------------------------------STARTING A*------------------------------");
 
     openSet.add(startNode.id);
 
@@ -24,9 +24,8 @@ export function aStar(startNode, goalNode, nodes) {
 
     while (openSet.size > 0) {
 
-        console.log("open set before");
+        console.log("open Set! ");
         console.log(openSet);
-
         let currentId = null;
 
         lowestFScore = Infinity;
@@ -47,30 +46,33 @@ export function aStar(startNode, goalNode, nodes) {
         openSet.delete(currentId);
         exploredSet.add(currentId);
 
-        console.log("open set after");
-        console.log(openSet);
+        // console.log("open set after");
+        // console.log(openSet);
 
 
-        console.log(currentId);
+        // console.log(currentId);
 
-        console.log("edges...");
-        console.log(current.edges)
+        // console.log("edges...");
+        // console.log(current.edges)
+
+        console.log("current.edges");
+        console.log(current.edges);
 
         for (let edge of current.edges) {
             let neighbourId = edge.to;
             let neighbour = nodes.get(neighbourId);
 
-            console.log("neighbour");
-            console.log(neighbourId);
+            // console.log("neighbour");
+            // console.log(neighbourId);
 
             if (exploredSet.has(neighbourId)) {
                 continue;
             }
 
             if (neighbourId === goalNode.id) {
-                console.log("Found goal id!");
+                // console.log("Found goal id!");
                 cameFrom.set(neighbourId, current);
-                console.log(cameFrom);
+                // console.log(cameFrom);
                 return reconstructPath(cameFrom, neighbour);
             }
 
@@ -80,18 +82,18 @@ export function aStar(startNode, goalNode, nodes) {
             // Sum of gScore of current node, and the cost of current node and neighbour (considering distance and safety score)
             let temporaryGScore = gScore[current.id] + temporaryCost;
 
-            console.log("temp g score");
-            console.log(gScore[current.id]);
-            console.log(current);
-            console.log(gScore);
+            // console.log("temp g score");
+            // console.log(gScore[current.id]);
+            // console.log(current);
+            // console.log(gScore);
             
 
             let temporaryFScore = temporaryGScore + heuristicCostEstimate(neighbour, goal);
 
-            console.log(heuristicCostEstimate(neighbour, goal))
+            // console.log(heuristicCostEstimate(neighbour, goal))
 
-            console.log("temp f score");
-            console.log(temporaryFScore);
+            // console.log("temp f score");
+            // console.log(temporaryFScore);
 
             // This checks if the tentative gScore for neighbour node is better than previously recorded
             // If neighbour node hasn't been encountered before, infinity is assigned to gScore
@@ -107,8 +109,8 @@ export function aStar(startNode, goalNode, nodes) {
                 };
             }
             
-            console.log("came From");
-            console.log(cameFrom);
+            // console.log("came From");
+            // console.log(cameFrom);
         }
     }
 
@@ -159,7 +161,7 @@ function costFunction(edge) {
     // The higher the safety score, the lower the cost of the edge. 
     console.log(edge.distance);
     console.log(edge.safetyScore);
-    return parseFloat(edge.distance) * parseFloat(1/edge.safetyScore * 100) ;
+    return parseFloat(1/edge.safetyScore) ;
 }
 
 // Iterates backwards from the goal node to the start node using cameFrom map
@@ -168,17 +170,17 @@ function costFunction(edge) {
 function reconstructPath(cameFrom, goal) {
     let goalId = goal.id;
     let totalPath = [goalId];
-    console.log("total path");
-    console.log(totalPath);
+    // console.log("total path");
+    // console.log(totalPath);
 
     while (cameFrom.has(goalId)) {
         let predessecorNode = cameFrom.get(goalId);
-        console.log("predessecor node");
-        console.log(predessecorNode);
+        // console.log("predessecor node");
+        // console.log(predessecorNode);
         totalPath.unshift(predessecorNode.id);
         goalId = predessecorNode.id;
-        console.log("currentID at end");
-        console.log(goalId);
+        // console.log("currentID at end");
+        // console.log(goalId);
     }
 
     return totalPath;

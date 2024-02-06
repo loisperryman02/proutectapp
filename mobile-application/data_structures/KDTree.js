@@ -1,7 +1,7 @@
 import { kdTree } from 'kd-tree-javascript';
 // import { safety_scores } from 'C:/Users/loisp/Documents/Year3/Dissertation/Proutect/Proutect/csv-json-files/safety_scores.json';
 
-const safety_scores = 
+let safety_scores = 
 [
   {
     "Latitude": 52.295042,
@@ -1183,10 +1183,10 @@ function haversineDistance(coords1, coords2, isMiles = false) {
 }
 
 function getAverageSafetyScore(lat, lng, safety_scores) {
-    var averageScore = 0;
+    let averageScore = 0;
     safety_scores.forEach(entry => {
       if (entry.Latitude == lat && entry.Longitude == lng) {
-        let averageScore = averageScore + entry.Safety_Score
+        averageScore = averageScore + entry.Safety_Score
       }
     })
 
@@ -1202,9 +1202,31 @@ function buildKDTree(data) {
 }
 
 export function findNearestSafetyScore(lat, lng, kdtree) {
-  let nearest = kdtree.nearest({ latitude: lat, longitude: lng }, 1);
-  return nearest[0][0].safetyScore; // Returns the Safety_Score of the nearest point
+  let nearest = kdtree.nearest({ latitude: lat, longitude: lng }, 3);
+  return nearest[0][0].latitude; // Returns the Safety_Score of the nearest point
 }
+
+export function findNearestPoints(lat, lng, kdtree, numPoints = 4) {
+  // Find the 'numPoints' nearest points to the given latitude and longitude
+  let nearest = kdtree.nearest({ latitude: lat, longitude: lng }, numPoints)
+  
+  // Map the results to an array of objects with latitude, longitude, and safetyScore
+  let returned_points = nearest.map(entry => {
+    // Each 'entry' is an array: [point, distance]
+    const point = entry[0]; // The point object
+    const avg_safetyScore = getAverageSafetyScore(point.latitude, point.longitude, safety_scores);
+    
+    return {
+      latitude: point.latitude,
+      longitude: point.longitude,
+      safetyScore: avg_safetyScore
+    };
+  });
+
+  // Map the results to an array of objects with latitude, longitude, and safetyScore
+  return returned_points
+}
+
 
 // Plus 5 to safety score for daytime KD tree.
 export const daytimeKDTree = buildKDTree(safety_scores.map(item => ({
