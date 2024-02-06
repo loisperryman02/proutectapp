@@ -7,7 +7,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import Constants from 'expo-constants';
 import MapViewDirections from 'react-native-maps-directions';
 import RenderHtml from 'react-native-render-html';
-import { findNearestSafetyScore, daytimeKDTree, eveningKDTree } from '../data_structures/KDTree.js';
+import { findNearestSafetyScore, daytimeKDTree, eveningKDTree, findNearestPoints } from '../data_structures/KDTree.js';
 import { aStar } from '../data_structures/aStar';
  
 export default function MapScreen( {navigation} ) {
@@ -94,7 +94,7 @@ export default function MapScreen( {navigation} ) {
         });
       
       }
-      console.log("roue info up")
+      // console.log("roue info up")
     } catch (error) {
       console.error(error);
     }
@@ -107,12 +107,12 @@ export default function MapScreen( {navigation} ) {
       );
       const json = await response.json();
       if (json.routes.length) {
-        console.log("distance data found");
+        // console.log("distance data found");
         return {
-          distance: json.routes[0].legs[0].distance.text,
+          distance: json.routes[0].legs[0].distance.value,
         };
       } else {
-        console.log("distance not found");
+        // console.log("distance not found");
       }
     } catch (error) {
       console.error(error);
@@ -149,8 +149,6 @@ export default function MapScreen( {navigation} ) {
     const edges = [];
     const kdtree = getCurrentKDTree();
 
-    print(kdtree)
-
     // Sets start node and end node of original route - coordinates from route not the actual coordinates of places 
     let originalStartNodeID = `${routeInfo.steps[0].data.start_location.lat},${routeInfo.steps[0].data.start_location.lng}`;
     let originalDestinationID = `${routeInfo.steps[routeInfo.steps.length-1].data.end_location.lat},${routeInfo.steps[routeInfo.steps.length-1].data.end_location.lng}`;
@@ -183,11 +181,6 @@ export default function MapScreen( {navigation} ) {
         safetyScore: findNearestSafetyScore(midpoint.latitude, midpoint.longitude, kdtree)
       };
 
-      // console.log(midpoint);
-      // console.log(edge.safetyScore);
-
-      
-
       edges.push(edge);
       nodes.get(startNode).edges.push(edge);
     } 
@@ -199,107 +192,146 @@ export default function MapScreen( {navigation} ) {
     let previousNode = null;
     let nearbyPlaces = []
 
+    let visitedPoints = new Set(); 
+    let nearbyPoints = []
+
     for (const nodeId of originalNodes) {
-      console.log(originalNodes);
+      // console.log(originalNodes);
       let coords = nodeId.split(",");
       let currentLat = coords[0];
       let currentLon = coords[1];
 
       if (nodeId != originalDestinationID) {
-        nearbyPlaces = await fetchNearbyPlaces(currentLat, currentLon);
+        nearbyPoints = await findNearestPoints(currentLat, currentLon, kdtree, 5);
       } else {
         continue;
       }
 
       previousPlaces = [];
+      previousPoints = [];
 
-      for (const place of nearbyPlaces) {
+      console.log("nearby points!!!");
+      console.log(nearbyPoints);
 
-        let placeNode = `${place.latitude},${place.longitude}`;
+      for (const point of nearbyPoints) {
 
-        if (fetchedPlaces.has(placeNode)) continue;
+        let coordinateNode = `${point.latitude},${point.longitude}`;
 
-        fetchedPlaces.add(placeNode);
+        if (visitedPoints.has(coordinateNode)) continue;
 
-        nodes.set(placeNode, { id: placeNode, edges: [], placeDetails: place });
+        visitedPoints.add(coordinateNode);
 
-        console.log(placeNode);
+        nodes.set(coordinateNode, {id: coordinateNode, edges: []});
 
-        const currentDistance = await getDistance (
+        let currentDistance = await getDistance (
           currentLat, currentLon,
-          place.latitude, place.longitude
+          point.latitude, point.longitude
         );
 
-        if (currentDistance.value == undefined) {
+        console.log("current distance value before!!!");
+        console.log(currentDistance.distance);
+
+        if (currentDistance.distance == undefined) {
           continue;
         }
 
-        let midpoint = calculateMidpoint(currentLat, currentLon, place.latitude, place.longitude)
+        console.log("current distance value!!!");
+        console.log(currentDistance.distance);
 
+        let currentSafetyScore = findNearestSafetyScore(currentLat, currentLon, kdtree);
+
+        // Finds the average safety score of both nodes on the route.
+
+        let edgeSafetyScore = (currentSafetyScore + point.safetyScore) / 2
         // Creates edge from current node to each place.
         const currentEdge = {
           from: nodeId,
-          to: placeNode,
-          distance: currentDistance.value,
-          safetyScore: findNearestSafetyScore(midpoint.latitude, midpoint.longitude, kdtree)
+          to: coordinateNode,
+          distance: currentDistance.distance,
+          safetyScore: edgeSafetyScore
         };
 
         edges.push(currentEdge);
+
+        console.log("nodes!!!");
+        console.log(nodes);
+
+        console.log(nodeId);
+        console.log(nodes.get(nodeId).edges);
+
         nodes.get(nodeId).edges.push(currentEdge);
 
+        console.log("nodes after");
+        console.log(nodes);
+
         if (previousNode!=null) {
+
+          if (!nodes.has(previousNode)) {
+            nodes.set(previousNode, {id: previousNode, edges: []});
+          }
+
           const [prevLat, prevLng] = previousNode.split(',');
           const edgeFromPrevDistance = await getDistance(
             prevLat, prevLng,
-            place.latitude, place.longitude
+            point.latitude, point.longitude
           );
 
-          let midpoint = calculateMidpoint(prevLat, prevLng, place.latitude, place.longitude);
+          let currentSafetyScore = findNearestSafetyScore(prevLat, prevLng, kdtree);
+
+          // Finds the average safety score of both nodes on the route.
+          let edgeSafetyScore = (currentSafetyScore + point.safetyScore) / 2
 
           const edgeFromPrevious = {
             from: previousNode,
-            to: placeNode,
-            distance: edgeFromPrevDistance,
-            safetyScore: findNearestSafetyScore(midpoint.latitude, midpoint.longitude, kdtree)
+            to: coordinateNode,
+            distance: edgeFromPrevDistance.distance,
+            safetyScore: edgeSafetyScore
           };
 
           edges.push(edgeFromPrevious);
-          nodes[previousNode].edges.push(edgeFromPrevious);
+          nodes.get(previousNode).edges.push(edgeFromPrevious);
         }
-
       }
 
-      if (previousPlaces.length > 0) {
-        for (const prevPlace of previousPlaces) {
-          const [prevLat, prevLng] = prevPlace.split(',');
+      if (previousPoints.length > 0) {
+        for (const prevPoint of previousPoints) {
+
+          if (!nodes.has(prevPoint)) {
+            nodes.set(prevPoint, {id: prevPoint, edges: []});
+          };
+
+          const [prevLat, prevLng] = prevPoint.split(',');
           const edgeFromPrevDistance = await getDistance(
             prevLat, prevLng,
             currentLat, currentLon
           );
 
-          let midpoint = calculateMidpoint(prevLat, prevLng, currentLat, currentLon);
+          let prevSafetyScore = findNearestSafetyScore(prevLat, prevLng, kdtree);
+          let currentSafetyScore = findNearestSafetyScore(currentLat, currentLon, kdtree);
+
+          let edgeSafetyScore = (prevSafetyScore + currentSafetyScore) / 2;
 
           const edgeFromPrevious = {
-            from: prevPlace,
+            from: prevPoint,
             to: nodeId,
-            distance: edgeFromPrevDistance,
-            safetyScore: findNearestSafetyScore(midpoint.latitude, midpoint.longitude, kdtree)
+            distance: edgeFromPrevDistance.distance,
+            safetyScore: edgeSafetyScore
           };
 
           edges.push(edgeFromPrevious);
-          nodes[previousNode].edges.push(edgeFromPrevious);
+          nodes.get(prevPoint).edges.push(edgeFromPrevious);
         }
 
       }
 
       previousNode = nodeId;
-      if (nearbyPlaces) {
-        for (const place of nearbyPlaces) {
-          let placeNode = `${place.latitude},${place.longitude}`;
-          if (fetchedPlaces.has(placeNode)) {
+      if (nearbyPoints) {
+        for (const point of nearbyPlaces) {
+          let pointNode = `${point.latitude},${point.longitude}`;
+          if (visitedPoints.has(pointNode)) {
             continue;
           };
-          previousPlaces.push(placeNode);
+          previousPoints.push(pointNode);
         }
       }
 
@@ -347,7 +379,7 @@ export default function MapScreen( {navigation} ) {
         console.error("ERROR IN FIND AND SET SAFEST ROUTE:", error);
       }
     };
-    console.log(route);
+    // console.log(route);
     findAndSetSafestRoute();
 }, [routeInfo]);
 
