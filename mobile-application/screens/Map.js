@@ -185,30 +185,31 @@ export default function MapScreen( {navigation} ) {
       nodes.get(startNode).edges.push(edge);
     } 
 
-    // Keeps track of fetched places already. 
-    let fetchedPlaces = new Set(); 
     const originalNodes = [...nodes.keys()];
 
     let previousNode = null;
-    let nearbyPlaces = []
 
     let visitedPoints = new Set(); 
-    let nearbyPoints = []
+
+    let nearbyPoints = [];
+    
+    previousPoints = [];
 
     for (const nodeId of originalNodes) {
-      // console.log(originalNodes);
+
+      console.log("original nodes!");
+      console.log(originalNodes);
+
       let coords = nodeId.split(",");
       let currentLat = coords[0];
       let currentLon = coords[1];
 
       if (nodeId != originalDestinationID) {
-        nearbyPoints = await findNearestPoints(currentLat, currentLon, kdtree, 5);
+        nearbyPoints = await findNearestPoints(currentLat, currentLon, kdtree, 3);
       } else {
-        continue;
+        nearbyPoints = [];
       }
 
-      previousPlaces = [];
-      previousPoints = [];
 
       console.log("nearby points!!!");
       console.log(nearbyPoints);
@@ -294,8 +295,9 @@ export default function MapScreen( {navigation} ) {
       }
 
       if (previousPoints.length > 0) {
+        console.log(" PREV POINT HAS MORE THAN 0 !!!! ");
         for (const prevPoint of previousPoints) {
-
+          
           if (!nodes.has(prevPoint)) {
             nodes.set(prevPoint, {id: prevPoint, edges: []});
           };
@@ -321,19 +323,20 @@ export default function MapScreen( {navigation} ) {
           edges.push(edgeFromPrevious);
           nodes.get(prevPoint).edges.push(edgeFromPrevious);
         }
-
+        // resets the previous points array for the next interation 
+        previousPoints = [];
       }
 
       previousNode = nodeId;
       if (nearbyPoints) {
-        for (const point of nearbyPlaces) {
+        for (const point of nearbyPoints) {
           let pointNode = `${point.latitude},${point.longitude}`;
-          if (visitedPoints.has(pointNode)) {
-            continue;
-          };
           previousPoints.push(pointNode);
         }
       }
+
+      console.log("previous points !!!!");
+      console.log(previousPoints);
 
       }
 
@@ -348,6 +351,17 @@ export default function MapScreen( {navigation} ) {
       try {
         if (routeInfo.steps.length) {
             let [ nodes, startNodeID, destinationNodeID ] = await buildGraph(routeInfo);
+            console.log("===========after build graph is call=================");
+
+            console.log("nodes after the graph is formed....");
+
+            nodes.forEach(node => {
+              console.log("node.id");
+              console.log(node.id);
+
+              console.log("node.edges!");
+              console.log(node.edges);
+            })
 
             let startNode = {
               id: startNodeID,
@@ -358,6 +372,12 @@ export default function MapScreen( {navigation} ) {
               id: destinationNodeID,
               edges: nodes.get(destinationNodeID).edges
             };
+
+            console.log("start node!");
+            console.log(startNodeID);
+
+            console.log("destination node!");
+            console.log(destinationNodeID);
     
             let safestRoute = aStar(startNode, destinationNode, nodes);
 
