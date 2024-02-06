@@ -4,1163 +4,393 @@ import { kdTree } from 'kd-tree-javascript';
 let safety_scores = 
 [
   {
-    "Latitude": 52.295042,
-    "Longitude": -1.570058,
-    "Safety_Score": 34.75617548
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.562762,
-    "Safety_Score": 37.47437414
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.555381,
-    "Safety_Score": 51.17941121
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.548171,
-    "Safety_Score": 40.83982702
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.540875,
-    "Safety_Score": 41.23211333
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.533494,
-    "Safety_Score": 42.12779
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.526155,
-    "Safety_Score": 49.68727485
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.518688,
-    "Safety_Score": 51.99333174
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.511564,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.50414,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.497617,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.570058,
-    "Safety_Score": 35.35878829
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.562762,
-    "Safety_Score": 36.12713487
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.555381,
-    "Safety_Score": 48.05143435
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.548171,
-    "Safety_Score": 42.92508593
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.540875,
-    "Safety_Score": 39.48168896
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.533494,
-    "Safety_Score": 36.65256418
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.526155,
-    "Safety_Score": 49.53344717
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.518688,
-    "Safety_Score": 48.13210801
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.511564,
-    "Safety_Score": 40.05803734
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.50414,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.497617,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.570058,
-    "Safety_Score": 24.92953872
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.562762,
-    "Safety_Score": 29.61224022
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.555381,
-    "Safety_Score": 45.77085818
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.548171,
-    "Safety_Score": 41.7879732
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.540875,
-    "Safety_Score": 43.26450022
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.533494,
-    "Safety_Score": 44.46903615
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.526155,
-    "Safety_Score": 43.38158554
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.518688,
-    "Safety_Score": 45.95528764
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.511564,
-    "Safety_Score": 54.23350885
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.50414,
-    "Safety_Score": 52.97672429
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.497617,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.570058,
-    "Safety_Score": 36.30534706
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.562762,
-    "Safety_Score": 29.70780289
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.555381,
-    "Safety_Score": 44.93095057
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.548171,
-    "Safety_Score": 31.45452163
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.540875,
-    "Safety_Score": 41.3181885
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.533494,
-    "Safety_Score": 44.66683332
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.526155,
-    "Safety_Score": 44.33938808
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.518688,
-    "Safety_Score": 47.28850202
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.511564,
-    "Safety_Score": 50.68346859
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.50414,
-    "Safety_Score": 39.85644741
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.497617,
-    "Safety_Score": 24.93154202
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.570058,
-    "Safety_Score": 31.80100731
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.562762,
-    "Safety_Score": 19.63106852
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.555381,
-    "Safety_Score": 26.17393639
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.548171,
-    "Safety_Score": 30.61961651
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.540875,
-    "Safety_Score": 47.89837702
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.533494,
-    "Safety_Score": 43.9006417
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.526155,
-    "Safety_Score": 45.81767758
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.518688,
-    "Safety_Score": 49.87733459
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.511564,
-    "Safety_Score": 49.34601798
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.50414,
-    "Safety_Score": 27.13373756
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.497617,
-    "Safety_Score": 42.70023667
-  },
-  {
-    "Latitude": 52.272517,
-    "Longitude": -1.570058,
-    "Safety_Score": 30.31005762
-  },
-  {
-    "Latitude": 52.272517,
-    "Longitude": -1.562762,
-    "Safety_Score": 18.97672429
-  },
-  {
-    "Latitude": 52.272517,
-    "Longitude": -1.555381,
-    "Safety_Score": 50.91962903
-  },
-  {
-    "Latitude": 52.272517,
-    "Longitude": -1.548171,
-    "Safety_Score": 52.66927704
-  },
-  {
-    "Latitude": 52.272517,
-    "Longitude": -1.540875,
-    "Safety_Score": 35.2322024
-  },
-  {
-    "Latitude": 52.272517,
-    "Longitude": -1.533494,
-    "Safety_Score": 42.6177286
-  },
-  {
-    "Latitude": 52.272517,
-    "Longitude": -1.526155,
-    "Safety_Score": 47.62157741
-  },
-  {
-    "Latitude": 52.272517,
-    "Longitude": -1.518688,
-    "Safety_Score": 55.29427079
-  },
-  {
-    "Latitude": 52.272517,
-    "Longitude": -1.511564,
-    "Safety_Score": 55.04617527
-  },
-  {
-    "Latitude": 52.272517,
-    "Longitude": -1.50414,
-    "Safety_Score": 64.95892521
-  },
-  {
-    "Latitude": 52.272517,
-    "Longitude": -1.497617,
-    "Safety_Score": 61.73380904
-  },
-  {
     "Latitude": 52.268551,
     "Longitude": -1.570058,
-    "Safety_Score": 65
+    "Safety_Score": "65.0"
   },
   {
     "Latitude": 52.268551,
     "Longitude": -1.562762,
-    "Safety_Score": 65
+    "Safety_Score": "47.31337351"
   },
   {
     "Latitude": 52.268551,
     "Longitude": -1.555381,
-    "Safety_Score": 52.7757695
+    "Safety_Score": "53.149663753333336"
   },
   {
     "Latitude": 52.268551,
     "Longitude": -1.548171,
-    "Safety_Score": 36.1596127
+    "Safety_Score": "38.691645099999995"
   },
   {
     "Latitude": 52.268551,
     "Longitude": -1.540875,
-    "Safety_Score": 42.0889239
+    "Safety_Score": "46.255208100000004"
   },
   {
     "Latitude": 52.268551,
     "Longitude": -1.533494,
-    "Safety_Score": 44.81617516
+    "Safety_Score": "49.12114172"
   },
   {
     "Latitude": 52.268551,
     "Longitude": -1.526155,
-    "Safety_Score": 45.18627671
+    "Safety_Score": "51.02499434333333"
   },
   {
     "Latitude": 52.268551,
     "Longitude": -1.518688,
-    "Safety_Score": 54.80885649
+    "Safety_Score": "58.32011884"
   },
   {
     "Latitude": 52.268551,
     "Longitude": -1.511564,
-    "Safety_Score": 65
+    "Safety_Score": "48.98405437666667"
   },
   {
     "Latitude": 52.268551,
     "Longitude": -1.50414,
-    "Safety_Score": 65
+    "Safety_Score": "65.0"
   },
   {
     "Latitude": 52.268551,
     "Longitude": -1.497617,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.570058,
-    "Safety_Score": 32.38721309
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.562762,
-    "Safety_Score": 32.44066522
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.555381,
-    "Safety_Score": 44.46058865
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.548171,
-    "Safety_Score": 38.60608761
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.540875,
-    "Safety_Score": 43.71380643
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.533494,
-    "Safety_Score": 43.00753166
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.526155,
-    "Safety_Score": 51.83949193
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.518688,
-    "Safety_Score": 80.04672897
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.511564,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.50414,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.497617,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.570058,
-    "Safety_Score": 35.0149581
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.562762,
-    "Safety_Score": 31.31411982
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.555381,
-    "Safety_Score": 43.77444601
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.548171,
-    "Safety_Score": 44.23922591
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.540875,
-    "Safety_Score": 39.87300355
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.533494,
-    "Safety_Score": 36.15124053
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.526155,
-    "Safety_Score": 48.89961242
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.518688,
-    "Safety_Score": 46.78558114
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.511564,
-    "Safety_Score": 33.71122639
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.50414,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.497617,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.570058,
-    "Safety_Score": 24.28548005
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.562762,
-    "Safety_Score": 24.16777371
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.555381,
-    "Safety_Score": 47.48153372
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.548171,
-    "Safety_Score": 40.30456013
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.540875,
-    "Safety_Score": 42.66549334
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.533494,
-    "Safety_Score": 44.48850945
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.526155,
-    "Safety_Score": 44.24717998
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.518688,
-    "Safety_Score": 43.06582265
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.511564,
-    "Safety_Score": 41.74361022
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.50414,
-    "Safety_Score": 32.96690226
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.497617,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.570058,
-    "Safety_Score": 43.06146276
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.562762,
-    "Safety_Score": 33.3011175
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.555381,
-    "Safety_Score": 40.13352766
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.548171,
-    "Safety_Score": 29.30972485
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.540875,
-    "Safety_Score": 42.42845437
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.533494,
-    "Safety_Score": 48.52348903
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.526155,
-    "Safety_Score": 44.58960727
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.518688,
-    "Safety_Score": 47.57265398
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.511564,
-    "Safety_Score": 46.86657758
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.50414,
-    "Safety_Score": 38.32538725
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.497617,
-    "Safety_Score": 34.96552319
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.570058,
-    "Safety_Score": 26.09321053
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.562762,
-    "Safety_Score": 29.51764474
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.555381,
-    "Safety_Score": 33.83026633
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.548171,
-    "Safety_Score": 26.70065843
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.540875,
-    "Safety_Score": 49.9879596
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.533494,
-    "Safety_Score": 51.67518455
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.526155,
-    "Safety_Score": 51.22373259
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.518688,
-    "Safety_Score": 41.74656778
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.511564,
-    "Safety_Score": 41.88161436
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.50414,
-    "Safety_Score": 38.85106016
-  },
-  {
-    "Latitude": 52.277348,
-    "Longitude": -1.497617,
-    "Safety_Score": 55.63135395
+    "Safety_Score": "65.0"
   },
   {
     "Latitude": 52.272517,
     "Longitude": -1.570058,
-    "Safety_Score": 28.16276504
+    "Safety_Score": "30.915087126666663"
   },
   {
     "Latitude": 52.272517,
     "Longitude": -1.562762,
-    "Safety_Score": 29.1056613
+    "Safety_Score": "26.781616680000003"
   },
   {
     "Latitude": 52.272517,
     "Longitude": -1.555381,
-    "Safety_Score": 49.92813055
+    "Safety_Score": "51.72134046"
   },
   {
     "Latitude": 52.272517,
     "Longitude": -1.548171,
-    "Safety_Score": 47.94144767
+    "Safety_Score": "47.41179139"
   },
   {
     "Latitude": 52.272517,
     "Longitude": -1.540875,
-    "Safety_Score": 46.34193612
+    "Safety_Score": "33.42037551666667"
   },
   {
     "Latitude": 52.272517,
     "Longitude": -1.533494,
-    "Safety_Score": 52.13877772
+    "Safety_Score": "47.633075633333334"
   },
   {
     "Latitude": 52.272517,
     "Longitude": -1.526155,
-    "Safety_Score": 58.44544541
+    "Safety_Score": "53.83993998333333"
   },
   {
     "Latitude": 52.272517,
     "Longitude": -1.518688,
-    "Safety_Score": 59.59402188
+    "Safety_Score": "57.06609329666666"
   },
   {
     "Latitude": 52.272517,
     "Longitude": -1.511564,
-    "Safety_Score": 57.12996494
+    "Safety_Score": "57.16451111666667"
   },
   {
     "Latitude": 52.272517,
     "Longitude": -1.50414,
-    "Safety_Score": 39.35311153
+    "Safety_Score": "48.61959836666667"
   },
   {
     "Latitude": 52.272517,
     "Longitude": -1.497617,
-    "Safety_Score": 48.80933452
-  },
-  {
-    "Latitude": 52.268551,
-    "Longitude": -1.570058,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.268551,
-    "Longitude": -1.562762,
-    "Safety_Score": 34.23128196
-  },
-  {
-    "Latitude": 52.268551,
-    "Longitude": -1.555381,
-    "Safety_Score": 51.41491093
-  },
-  {
-    "Latitude": 52.268551,
-    "Longitude": -1.548171,
-    "Safety_Score": 44.90224497
-  },
-  {
-    "Latitude": 52.268551,
-    "Longitude": -1.540875,
-    "Safety_Score": 57.28573693
-  },
-  {
-    "Latitude": 52.268551,
-    "Longitude": -1.533494,
-    "Safety_Score": 52.23866245
-  },
-  {
-    "Latitude": 52.268551,
-    "Longitude": -1.526155,
-    "Safety_Score": 56.05072001
-  },
-  {
-    "Latitude": 52.268551,
-    "Longitude": -1.518688,
-    "Safety_Score": 63.17781814
-  },
-  {
-    "Latitude": 52.268551,
-    "Longitude": -1.511564,
-    "Safety_Score": 16.99448371
-  },
-  {
-    "Latitude": 52.268551,
-    "Longitude": -1.50414,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.268551,
-    "Longitude": -1.497617,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.570058,
-    "Safety_Score": 42.7669791
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.562762,
-    "Safety_Score": 48.45919118
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.555381,
-    "Safety_Score": 49.60713324
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.548171,
-    "Safety_Score": 29.91081178
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.540875,
-    "Safety_Score": 43.95289676
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.533494,
-    "Safety_Score": 41.40072328
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.526155,
-    "Safety_Score": 48.39738977
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.518688,
-    "Safety_Score": 80.04672897
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.511564,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.50414,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.295042,
-    "Longitude": -1.497617,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.570058,
-    "Safety_Score": 39.40711405
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.562762,
-    "Safety_Score": 36.93040369
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.555381,
-    "Safety_Score": 47.17599321
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.548171,
-    "Safety_Score": 37.03627249
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.540875,
-    "Safety_Score": 36.45421669
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.533494,
-    "Safety_Score": 33.03799349
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.526155,
-    "Safety_Score": 44.60616391
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.518688,
-    "Safety_Score": 35.42806761
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.511564,
-    "Safety_Score": 40.86824193
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.50414,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.290777,
-    "Longitude": -1.497617,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.570058,
-    "Safety_Score": 24.59478046
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.562762,
-    "Safety_Score": 25.20263952
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.555381,
-    "Safety_Score": 47.69123611
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.548171,
-    "Safety_Score": 31.07835257
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.540875,
-    "Safety_Score": 35.89523893
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.533494,
-    "Safety_Score": 44.34332771
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.526155,
-    "Safety_Score": 45.29514761
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.518688,
-    "Safety_Score": 46.75048492
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.511564,
-    "Safety_Score": 53.47623246
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.50414,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.286249,
-    "Longitude": -1.497617,
-    "Safety_Score": 65
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.570058,
-    "Safety_Score": 14.95767942
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.562762,
-    "Safety_Score": 38.92405116
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.555381,
-    "Safety_Score": 47.7100335
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.548171,
-    "Safety_Score": 30.1306609
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.540875,
-    "Safety_Score": 37.33554617
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.533494,
-    "Safety_Score": 46.6900664
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.526155,
-    "Safety_Score": 46.60988795
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.518688,
-    "Safety_Score": 47.74651317
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.511564,
-    "Safety_Score": 46.85550814
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.50414,
-    "Safety_Score": 36.60675596
-  },
-  {
-    "Latitude": 52.281418,
-    "Longitude": -1.497617,
-    "Safety_Score": 30.96755422
+    "Safety_Score": "55.343112776666665"
   },
   {
     "Latitude": 52.277348,
     "Longitude": -1.570058,
-    "Safety_Score": 34.27243872
+    "Safety_Score": "30.72221885333333"
   },
   {
     "Latitude": 52.277348,
     "Longitude": -1.562762,
-    "Safety_Score": 39.60673603
+    "Safety_Score": "29.585149763333334"
   },
   {
     "Latitude": 52.277348,
     "Longitude": -1.555381,
-    "Safety_Score": 33.44768533
+    "Safety_Score": "31.150629350000003"
   },
   {
     "Latitude": 52.277348,
     "Longitude": -1.548171,
-    "Safety_Score": 31.53546412
+    "Safety_Score": "29.618579686666667"
   },
   {
     "Latitude": 52.277348,
     "Longitude": -1.540875,
-    "Safety_Score": 46.90389702
+    "Safety_Score": "48.263411213333335"
   },
   {
     "Latitude": 52.277348,
     "Longitude": -1.533494,
-    "Safety_Score": 47.68647184
+    "Safety_Score": "47.75409936333333"
   },
   {
     "Latitude": 52.277348,
     "Longitude": -1.526155,
-    "Safety_Score": 48.9594511
+    "Safety_Score": "48.666953756666665"
   },
   {
     "Latitude": 52.277348,
     "Longitude": -1.518688,
-    "Safety_Score": 49.20649248
+    "Safety_Score": "46.94346495"
   },
   {
     "Latitude": 52.277348,
     "Longitude": -1.511564,
-    "Safety_Score": 45.81577953
+    "Safety_Score": "45.68113729"
   },
   {
     "Latitude": 52.277348,
     "Longitude": -1.50414,
-    "Safety_Score": 38.88538177
+    "Safety_Score": "34.95672649666667"
   },
   {
     "Latitude": 52.277348,
     "Longitude": -1.497617,
-    "Safety_Score": 51.7918977
+    "Safety_Score": "50.04116277333333"
   },
   {
-    "Latitude": 52.272517,
+    "Latitude": 52.281418,
     "Longitude": -1.570058,
-    "Safety_Score": 34.27243872
+    "Safety_Score": "31.441496413333336"
   },
   {
-    "Latitude": 52.272517,
+    "Latitude": 52.281418,
     "Longitude": -1.562762,
-    "Safety_Score": 32.26246445
+    "Safety_Score": "33.97765718333333"
   },
   {
-    "Latitude": 52.272517,
+    "Latitude": 52.281418,
     "Longitude": -1.555381,
-    "Safety_Score": 54.3162618
+    "Safety_Score": "44.258170576666664"
   },
   {
-    "Latitude": 52.272517,
+    "Latitude": 52.281418,
     "Longitude": -1.548171,
-    "Safety_Score": 41.62464946
+    "Safety_Score": "30.29830246"
   },
   {
-    "Latitude": 52.272517,
+    "Latitude": 52.281418,
     "Longitude": -1.540875,
-    "Safety_Score": 18.68698803
+    "Safety_Score": "40.36072968"
   },
   {
-    "Latitude": 52.272517,
+    "Latitude": 52.281418,
     "Longitude": -1.533494,
-    "Safety_Score": 48.14272058
+    "Safety_Score": "46.626796250000005"
   },
   {
-    "Latitude": 52.272517,
+    "Latitude": 52.281418,
     "Longitude": -1.526155,
-    "Safety_Score": 55.45279713
+    "Safety_Score": "45.17962776666667"
   },
   {
-    "Latitude": 52.272517,
+    "Latitude": 52.281418,
     "Longitude": -1.518688,
-    "Safety_Score": 56.30998722
+    "Safety_Score": "47.535889723333334"
   },
   {
-    "Latitude": 52.272517,
+    "Latitude": 52.281418,
     "Longitude": -1.511564,
-    "Safety_Score": 59.31739314
+    "Safety_Score": "48.135184769999995"
   },
   {
-    "Latitude": 52.272517,
+    "Latitude": 52.281418,
     "Longitude": -1.50414,
-    "Safety_Score": 41.54675836
+    "Safety_Score": "38.262863540000005"
   },
   {
-    "Latitude": 52.272517,
+    "Latitude": 52.281418,
     "Longitude": -1.497617,
-    "Safety_Score": 55.48619477
+    "Safety_Score": "30.288206476666662"
   },
   {
-    "Latitude": 52.268551,
+    "Latitude": 52.286249,
     "Longitude": -1.570058,
-    "Safety_Score": 65
+    "Safety_Score": "24.60326641"
   },
   {
-    "Latitude": 52.268551,
+    "Latitude": 52.286249,
     "Longitude": -1.562762,
-    "Safety_Score": 42.70883857
+    "Safety_Score": "26.32755115"
   },
   {
-    "Latitude": 52.268551,
+    "Latitude": 52.286249,
     "Longitude": -1.555381,
-    "Safety_Score": 55.25831083
+    "Safety_Score": "46.981209336666666"
   },
   {
-    "Latitude": 52.268551,
+    "Latitude": 52.286249,
     "Longitude": -1.548171,
-    "Safety_Score": 35.01307763
+    "Safety_Score": "37.723628633333334"
   },
   {
-    "Latitude": 52.268551,
+    "Latitude": 52.286249,
     "Longitude": -1.540875,
-    "Safety_Score": 39.39096347
+    "Safety_Score": "40.60841083"
   },
   {
-    "Latitude": 52.268551,
+    "Latitude": 52.286249,
     "Longitude": -1.533494,
-    "Safety_Score": 50.30858755
+    "Safety_Score": "44.43362443666666"
   },
   {
-    "Latitude": 52.268551,
+    "Latitude": 52.286249,
     "Longitude": -1.526155,
-    "Safety_Score": 51.83798631
+    "Safety_Score": "44.30797104333334"
   },
   {
-    "Latitude": 52.268551,
+    "Latitude": 52.286249,
     "Longitude": -1.518688,
-    "Safety_Score": 56.97368189
+    "Safety_Score": "45.25719840333333"
   },
   {
-    "Latitude": 52.268551,
+    "Latitude": 52.286249,
     "Longitude": -1.511564,
-    "Safety_Score": 64.95767942
+    "Safety_Score": "49.81778384333333"
   },
   {
-    "Latitude": 52.268551,
+    "Latitude": 52.286249,
     "Longitude": -1.50414,
-    "Safety_Score": 65
+    "Safety_Score": "50.31454218333334"
   },
   {
-    "Latitude": 52.268551,
+    "Latitude": 52.286249,
     "Longitude": -1.497617,
-    "Safety_Score": 65
+    "Safety_Score": "65.0"
+  },
+  {
+    "Latitude": 52.290777,
+    "Longitude": -1.570058,
+    "Safety_Score": "36.593620146666666"
+  },
+  {
+    "Latitude": 52.290777,
+    "Longitude": -1.562762,
+    "Safety_Score": "34.79055279333333"
+  },
+  {
+    "Latitude": 52.290777,
+    "Longitude": -1.555381,
+    "Safety_Score": "46.333957856666665"
+  },
+  {
+    "Latitude": 52.290777,
+    "Longitude": -1.548171,
+    "Safety_Score": "41.400194776666666"
+  },
+  {
+    "Latitude": 52.290777,
+    "Longitude": -1.540875,
+    "Safety_Score": "38.60296973333333"
+  },
+  {
+    "Latitude": 52.290777,
+    "Longitude": -1.533494,
+    "Safety_Score": "35.2805994"
+  },
+  {
+    "Latitude": 52.290777,
+    "Longitude": -1.526155,
+    "Safety_Score": "47.679741166666666"
+  },
+  {
+    "Latitude": 52.290777,
+    "Longitude": -1.518688,
+    "Safety_Score": "43.44858558666667"
+  },
+  {
+    "Latitude": 52.290777,
+    "Longitude": -1.511564,
+    "Safety_Score": "38.212501886666665"
+  },
+  {
+    "Latitude": 52.290777,
+    "Longitude": -1.50414,
+    "Safety_Score": "65.0"
+  },
+  {
+    "Latitude": 52.290777,
+    "Longitude": -1.497617,
+    "Safety_Score": "65.0"
+  },
+  {
+    "Latitude": 52.295042,
+    "Longitude": -1.570058,
+    "Safety_Score": "36.63678922333333"
+  },
+  {
+    "Latitude": 52.295042,
+    "Longitude": -1.562762,
+    "Safety_Score": "39.458076846666664"
+  },
+  {
+    "Latitude": 52.295042,
+    "Longitude": -1.555381,
+    "Safety_Score": "48.41571103333333"
+  },
+  {
+    "Latitude": 52.295042,
+    "Longitude": -1.548171,
+    "Safety_Score": "36.45224213666667"
+  },
+  {
+    "Latitude": 52.295042,
+    "Longitude": -1.540875,
+    "Safety_Score": "42.96627217333333"
+  },
+  {
+    "Latitude": 52.295042,
+    "Longitude": -1.533494,
+    "Safety_Score": "42.17868164666667"
+  },
+  {
+    "Latitude": 52.295042,
+    "Longitude": -1.526155,
+    "Safety_Score": "49.974718849999995"
+  },
+  {
+    "Latitude": 52.295042,
+    "Longitude": -1.518688,
+    "Safety_Score": "70.69559656"
+  },
+  {
+    "Latitude": 52.295042,
+    "Longitude": -1.511564,
+    "Safety_Score": "65.0"
+  },
+  {
+    "Latitude": 52.295042,
+    "Longitude": -1.50414,
+    "Safety_Score": "65.0"
+  },
+  {
+    "Latitude": 52.295042,
+    "Longitude": -1.497617,
+    "Safety_Score": "65.0"
   }
- ]
-
-function haversineDistance(coords1, coords2, isMiles = false) {
+];
+ 
+ function haversineDistance(coords1, coords2, isMiles = false) {
   // Earth's radius in kilometers or miles
   const RADIUS_OF_EARTH_IN_KM = 6371;
   const RADIUS_OF_EARTH_IN_MILES = 3959;
@@ -1206,27 +436,19 @@ export function findNearestSafetyScore(lat, lng, kdtree) {
   return nearest[0][0].latitude; // Returns the Safety_Score of the nearest point
 }
 
-export function findNearestPoints(lat, lng, kdtree, numPoints = 4) {
+export function findNearestPoints(lat, lng, kdtree, numPoints) {
   // Find the 'numPoints' nearest points to the given latitude and longitude
-  let nearest = kdtree.nearest({ latitude: lat, longitude: lng }, numPoints)
-  
-  // Map the results to an array of objects with latitude, longitude, and safetyScore
-  let returned_points = nearest.map(entry => {
-    // Each 'entry' is an array: [point, distance]
-    const point = entry[0]; // The point object
-    const avg_safetyScore = getAverageSafetyScore(point.latitude, point.longitude, safety_scores);
-    
-    return {
-      latitude: point.latitude,
-      longitude: point.longitude,
-      safetyScore: avg_safetyScore
-    };
-  });
+  let nearest = kdtree.nearest({ latitude: lat, longitude: lng }, numPoints);
 
   // Map the results to an array of objects with latitude, longitude, and safetyScore
-  return returned_points
+  let returned_points = nearest.map(point => ({
+    latitude: point[0].latitude,
+    longitude: point[0].longitude,
+    safetyScore: point[0].safetyScore
+  }));
+
+  return returned_points;
 }
-
 
 // Plus 5 to safety score for daytime KD tree.
 export const daytimeKDTree = buildKDTree(safety_scores.map(item => ({

@@ -21,14 +21,14 @@ export function aStar(startNode, goalNode, nodes) {
         id: goalNode.id,
         edges: goalNode.edges
     };
-
+    
     while (openSet.size > 0) {
 
         console.log("open Set! ");
         console.log(openSet);
-        let currentId = null;
 
         lowestFScore = Infinity;
+        let currentId = null;
 
         // Loops through openSet, gets the node with the lowest fScore and sets it to current 
         openSet.forEach(nodeId => {
@@ -39,7 +39,7 @@ export function aStar(startNode, goalNode, nodes) {
         });
 
         // if no current node, break out of loop. 
-        if (currentId == null) break;
+        if (currentId == null) continue;
 
         current = nodes.get(currentId);
 
@@ -62,9 +62,6 @@ export function aStar(startNode, goalNode, nodes) {
             let neighbourId = edge.to;
             let neighbour = nodes.get(neighbourId);
 
-            // console.log("neighbour");
-            // console.log(neighbourId);
-
             if (exploredSet.has(neighbourId)) {
                 continue;
             }
@@ -81,20 +78,16 @@ export function aStar(startNode, goalNode, nodes) {
             // Calculates a temporary gScore for neighbour node 
             // Sum of gScore of current node, and the cost of current node and neighbour (considering distance and safety score)
             let temporaryGScore = gScore[current.id] + temporaryCost;
-
-            // console.log("temp g score");
-            // console.log(gScore[current.id]);
-            // console.log(current);
-            // console.log(gScore);
             
-
             let temporaryFScore = temporaryGScore + heuristicCostEstimate(neighbour, goal);
 
             // console.log(heuristicCostEstimate(neighbour, goal))
 
-            // console.log("temp f score");
-            // console.log(temporaryFScore);
+            console.log(" f score of neighbour ");
+            console.log(temporaryFScore);
 
+            console.log("f score of current node");
+            console.log(fScore[neighbourId]);
             // This checks if the tentative gScore for neighbour node is better than previously recorded
             // If neighbour node hasn't been encountered before, infinity is assigned to gScore
 
@@ -107,10 +100,12 @@ export function aStar(startNode, goalNode, nodes) {
                 if (!openSet.has(neighbourId)) {
                     openSet.add(neighbourId);
                 };
+
+                console.log("node set after neighbour...");
+                console.log(openSet);
             }
             
-            // console.log("came From");
-            // console.log(cameFrom);
+            
         }
     }
 
@@ -161,7 +156,7 @@ function costFunction(edge) {
     // The higher the safety score, the lower the cost of the edge. 
     console.log(edge.distance);
     console.log(edge.safetyScore);
-    return parseFloat(1/edge.safetyScore) ;
+    return parseFloat(1/edge.safetyScore);
 }
 
 // Iterates backwards from the goal node to the start node using cameFrom map
