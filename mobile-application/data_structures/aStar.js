@@ -2,7 +2,7 @@
 // A* Graph Search algorithm. 
 
 // Need to sort out objects and how they are accessed in this file.
-export function aStar(startNode, goalNode, nodes) {
+export function aStar(startNode, goalNode, nodes, preferences) {
     let openSet = new Set(); // starts with start node
     let exploredSet = new Set(); // defines already explored nodes
     let cameFrom = new Map(); // reconstructs path later
@@ -24,9 +24,6 @@ export function aStar(startNode, goalNode, nodes) {
     
     while (openSet.size > 0) {
 
-        console.log("open Set! ");
-        console.log(openSet);
-
         lowestFScore = Infinity;
         let currentId = null;
 
@@ -46,18 +43,6 @@ export function aStar(startNode, goalNode, nodes) {
         openSet.delete(currentId);
         exploredSet.add(currentId);
 
-        // console.log("open set after");
-        // console.log(openSet);
-
-
-        // console.log(currentId);
-
-        // console.log("edges...");
-        // console.log(current.edges)
-
-        console.log("current.edges");
-        console.log(current.edges);
-
         for (let edge of current.edges) {
             let neighbourId = edge.to;
             let neighbour = nodes.get(neighbourId);
@@ -73,7 +58,14 @@ export function aStar(startNode, goalNode, nodes) {
                 return reconstructPath(cameFrom, neighbour);
             }
 
-            let temporaryCost = costFunction(edge, []);
+            // console.log("PREFERENCES!!!");
+            // console.log(preferences);
+
+            console.log("edge!!!");
+            console.log(edge);
+            let temporaryCost = costFunction(edge, preferences);
+            
+
 
             // Calculates a temporary gScore for neighbour node 
             // Sum of gScore of current node, and the cost of current node and neighbour (considering distance and safety score)
@@ -81,13 +73,6 @@ export function aStar(startNode, goalNode, nodes) {
             
             let temporaryFScore = temporaryGScore + heuristicCostEstimate(neighbour, goal);
 
-            // console.log(heuristicCostEstimate(neighbour, goal))
-
-            console.log(" f score of neighbour ");
-            console.log(temporaryFScore);
-
-            console.log("f score of current node");
-            console.log(fScore[neighbourId]);
             // This checks if the tentative gScore for neighbour node is better than previously recorded
             // If neighbour node hasn't been encountered before, infinity is assigned to gScore
 
@@ -101,8 +86,6 @@ export function aStar(startNode, goalNode, nodes) {
                     openSet.add(neighbourId);
                 };
 
-                console.log("node set after neighbour...");
-                console.log(openSet);
             }
             
             
@@ -160,8 +143,13 @@ function costFunction(edge, preferences) {
     let distance_weight = 0.5;
     let safety_weight = 0.5;
 
-    if (preferences.length == 1) {
-        if (preferences[0] == "Efficiency") {
+
+    console.log(edge.distance);
+
+
+
+    if (preferences.size == 1) {
+        if (preferences.has("Efficiency")) {
             distance_weight =  0.8;
             safety_weight = 0.2;
         } else {
@@ -186,12 +174,8 @@ function reconstructPath(cameFrom, goal) {
 
     while (cameFrom.has(goalId)) {
         let predessecorNode = cameFrom.get(goalId);
-        // console.log("predessecor node");
-        // console.log(predessecorNode);
         totalPath.unshift(predessecorNode.id);
         goalId = predessecorNode.id;
-        // console.log("currentID at end");
-        // console.log(goalId);
     }
 
     return totalPath;

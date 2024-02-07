@@ -37,8 +37,12 @@ export default function MapScreen( {navigation} ) {
       } else {
         updatePreferences.delete(title);
       }
+
+      console.log("in function");
+      console.log(updatePreferences);
+      
       return updatePreferences;
-    })
+    });
   }
 
   const [ routeInfo, setRouteInfo ] = React.useState({
@@ -108,7 +112,7 @@ export default function MapScreen( {navigation} ) {
         });
       
       }
-      // console.log("roue info up")
+      // //console.log"roue info up")
     } catch (error) {
       console.error(error);
     }
@@ -121,12 +125,12 @@ export default function MapScreen( {navigation} ) {
       );
       const json = await response.json();
       if (json.routes.length) {
-        // console.log("distance data found");
+        // //console.log"distance data found");
         return {
           distance: json.routes[0].legs[0].distance.value,
         };
       } else {
-        // console.log("distance not found");
+        // //console.log"distance not found");
       }
     } catch (error) {
       console.error(error);
@@ -211,9 +215,6 @@ export default function MapScreen( {navigation} ) {
 
     for (const nodeId of originalNodes) {
 
-      console.log("original nodes!");
-      console.log(originalNodes);
-
       let coords = nodeId.split(",");
       let currentLat = coords[0];
       let currentLon = coords[1];
@@ -223,10 +224,6 @@ export default function MapScreen( {navigation} ) {
       } else {
         nearbyPoints = [];
       }
-
-
-      console.log("nearby points!!!");
-      console.log(nearbyPoints);
 
       for (const point of nearbyPoints) {
 
@@ -243,15 +240,9 @@ export default function MapScreen( {navigation} ) {
           point.latitude, point.longitude
         );
 
-        console.log("current distance value before!!!");
-        console.log(currentDistance.distance);
-
         if (currentDistance.distance == undefined) {
           continue;
         }
-
-        console.log("current distance value!!!");
-        console.log(currentDistance.distance);
 
         let currentSafetyScore = findNearestSafetyScore(currentLat, currentLon, kdtree);
 
@@ -268,16 +259,7 @@ export default function MapScreen( {navigation} ) {
 
         edges.push(currentEdge);
 
-        console.log("nodes!!!");
-        console.log(nodes);
-
-        console.log(nodeId);
-        console.log(nodes.get(nodeId).edges);
-
         nodes.get(nodeId).edges.push(currentEdge);
-
-        console.log("nodes after");
-        console.log(nodes);
 
         if (previousNode!=null) {
 
@@ -309,7 +291,7 @@ export default function MapScreen( {navigation} ) {
       }
 
       if (previousPoints.length > 0) {
-        console.log(" PREV POINT HAS MORE THAN 0 !!!! ");
+        
         for (const prevPoint of previousPoints) {
 
           if (!nodes.has(prevPoint)) {
@@ -350,9 +332,6 @@ export default function MapScreen( {navigation} ) {
         }
       }
 
-      console.log("previous points !!!!");
-      console.log(previousPoints);
-
       }
 
         return [nodes, originalStartNodeID, originalDestinationID ];
@@ -366,16 +345,16 @@ export default function MapScreen( {navigation} ) {
       try {
         if (routeInfo.steps.length) {
             let [ nodes, startNodeID, destinationNodeID ] = await buildGraph(routeInfo);
-            console.log("===========after build graph is call=================");
+            //console.log"===========after build graph is call=================");
 
-            console.log("nodes after the graph is formed....");
+            //console.log"nodes after the graph is formed....");
 
             nodes.forEach(node => {
-              console.log("node.id");
-              console.log(node.id);
+              //console.log"node.id");
+              //console.lognode.id);
 
-              console.log("node.edges!");
-              console.log(node.edges);
+              //console.log"node.edges!");
+              //console.lognode.edges);
             })
 
             let startNode = {
@@ -388,13 +367,13 @@ export default function MapScreen( {navigation} ) {
               edges: nodes.get(destinationNodeID).edges
             };
 
-            console.log("start node!");
-            console.log(startNodeID);
+            //console.log"start node!");
+            //console.logstartNodeID);
 
-            console.log("destination node!");
-            console.log(destinationNodeID);
+            //console.log"destination node!");
+            //console.logdestinationNodeID);
     
-            let safestRoute = aStar(startNode, destinationNode, nodes);
+            let safestRoute = aStar(startNode, destinationNode, nodes, preferences);
 
             // Need to get safest route in format to display route on screen. 
             setCoordinates([]);
@@ -414,7 +393,7 @@ export default function MapScreen( {navigation} ) {
         console.error("ERROR IN FIND AND SET SAFEST ROUTE:", error);
       }
     };
-    // console.log(route);
+    // //console.logroute);
     findAndSetSafestRoute();
 }, [routeInfo]);
 
@@ -475,7 +454,6 @@ export default function MapScreen( {navigation} ) {
         
         )}
 
-        
         {start && destination && coords && route && (
           <MapViewDirections
             origin = {start}
@@ -485,8 +463,8 @@ export default function MapScreen( {navigation} ) {
             strokeColor = "blue"
             mode = "WALKING"
             onReady={result => {
-              console.log('Distance:', result.distance, 'km');
-              console.log('Duration:', result.duration, 'min');
+              //console.log'Distance:', result.distance, 'km');
+              //console.log'Duration:', result.duration, 'min');
             }}            
           />
         )}
@@ -602,7 +580,7 @@ export default function MapScreen( {navigation} ) {
                   onPress={
                     () => {
                       setSafeChecked(!safeChecked);
-                      updatePreferences("Efficient", !safeChecked);
+                      updatePreferences("Safe", !safeChecked);
                   }}
                 />
                 <CheckBox
@@ -610,7 +588,7 @@ export default function MapScreen( {navigation} ) {
                   checked={busyChecked}
                   onPress={() => {
                     setBusyChecked(!busyChecked);
-                    updatePreferences("Efficient", !busyChecked);
+                    updatePreferences("Busy", !busyChecked);
                   }}
                 />
               </View>
@@ -670,21 +648,30 @@ export default function MapScreen( {navigation} ) {
                 <CheckBox
                   title="Efficient"
                   checked={efficientChecked}
-                  onPress={() => setEfficientChecked(!efficientChecked)}
+                  onPress={() => {
+                    setEfficientChecked(!efficientChecked);
+                    updatePreferences("Efficient", !efficientChecked);
+                  }}
                 />
                 <CheckBox
                   title="Safe"
                   checked={safeChecked}
-                  onPress={() => setSafeChecked(!safeChecked)}
+                  onPress={
+                    () => {
+                      setSafeChecked(!safeChecked);
+                      updatePreferences("Safe", !safeChecked);
+                  }}
                 />
                 <CheckBox
                   title="Busy"
                   checked={busyChecked}
-                  onPress={() => setBusyChecked(!busyChecked)}
+                  onPress={() => {
+                    setBusyChecked(!busyChecked);
+                    updatePreferences("Busy", !busyChecked);
+                  }}
                 />
               </View>
               
-
             </View>
 
             <View style = {styles.routeButtonContainer}>
