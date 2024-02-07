@@ -27,6 +27,20 @@ export default function MapScreen( {navigation} ) {
   const [ userInput, setUserInput ] = React.useState('');
   const [ coords, setCoordinates ] = React.useState();
 
+  const [preferences, setPreferences] = React.useState(new Set());
+
+  const updatePreferences = (title, isChecked) => {
+    setPreferences(currentPreferences => {
+      const updatePreferences = new Set(currentPreferences);
+      if (isChecked) {
+        updatePreferences.add(title);
+      } else {
+        updatePreferences.delete(title);
+      }
+      return updatePreferences;
+    })
+  }
+
   const [ routeInfo, setRouteInfo ] = React.useState({
     distance: null,
     duration: null,
@@ -577,17 +591,27 @@ export default function MapScreen( {navigation} ) {
                 <CheckBox
                   title="Efficient"
                   checked={efficientChecked}
-                  onPress={() => setEfficientChecked(!efficientChecked)}
+                  onPress={() => {
+                    setEfficientChecked(!efficientChecked);
+                    updatePreferences("Efficient", !efficientChecked);
+                  }}
                 />
                 <CheckBox
                   title="Safe"
                   checked={safeChecked}
-                  onPress={() => setSafeChecked(!safeChecked)}
+                  onPress={
+                    () => {
+                      setSafeChecked(!safeChecked);
+                      updatePreferences("Efficient", !safeChecked);
+                  }}
                 />
                 <CheckBox
                   title="Busy"
                   checked={busyChecked}
-                  onPress={() => setBusyChecked(!busyChecked)}
+                  onPress={() => {
+                    setBusyChecked(!busyChecked);
+                    updatePreferences("Efficient", !busyChecked);
+                  }}
                 />
               </View>
               

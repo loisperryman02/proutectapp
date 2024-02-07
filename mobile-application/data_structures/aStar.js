@@ -157,17 +157,16 @@ function heuristicCostEstimate(currentNode, goalNode) {
 
 function costFunction(edge, preferences) {
 
-    
     let distance_weight = 0.5;
     let safety_weight = 0.5;
 
     if (preferences.length == 1) {
         if (preferences[0] == "Efficiency") {
-            distance_weight =  0.7;
-            safety_weight = 0.3;
+            distance_weight =  0.8;
+            safety_weight = 0.2;
         } else {
-            distance_weight =  0.3;
-            safety_weight = 0.7;
+            distance_weight =  0.2;
+            safety_weight = 0.8;
         }
     }
 
