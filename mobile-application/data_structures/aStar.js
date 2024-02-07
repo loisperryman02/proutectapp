@@ -73,7 +73,7 @@ export function aStar(startNode, goalNode, nodes) {
                 return reconstructPath(cameFrom, neighbour);
             }
 
-            let temporaryCost = costFunction(edge);
+            let temporaryCost = costFunction(edge, []);
 
             // Calculates a temporary gScore for neighbour node 
             // Sum of gScore of current node, and the cost of current node and neighbour (considering distance and safety score)
@@ -152,11 +152,28 @@ function heuristicCostEstimate(currentNode, goalNode) {
     return haversineDistance(currentNode.id, goalNode.id);
 }
 
-function costFunction(edge) {
-    // The higher the safety score, the lower the cost of the edge. 
-    console.log(edge.distance);
-    console.log(edge.safetyScore);
-    return parseFloat(1/edge.safetyScore);
+// The cost function will be altered depending on user preferences
+// The user may prefer a more efficient, safe or busy route
+
+function costFunction(edge, preferences) {
+
+    
+    let distance_weight = 0.5;
+    let safety_weight = 0.5;
+
+    if (preferences.length == 1) {
+        if (preferences[0] == "Efficiency") {
+            distance_weight =  0.7;
+            safety_weight = 0.3;
+        } else {
+            distance_weight =  0.3;
+            safety_weight = 0.7;
+        }
+    }
+
+    let gScore = ((edge.distance * distance_weight) + (parseFloat(1/edge.safetyScore) * safety_weight));
+
+    return gScore
 }
 
 // Iterates backwards from the goal node to the start node using cameFrom map

@@ -297,7 +297,7 @@ export default function MapScreen( {navigation} ) {
       if (previousPoints.length > 0) {
         console.log(" PREV POINT HAS MORE THAN 0 !!!! ");
         for (const prevPoint of previousPoints) {
-          
+
           if (!nodes.has(prevPoint)) {
             nodes.set(prevPoint, {id: prevPoint, edges: []});
           };
@@ -322,6 +322,7 @@ export default function MapScreen( {navigation} ) {
 
           edges.push(edgeFromPrevious);
           nodes.get(prevPoint).edges.push(edgeFromPrevious);
+
         }
         // resets the previous points array for the next interation 
         previousPoints = [];
