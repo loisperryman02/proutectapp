@@ -57,15 +57,8 @@ export function aStar(startNode, goalNode, nodes, preferences) {
                 // console.log(cameFrom);
                 return reconstructPath(cameFrom, neighbour);
             }
-
-            // console.log("PREFERENCES!!!");
-            // console.log(preferences);
-
-            console.log("edge!!!");
-            console.log(edge);
-            let temporaryCost = costFunction(edge, preferences);
             
-
+            let temporaryCost = costFunction(edge, preferences);
 
             // Calculates a temporary gScore for neighbour node 
             // Sum of gScore of current node, and the cost of current node and neighbour (considering distance and safety score)

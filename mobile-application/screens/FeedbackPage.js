@@ -83,7 +83,10 @@ export default function FeedbackPage({ navigation }) {
     </View>
 
     <View style={styles.button_container}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity 
+              onPress={() => navigation.navigate("ResponsePage")}
+              style={styles.button}
+              >
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>

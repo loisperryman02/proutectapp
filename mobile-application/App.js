@@ -2,6 +2,7 @@ import HomeScreen from "./screens/HomeScreen.js";
 import SignUp from "./screens/SignUp.js";
 import MapScreen from "./screens/Map.js";
 import FeedbackPage from "./screens/FeedbackPage";
+import ResponsePage from "./screens/ReponseScreen.js";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -28,6 +29,11 @@ export default function App() {
         <Stack.Screen
           name="FeedbackPage"
           component={FeedbackPage}
+        />
+
+        <Stack.Screen
+          name="ResponsePage"
+          component={ResponsePage}
         />
         
       </Stack.Navigator>
