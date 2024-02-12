@@ -9,12 +9,10 @@ const FeedbackSchema = new Schema({
     q2: Number,
     q3: Number,
     q4: Number,
-    written_feedback: String,
-    date: Date,
-    time: Timestamp
+    written_feedback: String
 });
 
 const Feedback = mongoose.model('Feedback', FeedbackSchema);
 
-mondule.exports = Feedback;
+module.exports = Feedback;
 

@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const Feedback = require('./../models/Feedback');
-
-
+const Feedback = require('./../models/Feedback.js');
 
 // Route feedback
 router.post('/feedback', (req, res) => {
-    let {id, coordinates, q1, q2, q3, q4, written_feedback, date, time} = req.body;
+    let {id, coordinates, q1, q2, q3, q4, written_feedback, date} = req.body;
     id = id.trim();
     coordinates = coordinates.trim();
     q1 = q1.trim();
@@ -15,8 +13,6 @@ router.post('/feedback', (req, res) => {
     q3 = q3.trim();
     q4 = q4.trim();
     written_feedback = written_feedback.trim();
-    date = date.trim();
-    time = time.trim();
 
     // doesn't matter if there is any empty entries in the database for this case. 
     // but here would be verification for different entries if needed.
@@ -29,9 +25,7 @@ router.post('/feedback', (req, res) => {
         q2,
         q3,
         q4,
-        written_feedback,
-        date,
-        time
+        written_feedback
     });
 
     newFeedback.save().then(result => {
