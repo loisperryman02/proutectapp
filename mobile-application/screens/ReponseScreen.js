@@ -1,9 +1,16 @@
 import React from 'react';
-import { StyleSheet, View, Text, Pressable, TextInput, Image } from 'react-native';
+import { StyleSheet, View, Text, Pressable, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 export default function SignUp({ navigation }) {
+
+    const DismissKeyboardView = ({ children }) => (
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            {children}
+        </TouchableWithoutFeedback>
+    );
   
   return (
+    <DismissKeyboardView>
     <View style={styles.background}>
       <View style={styles.top_container}>
       
@@ -18,13 +25,12 @@ export default function SignUp({ navigation }) {
         </View>
         
         <View style={styles.input_container}>
-           
            <TextInput 
             style = {styles.text_input}
-            placeholder='Enter more feedback here.'
+            placeholder='Enter more feedback here...'
             keyboardType='ascii-capable'
+            multiline
             />  
-           
         </View>
 
         <View style={styles.button_container}>
@@ -39,15 +45,16 @@ export default function SignUp({ navigation }) {
         </View>
       </View>
     </View>
+    </DismissKeyboardView>
   );
 }
 
 const styles = StyleSheet.create({
     text_input: {
-        height: "40%",
-        borderWidth: 2,
-        width: "80%",
-        padding: "5%"
+        height: "100%",
+        width: "100%",
+        padding: "5%",
+        marginTop: "10%"
     },
     bottom_container: {
         borderTopRightRadius: 100,
@@ -58,7 +65,8 @@ const styles = StyleSheet.create({
     },
     top_container: {
         flex: 0.1,
-        backgroundColor: '#013B1E'
+        backgroundColor: '#013B1E',
+        flexDirection: "column"
     },
     background: {
         flex: 1,
@@ -68,7 +76,8 @@ const styles = StyleSheet.create({
         width:"100%",
         alignItems:"center",
         justifyContent:"center",
-        paddingTop: "3%"
+        paddingTop: "3%",
+        flex: 0.2
     },
     button: {
         alignItems: "center",
@@ -84,11 +93,14 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     input_container: {
-        width:"100%",
+        width:"80%",
+        height: "40%",
         alignItems:"center",
         justifyContent:"center",
         paddingBottom: "5%",
-        backgroundColor: "blue"
+        borderWidth: 2,
+        borderRadius: "20%",
+        flex: 0.5
     },
     input: {
         height: 40,
@@ -104,25 +116,26 @@ const styles = StyleSheet.create({
         width:"100%",
         alignItems:"center",
         justifyContent:"center",
-        marginBottom: "5%",
-        marginTop: "-20%"
+        flex: 0.15
     },
     subtitle_container: {
-        width: "80%",
+        width: "90%",
         justifyContent: "center",
-        marginLeft: "5%"
+        flex: 0.15
     },
     signup_title: {
         color: "#5EDD9D",
         fontFamily: "Arial",
         fontWeight: "bold",
-        fontSize: 45
+        fontSize: 45,
+        marginTop: "5%"
     }, 
     subtitle: {
         color: "#013B1E",
         fontFamily: "Arial",
         fontWeight: "bold",
-        fontSize: 15,
-        textAlign: "center"
+        fontSize: 17,
+        textAlign: "center",
+        marginTop: "-10%"
     }
 });

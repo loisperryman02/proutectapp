@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ResponseSchema = new Schema({
-    id: Number,
     coordinates: String,
     reponse: String,
     date: Date
