@@ -6,13 +6,13 @@ const Response = require('./../models/Response.js');
 
 // Route feedback endpoint 
 router.post('/feedback', (req, res) => {
-    let {coordinates, q1, q2, q3, q4, date} = req.body;
+    let {coordinates, date, q1, q2, q3, q4} = req.body;
     coordinates = coordinates.trim();
-    q1 = q1.trim();
-    q2 = q2.trim();
-    q3 = q3.trim();
-    q4 = q4.trim();
     date = date.trim();
+    q1 = q1;
+    q2 = q2;
+    q3 = q3;
+    q4 = q4;
 
     // doesn't matter if there is any empty entries in the database for this case. 
     // but here would be verification for different entries if needed.
@@ -20,11 +20,11 @@ router.post('/feedback', (req, res) => {
     // Creates a new feedback object. 
     const newFeedback  = new Feedback({
         coordinates,
+        date,
         q1,
         q2,
         q3,
-        q4,
-        date
+        q4
     });
 
     newFeedback.save().then(result => {

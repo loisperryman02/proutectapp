@@ -1,7 +1,43 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, Pressable, TouchableOpacity } from 'react-native';
 
-export default function FeedbackPage({ navigation }) {
+import axios from 'axios';
+
+export default function FeedbackPage({ navigation, route }) {
+  
+  const today = new Date().toISOString().split('T')[0];
+
+  const [additionalInfo, setAdditionalInfo] = React.useState({
+    coordinates: JSON.stringify(route.params), // You'll need to obtain or set these values
+    date: today // Format: YYYY-MM-DD or however your backend expects it
+  });
+
+  const handleFeedback = () => {
+    const url = "http://10.0.0.142:3000/feedback";
+    console.log("trying server.");
+    const feedbackInfo = {
+      ...additionalInfo, // Spreads the id, coordinates, and date
+      ...ratings, // Spreads the q1, q2, q3, q4 ratings
+    };
+    console.log(feedbackInfo);
+    axios
+      .post(url, feedbackInfo)
+      .then((response) => {
+          const result = response.data;
+          const {status, data} = result;
+          if (status !== "SUCCESS") {
+            // set some error message...
+            console.log("Unsuccessful!");
+          } else {
+            // not sure if we need to pass data.
+            navigation.navigate("ResponsePage");
+          }
+        })
+      .catch(error => {
+        console.log("There is an error1");
+      console.log(error);
+    })
+  }
 
   const [ratings, setRatings] = React.useState({
     q1: 0, // Question 1 rating
@@ -46,13 +82,8 @@ export default function FeedbackPage({ navigation }) {
         style={originalViewStyle}>
         <Text style={originalTextStyle}>{rating}</Text>
       </TouchableOpacity>
-      
         {labelText && <Text style={styles.labelText}>{labelText}</Text>}
-      
-     
       </View>
-      
-
     );
   };
   
@@ -84,7 +115,9 @@ export default function FeedbackPage({ navigation }) {
 
     <View style={styles.button_container}>
           <TouchableOpacity 
-              onPress={() => navigation.navigate("ResponsePage")}
+              onPress={() => 
+                handleFeedback(ratings)
+              }
               style={styles.button}
               >
             <Text style={styles.buttonText}>Next</Text>

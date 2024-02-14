@@ -345,17 +345,6 @@ export default function MapScreen( {navigation} ) {
       try {
         if (routeInfo.steps.length) {
             let [ nodes, startNodeID, destinationNodeID ] = await buildGraph(routeInfo);
-            //console.log"===========after build graph is call=================");
-
-            //console.log"nodes after the graph is formed....");
-
-            nodes.forEach(node => {
-              //console.log"node.id");
-              //console.lognode.id);
-
-              //console.log"node.edges!");
-              //console.lognode.edges);
-            })
 
             let startNode = {
               id: startNodeID,
@@ -366,12 +355,6 @@ export default function MapScreen( {navigation} ) {
               id: destinationNodeID,
               edges: nodes.get(destinationNodeID).edges
             };
-
-            //console.log"start node!");
-            //console.logstartNodeID);
-
-            //console.log"destination node!");
-            //console.logdestinationNodeID);
     
             let safestRoute = aStar(startNode, destinationNode, nodes, preferences);
 
@@ -693,7 +676,7 @@ export default function MapScreen( {navigation} ) {
 
           <Pressable 
             onPress={ () => {
-              navigation.navigate("FeedbackPage")
+              navigation.navigate("FeedbackPage", coords)
             }}
             style = {styles.routeButton}> 
 
