@@ -4,17 +4,14 @@ import axios from 'axios';
 
 export default function ResponsePage({ navigation, route }) {
 
-    const today = new Date().toISOString().split('T')[0];
+ 
+    console.log(route.params.coordinates);
+    // const today = new Date().toISOString().split('T')[0];
 
-    const [additionalInfo, setAdditionalInfo] = React.useState({
-        coordinates: JSON.stringify(route.params), // You'll need to obtain or set these values
-        date: today // Format: YYYY-MM-DD or however your backend expects it
-    });
-
-    const [feedback, setFeedback] = React.useState("");
-
-    
-    let [savedInput, setSavedInput] = React.useState('');
+    // const [additionalInfo, setAdditionalInfo] = React.useState({
+    //     coordinates: JSON.stringify(route.params), // You'll need to obtain or set these values
+    //     date: today // Format: YYYY-MM-DD or however your backend expects it
+    // });
     
     // Local variable to temporarily hold the TextInput value
     let [tempInput, setTempInput] = React.useState(''); 
@@ -29,17 +26,13 @@ export default function ResponsePage({ navigation, route }) {
     const handleFeedback = () => {
         const url = "http://172.25.88.245:3000/response";
         console.log("trying server.");
-        const feedbackInfo = {
-          ...additionalInfo, // Spreads the coordinates and date
+        const responseInfo = {
+          coordinates: route.params.coordinates, // Spreads the coordinates and date
+          date: route.params.date,
           response: tempInput // adds the reponse from text input.
         };
-        console.log("this is temp input")
-        console.log(tempInput);
-        console.log(feedbackInfo);
-        console.log("trying to save response");
-        console.log(feedbackInfo);
         axios
-          .post(url, feedbackInfo)
+          .post(url, responseInfo)
           .then((response) => {
               const result = response.data;
               const {status, data} = result;

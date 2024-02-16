@@ -30,7 +30,7 @@ export default function FeedbackPage({ navigation, route }) {
           } else {
             // not sure if we need to pass data.
             console.log("trying to navigate");
-            navigation.navigate("ResponsePage", route);
+            navigation.navigate("ResponsePage", additionalInfo);
           }
         })
       .catch(error => {
