@@ -1,28 +1,89 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import axios from 'axios';
 
-export default function SignUp({ navigation }) {
+export default function ResponsePage({ navigation, route }) {
+
+    const today = new Date().toISOString().split('T')[0];
+
+    const [additionalInfo, setAdditionalInfo] = React.useState({
+        coordinates: JSON.stringify(route.params), // You'll need to obtain or set these values
+        date: today // Format: YYYY-MM-DD or however your backend expects it
+    });
+
+    const [feedback, setFeedback] = React.useState("");
+
+    
+    let [savedInput, setSavedInput] = React.useState('');
+    
+    // Local variable to temporarily hold the TextInput value
+    let [tempInput, setTempInput] = React.useState(''); 
+
+    // // Function to handle the button press
+    // const handleSaveInput = () => {
+      
+    //   setSavedInput(tempInput);
+    // };
+  
+
+    const handleFeedback = () => {
+        const url = "http://172.25.88.245:3000/response";
+        console.log("trying server.");
+        const feedbackInfo = {
+          ...additionalInfo, // Spreads the coordinates and date
+          response: tempInput // adds the reponse from text input.
+        };
+        console.log("this is temp input")
+        console.log(tempInput);
+        console.log(feedbackInfo);
+        console.log("trying to save response");
+        console.log(feedbackInfo);
+        axios
+          .post(url, feedbackInfo)
+          .then((response) => {
+              const result = response.data;
+              const {status, data} = result;
+              if (status !== "SUCCESS") {
+                // set some error message...
+                console.log("Unsuccessful!");
+              } else {
+                // not sure if we need to pass data.
+                navigation.navigate("Map");
+              }
+            })
+          .catch(error => {
+            console.log("There is an error1");
+          console.log(error);
+        })
+      }
 
     const DismissKeyboardView = ({ children }) => (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             {children}
         </TouchableWithoutFeedback>
     );
-  
+
   return (
-    <DismissKeyboardView>
+   
     <View style={styles.background}>
       <View style={styles.top_container}>
-      
       </View>
-      <View style={styles.bottom_container}>
-        <View style={styles.title_container}>
-          <Text style={styles.signup_title}> Route Feedback</Text>
-        </View>
 
-        <View style = {styles.subtitle_container}>
-            <Text style={styles.subtitle}>If you have any additional comments or feedback about the route, then write them in the box below.</Text>
-        </View>
+      
+      <View style={styles.bottom_container}>
+        <DismissKeyboardView>
+          <View style={styles.title_container}>
+            <Text style={styles.signup_title}> Route Feedback</Text>
+          </View>
+        </DismissKeyboardView>
+
+        <DismissKeyboardView>
+          <View style = {styles.subtitle_container}>
+              <Text style={styles.subtitle}>If you have any additional comments or feedback about the route, then write them in the box below.</Text>
+          </View>
+        </DismissKeyboardView>
+
+        
         
         <View style={styles.input_container}>
            <TextInput 
@@ -30,13 +91,14 @@ export default function SignUp({ navigation }) {
             placeholder='Enter more feedback here...'
             keyboardType='ascii-capable'
             multiline
+            onChangeText={newText => setTempInput(newText) }
             />  
         </View>
 
         <View style={styles.button_container}>
           <Pressable 
             style={styles.button}
-            onPress={() => navigation.navigate("Map")}>
+            onPress={handleFeedback}>
             <Text style={styles.buttonText}>Return to Map</Text>
           </Pressable>
         </View>
@@ -45,7 +107,7 @@ export default function SignUp({ navigation }) {
         </View>
       </View>
     </View>
-    </DismissKeyboardView>
+    
   );
 }
 

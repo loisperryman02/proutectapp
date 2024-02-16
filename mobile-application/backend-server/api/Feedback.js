@@ -44,19 +44,22 @@ router.post('/feedback', (req, res) => {
 
 // Route writen response feedback endpoint
 router.post('/response', (req, res) => {
-    let {id, coordinates, response, date} = req.body;
-    id = id.trim();
+    let {coordinates, date, response} = req.body;
+    console.log(response);
     coordinates = coordinates.trim();
-    response = response.trim();
     date = date.trim();
+    response = response.trim();
 
+    console.log(response);
+    
     // Creates a new response object. 
     const newResponse  = new Response({
-        id,
         coordinates,
-        response, 
-        date
+        date,
+        response
     });
+
+   console.log(newResponse);
 
     newResponse.save().then(result => {
         res.json({

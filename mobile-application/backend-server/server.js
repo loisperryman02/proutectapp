@@ -17,7 +17,11 @@ app.use(cors());
 
 app.use(FeedbackRouter);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`server running on port ${port}`);
 });
+
+server.setTimeout(5000);
+
+
 

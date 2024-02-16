@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, Pressable, TouchableOpacity } from 'react-native';
-
 import axios from 'axios';
 
 export default function FeedbackPage({ navigation, route }) {
@@ -13,7 +12,7 @@ export default function FeedbackPage({ navigation, route }) {
   });
 
   const handleFeedback = () => {
-    const url = "http://10.0.0.142:3000/feedback";
+    const url = "http://172.25.88.245:3000/feedback";
     console.log("trying server.");
     const feedbackInfo = {
       ...additionalInfo, // Spreads the id, coordinates, and date
@@ -21,7 +20,7 @@ export default function FeedbackPage({ navigation, route }) {
     };
     console.log(feedbackInfo);
     axios
-      .post(url, feedbackInfo)
+      .post(url, feedbackInfo, {timeout: 30000})
       .then((response) => {
           const result = response.data;
           const {status, data} = result;
@@ -30,12 +29,13 @@ export default function FeedbackPage({ navigation, route }) {
             console.log("Unsuccessful!");
           } else {
             // not sure if we need to pass data.
-            navigation.navigate("ResponsePage");
+            console.log("trying to navigate");
+            navigation.navigate("ResponsePage", route);
           }
         })
       .catch(error => {
-        console.log("There is an error1");
-      console.log(error);
+        console.log("There is an error");
+        console.log(error);
     })
   }
 
