@@ -3,26 +3,10 @@ import { StyleSheet, View, Text, Pressable, TextInput, Keyboard, TouchableWithou
 import axios from 'axios';
 
 export default function ResponsePage({ navigation, route }) {
-
- 
-    console.log(route.params.coordinates);
-    // const today = new Date().toISOString().split('T')[0];
-
-    // const [additionalInfo, setAdditionalInfo] = React.useState({
-    //     coordinates: JSON.stringify(route.params), // You'll need to obtain or set these values
-    //     date: today // Format: YYYY-MM-DD or however your backend expects it
-    // });
     
-    // Local variable to temporarily hold the TextInput value
     let [tempInput, setTempInput] = React.useState(''); 
 
-    // // Function to handle the button press
-    // const handleSaveInput = () => {
-      
-    //   setSavedInput(tempInput);
-    // };
-  
-
+    // note: IP address changes. 
     const handleFeedback = () => {
         const url = "http://172.25.88.245:3000/response";
         console.log("trying server.");

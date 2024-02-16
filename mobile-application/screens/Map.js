@@ -674,17 +674,20 @@ export default function MapScreen( {navigation} ) {
               
         ) : startJourney ? (
 
+          <View style = {styles.finishedJourneyContainer}>
           <Pressable 
             onPress={ () => {
               navigation.navigate("FeedbackPage", coords)
             }}
-            style = {styles.routeButton}> 
+            style = {styles.finishedJourney}> 
 
             <Text style={styles.buttonText}>
               Finished Journey
             </Text>          
             
           </Pressable>
+
+          </View>
 
 
         ) : !startJourney && !isPressed && (
@@ -912,6 +915,16 @@ const styles = StyleSheet.create({
     width: "60%",
     height: "50%"
   },
+  finishedJourney: {
+    alignItems: "center",
+    backgroundColor: '#5EDD9D',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    width: "60%",
+    height: "50%",
+    marginBottom: "10%"
+  },
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
@@ -922,5 +935,8 @@ const styles = StyleSheet.create({
     color: "#013B1E",
     fontWeight: "bold",
     fontSize: 20
+  },
+  finishedJourneyContainer: {
+    alignItems: "center"
   }
 })
