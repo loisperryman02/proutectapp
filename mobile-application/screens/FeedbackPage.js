@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export default function FeedbackPage({ navigation, route }) {
   
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString();
 
   const [additionalInfo, setAdditionalInfo] = React.useState({
     coordinates: JSON.stringify(route.params), // You'll need to obtain or set these values
@@ -12,7 +12,7 @@ export default function FeedbackPage({ navigation, route }) {
   });
 
   const handleFeedback = () => {
-    const url = "http://172.25.88.245:3000/feedback";
+    const url = "http://192.168.4.219:3000/feedback";
     console.log("trying server.");
     const feedbackInfo = {
       ...additionalInfo, // Spreads the id, coordinates, and date

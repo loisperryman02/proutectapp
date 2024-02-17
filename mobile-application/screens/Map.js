@@ -21,6 +21,9 @@ export default function MapScreen( {navigation} ) {
   const [ busyChecked, setBusyChecked ] = React.useState(false);
   const [ safeChecked, setSafeChecked ] = React.useState(false);
 
+  const [ safeRouteChecked, setSafeRouteChecked ] = React.useState(false);
+  const [ googleRouteChecked, setGoogleRouteChecked ] = React.useState(false);
+
   const [ route, setRoute ] = React.useState(false);
   const [ startJourney, setStartJourney ] = React.useState(false);
   const [ feedback, getFeedback ] = React.useState(false);
@@ -674,7 +677,39 @@ export default function MapScreen( {navigation} ) {
               
         ) : startJourney ? (
 
+          <>
+    
+          <View style = {styles.checkRouteContainer}>
+
+          <Text style = {styles.routeCheckText}>
+             The pink route is the app suggested route, while the blue route is a route suggested by Google Maps.
+             Select which route you are going to take:
+          </Text>
+
+          <View style = {styles.routeCheckBoxes}>
+
+          
+                <CheckBox
+                  title="Pink"
+                  checked={safeRouteChecked}
+                  onPress={() => {
+                    setSafeRouteChecked(!safeRouteChecked);
+                  }}
+                />
+                <CheckBox
+                  title="Blue"
+                  checked={googleRouteChecked}
+                  onPress={
+                    () => {
+                      setGoogleRouteChecked(!googleRouteChecked);
+                  }}
+                />
+          </View>
+
+              </View>
+
           <View style = {styles.finishedJourneyContainer}>
+
           <Pressable 
             onPress={ () => {
               navigation.navigate("FeedbackPage", coords)
@@ -688,6 +723,7 @@ export default function MapScreen( {navigation} ) {
           </Pressable>
 
           </View>
+          </>
 
 
         ) : !startJourney && !isPressed && (
@@ -727,7 +763,7 @@ const styles = StyleSheet.create({
     height: '10%'
   },
   navigationMap: {
-    height: '80%'
+    height: '60%'
   },
   searchContainer: {
     position: "absolute",
@@ -765,7 +801,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   navigationContainer: {
-    height: '20%'
+    height: '40%',
+    flexDirection: 'column'
   },
   searchBarContainer: {
     height: '50%',
@@ -918,12 +955,12 @@ const styles = StyleSheet.create({
   finishedJourney: {
     alignItems: "center",
     backgroundColor: '#5EDD9D',
-    paddingVertical: 10,
     paddingHorizontal: 20,
+    paddingVertical: 6,
     borderRadius: 10,
     width: "60%",
     height: "50%",
-    marginBottom: "10%"
+    marginTop: "3%"
   },
   buttonText: {
     color: "#fff",
@@ -937,6 +974,23 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   finishedJourneyContainer: {
-    alignItems: "center"
+    alignItems: "center",
+    flex: 0.3
+  },
+  checkRouteContainer: {
+    flex: 0.7,
+    width: "100%",
+    alignItems: "center",
+    marginTop: "3%"
+  },
+  routeCheckBoxes: {
+    width: "70%",
+    marginTop: "2%"
+  },
+  routeCheckText: {
+    width: "80%",
+    color: "#013B1E",
+    fontWeight: "bold",
+    fontSize: 15
   }
 })
