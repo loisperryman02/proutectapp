@@ -1,0 +1,229 @@
+﻿Feedback,Sentiment
+"""The new lighting installed along the riverside walkway makes evening strolls feel much safer. The area is well-lit and feels secure.""",Positive
+"""The parking area next to the metro station is quite intimidating at night due to the lack of proper lighting and surveillance.""",Negative
+"""The community park has become a no-go area after dusk. It's poorly lit and there's hardly any patrol making rounds.""",Negative
+"""I was pleasantly surprised by how safe I felt walking through the downtown area at night, thanks to the busy streets and visible police presence.""",Positive
+"""Crossing the bridge at night is a terrifying experience. The lights are often out, and the pathway is isolated.""",Negative
+"""The recent addition of emergency call boxes along the jogging path has made it a lot safer for evening workouts. It's a thoughtful touch that adds to the sense of security.""",Positive
+"""Avoid the alley behind the grocery store; it's not only dark but also frequently visited by suspicious groups.""",Negative
+"""The main square is a great example of a safe public space, with its open design, ample lighting, and regular patrols.""",Positive
+"""The underpass linking the mall to the residential area feels unsafe. It's dimly lit and the echo makes it hard to hear if someone is approaching.""",Negative
+"""Our neighborhood installed LED streetlights last year, and it has transformed night walks. The area is bright and welcoming, making it feel much safer.""",Positive
+"""The bike lane along the river is exceptionally well-maintained and lit, making late-night rides feel safe and enjoyable.""",Positive
+"""The small park by the train station becomes quite desolate after dark; the lack of lighting and security makes it feel risky.""",Negative
+"""The pedestrian bridge over the highway is a model of safety, with clear signage, ample lighting, and emergency phones available.""",Positive
+"""The construction site next to the apartment complex is poorly secured and lit, posing a danger to pedestrians walking by at night.""",Negative
+"""The outdoor shopping district is vibrant and safe at all hours, with security personnel visibly patrolling and helping keep the area secure.""",Positive
+"""The walkway through the industrial area lacks proper maintenance and lighting, making it a hotspot for unsavory activities after hours.""",Negative
+"""The city's efforts to improve safety in the downtown area are noticeable, with well-lit streets and frequent police patrols making a big difference.""",Positive
+"""The subway entrance is daunting at night due to the absence of adequate lighting and the presence of loiterers.""",Negative
+"""The newly renovated park is now a gem in our community, offering a safe place for families to enjoy, even after sunset.""",Positive
+"""The parking garage feels unsafe at night with several poorly lit levels and no visible security or surveillance.""",Negative
+"""The art district has become a beacon of safety and culture, with street art that brightens the area and attracts crowds at all times.""",Positive
+"""The shortcut through the woods is unnerving due to its isolation and the lack of cell service, not to mention the poor lighting.""",Negative
+"""The waterfront promenade is a delight to visit, featuring regular security patrols and emergency stations that ensure visitors' safety.""",Positive
+"""The alleyway connecting Main Street to the residential area is a concern for residents, due to its darkness and silence at night.""",Negative
+"""The city square has become a hub of activity, well-secured by CCTV cameras and regular police patrols, making it feel very safe.""",Positive
+"""The overpass linking the old market to the bus terminal is well-lit and monitored by security cameras, offering peace of mind during late-night commutes.""",Positive
+"""The secluded path behind the community center is often overlooked by patrols, making it a breeding ground for petty crimes after dark.""",Negative
+"""The local authorities have done a commendable job with the street lighting on Maple Avenue, turning it from a no-go zone to a safe passage at night.""",Positive
+"""The stairwell in the public parking structure is dimly lit and always reeks of smoke, making it feel unsafe and unclean.""",Negative
+"""The installation of blue light emergency phones along the campus walkways has significantly increased the feeling of safety among students.""",Positive
+"""The dog park, while popular during the day, becomes eerily quiet and dark after sunset, deterring pet owners from evening visits.""",Negative
+"""The recent upgrade to LED streetlights in the historic district not only highlights the area's beauty at night but also enhances safety for tourists and locals alike.""",Positive
+"""The underbridge walkway, despite being a shortcut, is avoided by many due to its reputation for being unsafe and poorly maintained.""",Negative
+"""The night market area is a testament to the community's effort to create a safe and vibrant nighttime economy, with ample lighting and security.""",Positive
+"""The footpath leading to the metro station is fraught with hazards at night, from uneven paving to sudden dips in lighting, creating a treacherous journey for commuters.""",Negative
+"""The lights in the park make it feel safe at night.""",Positive
+"""The back alley is too dark and feels dangerous.""",Negative
+"""Love how the main road is always busy and well-lit.""",Positive
+"""The parking lot is not safe at night, no lights.""",Negative
+"""The subway station is clean and feels secure because of the guards.""",Positive
+"""Walking past the construction site is scary, very quiet.""",Negative
+"""The neighborhood streets have security cameras, feels much safer.""",Positive
+"""The bridge at night is a no-go, feels too isolated.""",Negative
+"""The community center is great, well-lit and always people around.""",Positive
+"""The path through the woods is not recommended, very dark.""",Negative
+"""The shopping area is lively at night, good lighting.""",Positive
+"""The underground passage feels unsafe, needs more lights.""",Negative
+"""The park has emergency call points, which is reassuring.""",Positive
+"""The side street next to the bar is sketchy at night.""",Negative
+"""The waterfront area is fantastic at night, very secure.""",Positive
+"""Busy streets at night make me feel safe.""",Positive
+"""The lot behind the diner is too dark at night.""",Negative
+"""Police patrols in the area add to the feeling of safety.""",Positive
+"""The old bridge feels risky due to lack of lights.""",Negative
+"""The central plaza is great, full of life and secure.""",Positive
+"""Narrow alleys without lights are scary to pass through.""",Negative
+"""The park's new lighting system makes evening walks enjoyable.""",Positive
+"""Abandoned buildings make the street feel unsafe.""",Negative
+"""The presence of street performers at night is comforting.""",Positive
+"""Areas without CCTV feel less secure to me.""",Negative
+"""The riverside is beautiful and well-patrolled at night.""",Positive
+"""Lack of public presence makes the square feel deserted.""",Negative
+"""Well-lit jogging paths are why I love this neighborhood.""",Positive
+"""The underpass is dingy and often has loiterers.""",Negative
+"""The outdoor mall is vibrant and feels safe at all hours.""",Positive
+"""Dim streetlights on Main St. make it a hotspot for muggings.""",Negative
+"""The new pedestrian zone is always lively and feels very safe.""",Positive
+"""The bike trail is too secluded, making it feel dangerous.""",Negative
+"""The city's night market is a safe place to hang out after dark.""",Positive
+"""The stairway leading to the metro is poorly lit and eerie.""",Negative
+"""The new park benches have security cameras, adding safety.""",Positive
+"""The side roads are too quiet at night, making them unnerving.""",Negative
+"""The area around the library is well-lit, making it a safe spot.""",Positive
+"""The tunnel connecting the districts is dark and smells bad.""",Negative
+"""The open-air market is secure, with police always nearby.""",Positive
+"""The parking area near the docks feels isolated and risky.""",Negative
+"""The children's playground is brightly lit and always active.""",Positive
+"""The footbridge at night has no lights, feels very unsafe.""",Negative
+"""The newly opened cafÃ© extends the lively area into the night.""",Positive
+"""The bus stop lacks a shelter and is away from the main road.""",Negative
+"""The waterfront gets patrolled regularly, making it secure.""",Positive
+"""The alley next to the cinema is a magnet for shady activities.""",Negative
+"""The local gym's parking lot is well-lit and monitored.""",Positive
+"""The path leading to the park is overgrown and neglected.""",Negative
+"""The main square has a vibrant night life and is very safe.""",Positive
+"""The construction area is not fenced off, posing a danger.""",Negative
+"""The night buses are frequent, making late travel feel safer.""",Positive
+"""The old mill area is avoided by locals due to its bad reputation.""",Negative
+"""The city garden is a popular spot, well-maintained and safe.""",Positive
+"""The dim lighting on College Street makes it a target for theft.""",Negative
+"""The city center is bustling and has plenty of open cafes at night.""",Positive
+"""The new underpass is poorly designed; it's dark and not welcoming.""",Negative
+"""Street musicians in the pedestrian area make it feel alive and safe.""",Positive
+"""The small park by the station is unkempt and feels unsafe at night.""",Negative
+"""The waterfront has been renovated and now has great night lighting.""",Positive
+"""The shortcut through the alley is quick but feels risky after dark.""",Negative
+"""The area near the university is well-lit and patrolled, very safe for students.""",Positive
+"""The old warehouse district is deserted at night and a bit intimidating.""",Negative
+"""The local diner stays open late and the area is always lively and secure.""",Positive
+"""The parking behind the mall has no surveillance and is very dimly lit.""",Negative
+"""The night view at the bridge is stunning, with security always on patrol.""",Positive
+"""The back entrance of the shopping center is rarely lit, feels very dodgy.""",Negative
+"""The presence of food trucks in the square at night makes it a safe gathering spot.""",Positive
+"""The walking path next to the canal is too secluded for comfort after sunset.""",Negative
+"""The train station area has improved with new lights and active patrols.""",Positive
+"""The parking lot next to the cinema needs better lighting and security.""",Negative
+"""The festival in the city park brings everyone together, making it feel very secure.""",Positive
+"""The alleyways near the old mill are notorious for being unsafe at any time.""",Negative
+"""The newly installed pedestrian crossings have made the downtown area safer.""",Positive
+"""The area around the abandoned factory is a no-go zone due to safety concerns.""",Negative
+"""The community garden stays well-lit throughout the night, offering a safe haven.""",Positive
+"""The stretch of road behind the school is pitch dark at night, very intimidating.""",Negative
+"""The local coffee shop's outdoor seating is always lively, even late at night.""",Positive
+"""The underpass near the river is graffiti-ridden and lacks proper lighting.""",Negative
+"""The square has become a popular spot for night markets, well-secured and lit.""",Positive
+"""The small lane next to the bakery feels unsafe due to its narrowness and shadows.""",Negative
+"""The waterfront area is beautifully lit and patrolled, making it perfect for night walks.""",Positive
+"""The bus terminal area lacks visibility at night, making waiting for a bus uneasy.""",Negative
+"""The open mic nights at the central plaza create a warm and safe atmosphere.""",Positive
+"""The dimly lit paths in the botanical gardens make evening visits not advisable.""",Negative
+"""The art installations in the park make it a safe, engaging place at night.""",Positive
+"""Crossing the industrial area at night is risky with minimal street lighting.""",Negative
+"""The weekend night market is bustling, with plenty of lights and security.""",Positive
+"""The staircases in the public garage are poorly lit and feel very secluded.""",Negative
+"""The riverside walk at night is my favorite, feels safe with the new lights.""",Positive
+"""The area near the old docks is desolate after dark, not a safe place to be.""",Negative
+"""The main boulevard is vibrant at night thanks to the street performers.""",Positive
+"""The parking spaces behind the theater are dark and give off an unsafe vibe.""",Negative
+"""The city's efforts to light up the walking paths have made a huge difference.""",Positive
+"""The alley behind the restaurants is cluttered and poorly lit, avoiding it.""",Negative
+"""The public squares are now filled with life after sunset, thanks to local events.""",Positive
+"""The footpath through the forest park is too dark and quiet, not recommended.""",Negative
+"""The outdoor cinema nights in the park are a safe and fun community event.""",Positive
+"""The multi-story car park lacks security cameras on several floors, feels unsafe.""",Negative
+"""The renovated square with its fountains and lights has become a night-time favorite.""",Positive
+"""The walkway under the bridge is a hotspot for graffiti and lacks adequate lighting.""",Negative
+"""The night guards at the museum make the whole area feel more secure and watched.""",Positive
+"""The secluded benches in the park are hidden away and not safe at night.""",Negative
+"""The light festival downtown brings everyone out and makes the city feel alive.""",Positive
+"""The old factory area is fenced off but still attracts questionable activity at night.""",Negative
+"""The plaza is well-equipped with emergency call stations, making it feel secure.""",Positive
+"""The narrow path next to the canal is completely unlit, posing a safety risk.""",Negative
+"""Security patrols in the residential areas at night have improved safety.""",Positive
+"""The bike racks near the subway station are in a dark spot, worrying for cyclists.""",Negative
+"""The installation of bright LED lights along the jogging path is a welcome change.""",Positive
+"""The derelict building at the end of the street is a magnet for unsavory characters.""",Negative
+"""The community's effort to organize night patrols has made our streets safer.""",Positive
+"""The lack of surveillance cameras in the parking areas is a glaring oversight.""",Negative
+"""The newly opened / convenience store adds a sense of security to the neighborhood.""",Positive
+"""Walking through the tunnel between the parks feels unsafe due to poor maintenance.""",Negative
+"""The lit walkways in the garden district encourage evening walks and socializing.""",Positive
+"""The side entrance of the library is poorly illuminated, making it a no-go area at night.""",Negative
+"""The presence of friendly neighborhood watch volunteers at night boosts community spirit.""",Positive
+"""The parking deck's stairwells have broken lights, creating dark spots that feel risky.""",Negative
+"""The seasonal decorations and lighting in the main square create a magical night-time atmosphere.""",Positive
+"""The lot next to the old warehouse is often used for illegal dumping, making it unsafe.""",Negative
+"""The increase in street festivals has brought more life and safety to the downtown area.""",Positive
+"""The underused parking lot behind the grocery store is a concern for vehicle break-ins.""",Negative
+"""The waterfront promenade's new design includes ample lighting and seating, inviting evening visitors.""",Positive
+"""The wooded area by the school is not well-lit, discouraging use after dusk.""",Negative
+"""The annual night fair brings energy and light to the downtown, enhancing safety.""",Positive
+"""The dimly lit underpass near the stadium feels like a trap at night, very unsafe.""",Negative
+"""Having more cafes open late has made the neighborhood more lively and secure.""",Positive
+"""The parking lot's exit is hidden and poorly lit, making it scary to use after hours.""",Negative
+"""The public art installations are well-lit, adding charm and security to the area.""",Positive
+"""The bus stops lack proper lighting, making them unwelcoming at night.""",Negative
+"""The new skate park is a hit, filled with kids and families until late, very safe.""",Positive
+"""The shortcut through the abandoned lot is risky, especially due to its isolation.""",Negative
+"""The installation of public Wi-Fi in parks has encouraged more people to visit after dark.""",Positive
+"""The narrow bridge connecting the neighborhoods lacks any form of surveillance.""",Negative
+"""Local artists' murals have transformed the once-dull alley into a vibrant walkway.""",Positive
+"""The old playground is now avoided due to its state of disrepair and lack of lighting.""",Negative
+"""The seasonal night markets in the city center are well-organized and feel incredibly safe.""",Positive
+"""The walkway along the river is beautiful but becomes eerily quiet and dark too early.""",Negative
+"""The addition of a community center has revitalized the neighborhood, making it safer.""",Positive
+"""The lot next to the library is a known spot for vandalism, especially at night.""",Negative
+"""The city's main avenue is bustling with night life, thanks to the extended shop hours.""",Positive
+"""The construction site is not secured at night, leading to frequent trespassing.""",Negative
+"""The newly paved walking path is scenic and equipped with emergency phones, very reassuring.""",Positive
+"""The pedestrian tunnel linking the parks is notorious for poor maintenance and graffiti.""",Negative
+"""The square's open mic nights offer a safe and lively environment for everyone.""",Positive
+"""The newly constructed bridge lacks pedestrian lights, making it a concern at night.""",Negative
+"""Outdoor seating at cafes along Main Street has increased foot traffic and safety.""",Positive
+"""The parking area by the riverfront is too secluded and lacks proper security measures.""",Negative
+"""The annual cultural festival lights up the downtown area, creating a safe, festive atmosphere.""",Positive
+"""The pathway behind the community hall is unlit and has become a hotspot for petty crimes.""",Negative
+"""The presence of street art along the alleyways has brightened and secured the area.""",Positive
+"""The disused lot next to the supermarket is poorly lit and attracts unsavory activities at night.""",Negative
+"""The local park's renovation includes safety features like better lighting and security cameras.""",Positive
+"""The stairway leading to the plaza is in disrepair and poorly lit, posing a risk.""",Negative
+"""The waterfront's night scene is vibrant, with live music and patrolled areas.""",Positive
+"""The alley next to the high school is notorious for being unsafe after dark.""",Negative
+"""The addition of a dog park has made the neighborhood more lively and secure.""",Positive
+"""The underground parking at the mall feels claustrophobic and lacks surveillance.""",Negative
+"""The city's effort to install more public benches has made streets more welcoming.""",Positive
+"""The crosswalks in the business district are not well-marked, leading to safety concerns.""",Negative
+"""Nighttime farmers' markets in the city center are a hit, offering both safety and local produce.""",Positive
+"""The bike lane ending abruptly on Elm Street is dangerous, especially at night.""",Negative
+"""The art gallery's late hours bring a cultured crowd and ensure the area stays safe.""",Positive
+"""The dim lighting in the subway's entrance creates an unwelcoming atmosphere for commuters.""",Negative
+"""The renovated alleyway with new murals and lights has become a popular shortcut, feeling much safer now.   """,Positive
+"""Late-night bus services have improved, but the stops still need better lighting and security.""",Negative
+"""The installation of speed bumps on residential streets has slowed traffic, making the neighborhood safer for pedestrians.""",Positive
+"""Despite the park's recent makeover, the lack of regular patrols leaves some areas feeling unsafe at night.""",Negative
+"""The community's initiative to start a neighborhood watch program has significantly improved safety feelings among residents.""",Positive
+"""The introduction of bike-sharing stations has made the downtown area more accessible, though some stations in remote areas feel less secure.""",Negative
+"""The local council's decision to close certain streets to traffic at night has been controversial, with some arguing it reduces safety by limiting access.""",Negative
+"""The new sports complex is well-equipped and secure, offering a safe environment for evening activities.""",Positive
+"""Some subway stations have introduced art exhibitions, creating a more inviting and perceived safe atmosphere.""",Positive
+"""The construction of a new pedestrian bridge over the highway has been delayed, leaving the temporary path feeling unsafe and inconvenient.""",Negative
+"""Areas around the university have seen an increase in security measures, but some external parts still suffer from poor lighting and infrequent patrols.""",Negative
+"""The opening of a 24-hour convenience store in the neighborhood has been a positive change, providing a sense of activity and safety at all hours.""",Positive
+"""A recent initiative to plant more trees and create green spaces has beautified the city but has also created poorly lit areas that concern some citizens.""",Negative
+"""The waterfront has been revitalized with walking paths and cafes, though some sections remain isolated and raise safety concerns after dark.""",Negative
+"""Efforts to clean up the industrial district have been successful during the day, but at night, the area still feels deserted and intimidating.""",Negative
+"""The city's bike lanes are a great addition, but the lack of lighting along certain stretches makes night riding feel risky.""",Negative
+"""The old town's charm attracts tourists, but the narrow, crowded streets can feel overwhelming and less secure at peak times.""",Negative
+"""Public libraries extending their hours have made the areas around them feel safer and more lively in the evenings.""",Positive
+"""The annual summer night festival boosts the local economy and safety by bringing in additional lighting and security.""",Positive
+"""Despite improvements in street lighting, the maze of back alleys in the historic district remains daunting for visitors and locals alike.""",Negative
+" ""Walking through Central Park at night felt surprisingly safe, thanks to the well-lit paths and visible security presence.""",Positive
+"""The alleyway behind the library gives off a sketchy vibe after sunset because of the poor lighting and lack of foot traffic.""",Negative
+"""The new pedestrian zone in downtown is fantastic! It's always crowded, and the bright street art makes it feel welcoming and safe.""",Positive
+"""I avoid the underpass near the train station. It's dark and isolated, making it feel really unsafe at any time of day.""",Negative
+" ""The river walk is my favorite route for evening jogs because of the consistent patrol by local police and the community watch signs posted around.""",Positive
+"""The parking lot next to the old warehouse is a no-go zone for me. It's not well-lit, and there have been several reports of theft.""",Negative
+"""The main street is safe to walk at night; it's well-lit, and there are always people around. Plus, the local shops stay open late.""",Positive
+"""The stretch of road between the park and the subway station feels unsafe due to the lack of streetlights and the overgrown bushes along the sidewalk.""",Negative

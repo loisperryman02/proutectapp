@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Constants from 'expo-constants';
 import MapViewDirections from 'react-native-maps-directions';
+import polyline from '@mapbox/polyline';
 import RenderHtml from 'react-native-render-html';
 import { findNearestSafetyScore, daytimeKDTree, eveningKDTree, findNearestPoints } from '../data_structures/KDTree.js';
 import { aStar } from '../data_structures/aStar';
@@ -26,9 +27,10 @@ export default function MapScreen( {navigation} ) {
 
   const [ route, setRoute ] = React.useState(false);
   const [ startJourney, setStartJourney ] = React.useState(false);
-  const [ feedback, getFeedback ] = React.useState(false);
-  const [ userInput, setUserInput ] = React.useState('');
+ 
   const [ coords, setCoordinates ] = React.useState();
+  const [ googleCoords, setGoogleCoords ] = React.useState();
+  const [ chosenCoords, setChosenCoordinates ] = React.useState();
 
   const [preferences, setPreferences] = React.useState(new Set());
 
@@ -96,7 +98,13 @@ export default function MapScreen( {navigation} ) {
     }
   }, [start, destination]);
 
-
+  // Decoding example
+  const decodePolyline = (points) => {
+    return polyline.decode(points).map(point => ({
+      latitude: point[0],
+      longitude: point[1]
+    }));
+  };
 
   const getDirections = async (startLoc, destinationLoc) => {
     try {
@@ -105,9 +113,13 @@ export default function MapScreen( {navigation} ) {
       );
       const json = await response.json();
       if (json.routes.length) {
+        const points = json.routes[0].overview_polyline.points;
+        const decodedPoints = decodePolyline(points); // You need a function to decode this
+        setGoogleCoords(decodedPoints);
         setRouteInfo({
           distance: json.routes[0].legs[0].distance.text,
           duration: json.routes[0].legs[0].duration.text,
+          coordinates: decodedPoints,
           steps: json.routes[0].legs[0].steps.map(step => ({
             data: step,
             instructions: step.html_instructions,
@@ -169,6 +181,9 @@ export default function MapScreen( {navigation} ) {
     let nodes = new Map();
     const edges = [];
     const kdtree = getCurrentKDTree();
+
+    console.log("finding coordinates");
+    console.log(routeInfo.coordinates);
 
     // Sets start node and end node of original route - coordinates from route not the actual coordinates of places 
     let originalStartNodeID = `${routeInfo.steps[0].data.start_location.lat},${routeInfo.steps[0].data.start_location.lng}`;
@@ -683,6 +698,7 @@ export default function MapScreen( {navigation} ) {
 
           <Text style = {styles.routeCheckText}>
              The pink route is the app suggested route, while the blue route is a route suggested by Google Maps.
+             If you can only see one route, then both suggest the same route.  
              Select which route you are going to take:
           </Text>
 
@@ -694,6 +710,10 @@ export default function MapScreen( {navigation} ) {
                   checked={safeRouteChecked}
                   onPress={() => {
                     setSafeRouteChecked(!safeRouteChecked);
+                    setGoogleRouteChecked(false);
+                    setChosenCoordinates();
+                    setChosenCoordinates(coords);
+                    console.log(chosenCoords);
                   }}
                 />
                 <CheckBox
@@ -702,6 +722,10 @@ export default function MapScreen( {navigation} ) {
                   onPress={
                     () => {
                       setGoogleRouteChecked(!googleRouteChecked);
+                      setSafeRouteChecked(false);
+                      setChosenCoordinates();
+                      setChosenCoordinates(googleCoords);
+                      console.log(chosenCoords);
                   }}
                 />
           </View>
@@ -712,7 +736,7 @@ export default function MapScreen( {navigation} ) {
 
           <Pressable 
             onPress={ () => {
-              navigation.navigate("FeedbackPage", coords)
+              navigation.navigate("FeedbackPage", chosenCoords)
             }}
             style = {styles.finishedJourney}> 
 

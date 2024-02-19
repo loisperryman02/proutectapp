@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@babel/traverse": "^7.23.9",
+    "@mapbox/polyline": "^1.2.1",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
     "axios": "^1.6.7",
