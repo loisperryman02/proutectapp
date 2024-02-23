@@ -61,7 +61,7 @@ export default function MapScreen( {navigation} ) {
   };
   
   const mapRef = React.useRef(null);
-  const GOOGLE_API_KEY = 'AIzaSyBwPXdbTdxT8cMhVjPxHuvJ3KCaFrF8-Xw';
+  const GOOGLE_API_KEY = 'AIzaSyANbMSuLyZUXaTxfw35cB0WF7Is43fMmyc';
   const { width } = Dimensions.get('window');
 
   // Fetch nearby places function, gets nearest places 
@@ -611,6 +611,7 @@ export default function MapScreen( {navigation} ) {
                 onPress = {() => {
                   handleExpansion();
                   setStartJourney(true);
+                  // setRoute(true);
                   }} 
                   style={styles.routeButton}
                 >
@@ -693,20 +694,23 @@ export default function MapScreen( {navigation} ) {
         ) : startJourney ? (
 
           <>
+
+          <View style = {styles.checkRouteTitleContainer}>
+              
+              <Text style = {styles.routeCheckText}>
+                Select preferred route: 
+              </Text>
+
+          </View>
     
           <View style = {styles.checkRouteContainer}>
-
-          <Text style = {styles.routeCheckText}>
-             The pink route is the app suggested route, while the blue route is a route suggested by Google Maps.
-             If you can only see one route, then both suggest the same route.  
-             Select which route you are going to take:
-          </Text>
+          
 
           <View style = {styles.routeCheckBoxes}>
 
           
                 <CheckBox
-                  title="Pink"
+                  title="Pink Route - Suggested by Proutect"
                   checked={safeRouteChecked}
                   onPress={() => {
                     setSafeRouteChecked(!safeRouteChecked);
@@ -717,7 +721,7 @@ export default function MapScreen( {navigation} ) {
                   }}
                 />
                 <CheckBox
-                  title="Blue"
+                  title="Blue Route - Suggested by Google Maps" 
                   checked={googleRouteChecked}
                   onPress={
                     () => {
@@ -741,7 +745,7 @@ export default function MapScreen( {navigation} ) {
             style = {styles.finishedJourney}> 
 
             <Text style={styles.buttonText}>
-              Finished Journey
+              FINISHED JOURNEY
             </Text>          
             
           </Pressable>
@@ -822,7 +826,7 @@ const styles = StyleSheet.create({
   }, 
   expandedBottomContainer: {
     height: '90%',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   navigationContainer: {
     height: '40%',
@@ -918,7 +922,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 1,
     height: 50,
-    marginBottom: "27%"
+    marginBottom: "28%"
   },
   arrowIcon: {
     color: "white",
@@ -927,7 +931,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     position: 'absolute',
-    top: -40,  // Adjust the top positioning as needed
+    top: -38,  // Adjust the top positioning as needed
     backgroundColor: 'transparent',
     alignItems: 'center',
     width: '100%'
@@ -1002,19 +1006,27 @@ const styles = StyleSheet.create({
     flex: 0.3
   },
   checkRouteContainer: {
-    flex: 0.7,
+    flex: 0.5,
     width: "100%",
-    alignItems: "center",
-    marginTop: "3%"
+    alignItems: "center"
+  },
+  checkRouteTitleContainer: {
+    flex: 0.2,
+    width: "80%",
+    borderBottomColor: "#013B1E",
+    borderBottomWidth: 2,
+    marginLeft: "10%"
   },
   routeCheckBoxes: {
     width: "70%",
-    marginTop: "2%"
+    marginTop: "3%"
   },
   routeCheckText: {
-    width: "80%",
+    width: "100%",
     color: "#013B1E",
     fontWeight: "bold",
-    fontSize: 15
+    fontSize: 20,
+    textAlign: "center",
+    paddingTop: "8%"
   }
 })
