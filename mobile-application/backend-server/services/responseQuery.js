@@ -43,6 +43,8 @@ async function groupByCoordinatesAndAggregate() {
       {
         $group: {
           _id: { latitude: "$latitude", longitude: "$longitude" }, // Group by both latitude and longitude
+          responseList: { $push: "$response" },
+          dateList: { $push: "$date" }
         }
       },
       {
@@ -56,9 +58,10 @@ async function groupByCoordinatesAndAggregate() {
   mongoose.disconnect();
 }
 
+// transformResponses()
 groupByCoordinatesAndAggregate();
 
   
 //   // Call the function
-//   transformResponses();
+// transformResponses();
   
