@@ -1,6 +1,6 @@
 import * as React from 'react';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { Text, StyleSheet, View, Dimensions, Button, TouchableOpacity, Pressable } from 'react-native';
+import { Text, StyleSheet, View, Dimensions, Button, TouchableOpacity, Pressable, KeyboardAvoidingView } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';

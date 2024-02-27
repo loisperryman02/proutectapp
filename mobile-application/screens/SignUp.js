@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Pressable, TextInput, Image } from 'react-native';
+import { StyleSheet, View, Text, Pressable, TextInput, Keyboard } from 'react-native';
 
 export default function SignUp({ navigation }) {
   const [username, onChangeUserName] = React.useState('');
@@ -7,13 +7,31 @@ export default function SignUp({ navigation }) {
   const [email, onChangeEmail] = React.useState('');
   const [password, onChangePassword] = React.useState('');
   const [passwordtwo, onChangePasswordTwo] = React.useState('');
+  const [keyboardVisible, setKeyboardVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true); // Keyboard is visible
+    });
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false); // Keyboard is hidden
+    });
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
+  
   return (
     <View style={styles.background}>
-      <View style={styles.top_container}>
+
+       <View style={!keyboardVisible ? styles.top_container : styles.top_container_sml }>
       
       </View>
-      <View style={styles.bottom_container}>
-        <View style={styles.title_container}>
+      <View style={!keyboardVisible ? styles.bottom_container : styles.bottom_container_exp }>
+      <View style={!keyboardVisible ? styles.title_container : styles.title_container_exp }>
           <Text style={styles.signup_title}> Sign up </Text>
         </View>
         
@@ -79,8 +97,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flex: 0.9
     },
+    bottom_container_exp: {
+        borderTopRightRadius: 100,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 0.95
+    },
     top_container: {
         flex: 0.1,
+        backgroundColor: '#013B1E'
+    },
+    top_container_sml: {
+        flex: 0.05,
         backgroundColor: '#013B1E'
     },
     background: {
@@ -128,6 +157,13 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         marginBottom: "5%",
         marginTop: "-20%"
+    },
+    title_container_exp: {
+        width:"100%",
+        alignItems:"center",
+        justifyContent:"center",
+        marginBottom: "5%",
+        marginTop: "-55%"
     },
     signup_title: {
         color: "#5EDD9D",
