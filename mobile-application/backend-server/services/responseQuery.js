@@ -59,7 +59,7 @@ async function groupByCoordinatesAndAggregate() {
 }
 
 // transformResponses()
-groupByCoordinatesAndAggregate();
+// groupByCoordinatesAndAggregate();
 
   
 //   // Call the function

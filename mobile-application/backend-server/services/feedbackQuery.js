@@ -86,7 +86,7 @@ async function joinCollectionsAndSaveResults() {
         }
       },
       {
-        $out: "joinedfeedback" // This will output the results into a new collection called "joinedFeedback"
+        $out: "joinedfeedback2" // This will output the results into a new collection called "joinedFeedback"
       }
     ]);
 
@@ -100,7 +100,7 @@ async function joinCollectionsAndSaveResults() {
 
 joinCollectionsAndSaveResults();
 
-  //transformData();
+// transformData();
 
-  // groupByCoordinatesAndAggregate();
+// groupByCoordinatesAndAggregate();
   

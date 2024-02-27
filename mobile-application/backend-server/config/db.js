@@ -1,5 +1,7 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
+// for running the application. 
+
+// require('dotenv').config();
+// const mongoose = require('mongoose');
 
 // mongoose
 //     .connect(process.env.MONGODB_URI)
@@ -8,7 +10,8 @@ const mongoose = require('mongoose');
 //     })
 //     .catch((err) => console.log(err));
 
-// config/db.js
+
+// config/db.js - for merging/joining databases. 
 const connectDB = async () => {
     const mongoose = require('mongoose');
     try {
