@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable, TextInput, Keyboard } from 'react-native';
+import axios from "axios";
 
 export default function SignUp({ navigation }) {
   const [username, onChangeUserName] = React.useState('');
@@ -8,6 +9,49 @@ export default function SignUp({ navigation }) {
   const [password, onChangePassword] = React.useState('');
   const [passwordtwo, onChangePasswordTwo] = React.useState('');
   const [keyboardVisible, setKeyboardVisible] = React.useState(false);
+
+  const handleSignUp = () => {
+    const url = "http://172.25.25.112:3000/signup";
+    let userDetails = {
+      name : name,
+      username: username,
+      password: password
+    };
+
+    console.log("user details:");
+    console.log(userDetails);
+    
+    axios
+        .post(url, userDetails)
+        .then((response) => {
+            console.log(response)
+          const result = response.data;
+          const {message, status, data} = result;
+
+          if (status!=="SUCCESS") {
+            // handleMessage(message, status);
+            console.log("Sign up successful");
+            // display login error - incorrect details
+          } else {
+            navigation.navigate("Home");
+          }
+        })
+        .catch(error => {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+              } else if (error.request) {
+                // The request was made but no response was received
+                console.log(error.request);
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
+              }
+      })
+  }
 
   React.useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -51,13 +95,6 @@ export default function SignUp({ navigation }) {
                 keyboardType="ascii-capable"
             />
             <TextInput
-                style={styles.input}
-                onChangeText={onChangeEmail}
-                value={email}
-                placeholder="Email"
-                keyboardType="email-address"
-            />
-            <TextInput
                 secureTextEntry={true}
                 style={styles.input}
                 onChangeText={onChangePassword}
@@ -77,7 +114,7 @@ export default function SignUp({ navigation }) {
         <View style={styles.button_container}>
           <Pressable 
             style={styles.button}
-            onPress={() => navigation.navigate("Home")}>
+            onPress={handleSignUp}>
             <Text style={styles.buttonText}>Register</Text>
           </Pressable>
         </View>
