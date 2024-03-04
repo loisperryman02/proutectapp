@@ -12,7 +12,7 @@ export default function FeedbackPage({ navigation, route }) {
   });
 
   const handleFeedback = () => {
-    const url = "http://172.25.25.112:3000/feedback";
+    const url = "http://172.25.44.121:3000/feedback";
     console.log("trying server.");
     const feedbackInfo = {
       ...additionalInfo, // Spreads the id, coordinates, and date
@@ -58,7 +58,7 @@ export default function FeedbackPage({ navigation, route }) {
     q1: { 1: 'Extremely unsafe', 5: 'Extremely safe' },
     q2: { 1: 'No street lights', 5: 'Many street lights' },
     q3: { 1: 'Extremely isolated', 5: 'Extremely crowded' },
-    q4: { 1: 'Not accessible', 5: 'Very accessible' },
+    q4: { 1: 'Not accessible', 5: 'Very accessible' }
   };
 
   // Function to update the rating for a question

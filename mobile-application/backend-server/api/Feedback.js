@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const Feedback = require('./../models/Feedback.js');
 const Response = require('./../models/Response.js');
 const User = require('../models/User.js');
+const Friend = require('../models/Friend.js');
 
 // Route feedback endpoint 
 router.post('/feedback', (req, res) => {
@@ -140,5 +141,46 @@ router.post("/signup", async (req, res) => {
 
 })
 
+router.post("/friend", async (req, res) => {
+    let { friend_username, username } = req.body;
+    friend_username = friend_username.trim();
+    username = username.trim();
+
+    let user = await User.findOne({ username: friend_username });
+    
+    if (!user) {
+        return res.status(400).json({ message: "User does not exist." });
+    }
+
+    if (username == friend_username) {
+        return res.status(400).json({ message: "Current user and requested user are the same." });
+    }
+
+    let friend = await Friend.findOne({ username: friend_username });
+    console.log("finding friend");
+    console.log(friend);
+
+    if (friend) {
+        // Checks that the current user has not already had a request from this user.
+        if (!friend.requests.includes(username)) {
+            friend.requests.push(username);
+            await friend.save();
+        } else {
+            console.log("You have already sent a request to this user.")
+        }
+    } else {
+        // If the user hasn't had any friend requests, make a new entry for Schema.
+        friend = new Friend({
+        username: friend_username,
+        friends: [],
+        requests: [username], // Initialize with the requester
+        updates: []
+        });
+        await friend.save();
+    }
+
+    res.status(200).json({ success: true, message: 'Friend request sent.' });
+
+})
 
 module.exports = router;

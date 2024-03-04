@@ -5,13 +5,12 @@ import axios from "axios";
 export default function SignUp({ navigation }) {
   const [username, onChangeUserName] = React.useState('');
   const [name, onChangeName] = React.useState('');
-  const [email, onChangeEmail] = React.useState('');
   const [password, onChangePassword] = React.useState('');
   const [passwordtwo, onChangePasswordTwo] = React.useState('');
   const [keyboardVisible, setKeyboardVisible] = React.useState(false);
 
   const handleSignUp = () => {
-    const url = "http://172.25.25.112:3000/signup";
+    const url = "http://192.168.4.15:3000/signup";
     let userDetails = {
       name : name,
       username: username,
@@ -24,17 +23,7 @@ export default function SignUp({ navigation }) {
     axios
         .post(url, userDetails)
         .then((response) => {
-            console.log(response)
-          const result = response.data;
-          const {message, status, data} = result;
-
-          if (status!=="SUCCESS") {
-            // handleMessage(message, status);
-            console.log("Sign up successful");
-            // display login error - incorrect details
-          } else {
-            navigation.navigate("Home");
-          }
+            navigation.navigate("Login");
         })
         .catch(error => {
             if (error.response) {

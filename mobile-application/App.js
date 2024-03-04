@@ -1,8 +1,10 @@
-import HomeScreen from "./screens/HomeScreen.js";
+import Login from "./screens/Login.js";
 import SignUp from "./screens/SignUp.js";
 import MapScreen from "./screens/Map.js";
 import FeedbackPage from "./screens/FeedbackPage";
 import ResponsePage from "./screens/ReponseScreen.js";
+import HomePage from "./screens/HomeScreen.js";
+import Friends from "./screens/Friends.js";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -14,8 +16,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen 
-          name="Home"
-          component={HomeScreen}
+          name="Login"
+          component={Login}
         />
         <Stack.Screen
           name="SignUp"
@@ -34,6 +36,16 @@ export default function App() {
         <Stack.Screen
           name="ResponsePage"
           component={ResponsePage}
+        />
+
+        <Stack.Screen
+          name="Home"
+          component={HomePage}
+        />
+
+        <Stack.Screen
+          name="Friends"
+          component={Friends}
         />
         
       </Stack.Navigator>
