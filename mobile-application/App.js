@@ -5,6 +5,7 @@ import FeedbackPage from "./screens/FeedbackPage";
 import ResponsePage from "./screens/ReponseScreen.js";
 import HomePage from "./screens/HomeScreen.js";
 import Friends from "./screens/Friends.js";
+import PostUpdate from "./screens/PostUpdate.js";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -46,6 +47,11 @@ export default function App() {
         <Stack.Screen
           name="Friends"
           component={Friends}
+        />
+
+        <Stack.Screen
+          name="PostUpdate"
+          component={PostUpdate}
         />
         
       </Stack.Navigator>

@@ -7,6 +7,7 @@ const Feedback = require('./../models/Feedback.js');
 const Response = require('./../models/Response.js');
 const User = require('../models/User.js');
 const Friend = require('../models/Friend.js');
+const Updates = require('../models/Updates.js')
 
 // Route feedback endpoint 
 router.post('/feedback', (req, res) => {
@@ -162,7 +163,8 @@ router.post("/friend", async (req, res) => {
 
     if (friend) {
         // Checks that the current user has not already had a request from this user.
-        if (!friend.requests.includes(username)) {
+        // Ensures that users are not already friends. 
+        if (!friend.requests.includes(username) && (!friends.friends.inlcudes(username))) {
             friend.requests.push(username);
             await friend.save();
         } else {
@@ -277,6 +279,34 @@ router.get('/friend/requests/:username', async (req, res) => {
       res.status(500).json({ success: false, message: 'Error fetching requests.' });
     }
   });
+
+router.post('/updates', (req, res) => {
+    let {username, date, update} = req.body;
+    username = username.trim();
+    date = date.trim();
+    update = update.trim();
+
+    // Creates a new update object
+    const newUpdate  = new Updates({
+        username,
+        date,
+        update
+    });
+
+    newUpdate.save().then(result => {
+        res.json({
+            status: "SUCCESS",
+            message: "Feedback saved sucessfully.",
+            data: result
+        })
+    })
+    .catch(err => {
+        res.json({
+            status: "FAILED",
+            message: "An error occurred while saving the feedback."
+        })
+    })
+})
   
 
 module.exports = router;

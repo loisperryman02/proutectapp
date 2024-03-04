@@ -7,7 +7,6 @@ export default function Friends({ navigation, route }) {
 
     const [request, setRequest] = useState('');
     const [allRequests, setAllRequests] = useState([]);
-    const [hideList, setHideList] = useState(false);
 
     useEffect(() => {
         const fetchRequests = async () => {
@@ -17,7 +16,7 @@ export default function Friends({ navigation, route }) {
             setAllRequests(response.data.requests);
 
             if (!response) {
-                console.log("user does not have any requests!");
+                console.log("User does not have any requests!");
             }
             
         };
@@ -36,7 +35,11 @@ export default function Friends({ navigation, route }) {
             .post(url, accept_user)
             .then((response) => {
                 const result = response.data;
-                setHideList(true); // Not sure if I need this because can move it from the list.
+
+                // Ensures that the list of requests is updated in real-time. 
+                const updatedRequests = allRequests.filter(request => request !== item);
+                console.log(updatedRequests);
+                setAllRequests(updatedRequests);
             })
             .catch(error => {
                 if (error.response) {
@@ -68,7 +71,9 @@ export default function Friends({ navigation, route }) {
             .post(url, accept_user)
             .then((response) => {
                 const result = response.data;
-                setHideList(true); // Not sure if I need this because can move it from the list.
+                const updatedRequests = allRequests.filter(request => request !== item);
+                console.log(updatedRequests);
+                setAllRequests(updatedRequests);
             })
             .catch(error => {
                 if (error.response) {
@@ -98,14 +103,11 @@ export default function Friends({ navigation, route }) {
             friend_username: request
         }
 
-        console.log(request_user);
-
         axios
             .post(url, request_user)
             .then((response) => {
               const result = response.data;
-            //   handleHomeNavigation(details); 
-              
+            //   handleHomeNavigation(details);               
             })
             .catch(error => {
               
@@ -155,7 +157,7 @@ export default function Friends({ navigation, route }) {
                 </TextInput>
             </View>
             <Pressable style={styles.button} onPress={sendFriendRequest}>
-                <Text style={styles.buttonText}> Send friend request </Text>
+                <Text style={styles.send_request_btn}> Send friend request </Text>
             </Pressable>
         </View>
 
@@ -172,7 +174,7 @@ export default function Friends({ navigation, route }) {
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) => (
                     <View style={styles.flatlist_container}>
-                        <View style = {styles.item_container}>
+                        <View style = {styles.item_container} >
                             <Text style={styles.item_text}>{item}</Text>
                         </View>
                         <Pressable style={styles.accept_btn} onPress={() => handleAccept(item)}>
@@ -322,5 +324,9 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     height: 20,
     marginLeft: "5%"
+  }, 
+  send_request_btn: {
+    color: "#fff",
+    fontWeight: "bold"
   }
 });

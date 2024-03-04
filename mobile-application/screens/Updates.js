@@ -12,36 +12,15 @@ export default function HomeScreen({ navigation, route }) {
       <View style={styles.top_container}>
         <View style={styles.title_container}>
           <Text style={styles.title_text}>
-             Welcome {username}
+             Updates
           </Text>
         </View>
       </View>
 
       <View style={styles.bottom_container}>
+            
 
-        <Pressable style={styles.navigation} onPress={() => navigation.navigate("Map")}>
-          <Text style={styles.button_text}>
-            Go to maps
-          </Text>
-        </Pressable>
-
-        <Pressable style={styles.navigation} onPress={() => navigation.navigate("PostUpdate", username)}>
-          <Text style={styles.button_text}>
-            Post an update
-          </Text>
-        </Pressable>
-
-        <Pressable style={styles.navigation}>
-          <Text style={styles.button_text}>
-            View updates
-          </Text>
-        </Pressable>
-
-        <Pressable style={styles.navigation} onPress={() => navigation.navigate("Friends", username)} >
-          <Text style={styles.button_text}>
-            View friends
-          </Text>
-        </Pressable>
+        
 
       </View>
   
