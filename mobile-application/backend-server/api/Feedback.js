@@ -183,4 +183,24 @@ router.post("/friend", async (req, res) => {
 
 })
 
+
+// Get friend requests for a user
+router.get('/friend/requests/:username', async (req, res) => {
+    const { username } = req.params;
+    console.log("username!!");
+    console.log(username);
+  
+    try {
+      const user = await Friend.findOne({ username: username });
+      if (user) {
+        res.status(200).json({ success: true, requests: user.requests });
+      } else {
+        res.status(404).json({ success: false, message: 'User not found.' });
+      }
+    } catch (error) {
+      res.status(500).json({ success: false, message: 'Error fetching requests.' });
+    }
+  });
+  
+
 module.exports = router;

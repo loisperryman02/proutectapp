@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Pressable, TextInput, Image, Keyboard } from 'react-native';
+import { StyleSheet, View, Text, Pressable, TextInput, FlatList, Keyboard } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import axios from "axios";
 
 export default function Friends({ navigation, route }) {
 
     const [request, setRequest] = useState('');
+    const [allRequests, setAllRequests] = useState([]);
+
+    useEffect(() => {
+        const fetchRequests = async () => {
+            try {
+                let username = route.params;
+                const response = await axios.get(`http://192.168.4.15:3000/friend/requests/${username}`);
+                setAllRequests(response.data.requests);
+            } catch (error) {
+                console.error("Failed to fetch friend requests", error);
+            }
+        };
+
+        fetchRequests();
+    }, []);
 
     const sendFriendRequest = () => {
         const url = "http://192.168.4.15:3000/friend";
@@ -83,6 +98,29 @@ export default function Friends({ navigation, route }) {
                 Current requests:
             </Text>
           </View>
+
+          <View style={styles.list_container}>
+            <FlatList
+                    data={allRequests}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) => (
+                    <View style={styles.flatlist_container}>
+                        <View style = {styles.item_container}>
+                            <Text style={styles.item_text}>{item}</Text>
+                        </View>
+                        <Pressable style={styles.accept_btn} onPress={() => handleAccept(item)}>
+                            <Text style={styles.acceptRejectText}>Accept</Text>
+                        </Pressable>
+                        <Pressable style={styles.reject_btn} onPress={() => handleAccept(item)}>
+                            <Text style={styles.acceptRejectText}>Reject</Text>
+                        </Pressable>
+                        {/* Add a reject button similarly */}
+                    </View>
+                    )}
+                />
+          </View>
+
+
         </View>
       </View>
   
@@ -118,6 +156,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     textAlign: "center"
+  },
+  item_text: {
+    color: "#013B1E",
+    fontFamily: "Arial",
+    fontWeight: "bold",
+    fontSize: 15
   },
   title_text: {
     color: "#013B1E",
@@ -179,8 +223,37 @@ const styles = StyleSheet.create({
     height: 40,
     marginTop: "7%"
   },
-  buttonText: {
+  acceptRejectText: {
     color: "#fff",
     fontWeight: "bold"
+  }, 
+  list_container: {
+    width: "100%",
+    height: "100%"
+  },
+  flatlist_container: {
+    flexDirection: "row",
+    width: "100%",
+    height: "100%",
+    marginTop: "5%"
+  },
+  item_container: {
+    flex: 0.4,
+    marginLeft: "10%"
+  },
+  accept_btn: {
+    flex: 0.25,
+    alignItems: "center",
+    backgroundColor: "#5EDD9D",
+    paddingVertical: 2,
+    height: 20
+  },
+  reject_btn: {
+    flex: 0.25,
+    alignItems: "center",
+    backgroundColor: "#DD5E5E",
+    paddingVertical: 2,
+    height: 20,
+    marginLeft: "5%"
   }
 });
