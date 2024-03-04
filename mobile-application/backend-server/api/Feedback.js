@@ -176,13 +176,89 @@ router.post("/friend", async (req, res) => {
         requests: [username], // Initialize with the requester
         updates: []
         });
+
         await friend.save();
+    }
+
+    // Adds the current user (one who made the request) to the Friend table if not there already. 
+    requester = await Friend.findOne({ username : username });
+
+    if (!requester) {
+         requestedFriend = new Friend({
+            username: username,
+            friends: [],
+            requests: [],
+            updates: []
+        })
+
+        await requestedFriend.save();
     }
 
     res.status(200).json({ success: true, message: 'Friend request sent.' });
 
 })
 
+router.post("/acceptUser", async (req, res) => {
+    let { request_username, username } = req.body;
+    request_username = request_username.trim();
+    username = username.trim();
+
+    let friend = await Friend.findOne({ username: username });
+
+    if (friend) {
+        // Removes username from requests list and adds to friends array.
+        if (friend.requests.includes(request_username)) {
+            const index = friend.requests.indexOf(request_username);
+            friend.requests.splice(index, 1);
+
+            friend.friends.push(request_username)
+
+            await friend.save();
+        } else {
+            console.log("You have already sent a request to this user.")
+        }
+    } else {
+        console.log("There is an error - this user does not exist in Friend Schema.");
+    }
+
+    let new_friend = await Friend.findOne({ username: request_username});
+
+    // Adds current user to list of friends of user they have just accepted.
+    if (new_friend) {
+        new_friend.friends.push(username);
+        await new_friend.save();
+    } else {
+        console.log("This user has not been added to the schema.");
+    }
+
+    res.status(200).json({ success: true, message: 'Friends added successfully.' });
+
+})
+
+router.post("/rejectUser", async (req, res) => {
+    let { reject_username, username } = req.body;
+    reject_username = reject_username.trim();
+    username = username.trim();
+
+    let friend = await Friend.findOne({ username: username });
+
+    if (friend) {
+        // Removes username from requests list as they have rejected the friend. 
+        if (friend.requests.includes(reject_username)) {
+            const index = friend.requests.indexOf(reject_username);
+            friend.requests.splice(index, 1);
+
+            await friend.save();
+        } else {
+            console.log("Error - a request has not been stored from this user. ")
+        }
+    } else {
+        console.log("There is an error - this user does not exist in Friend Schema.");
+    }
+
+    res.status(200).json({ success: true, message: 'Friends added successfully.' });
+
+})
 
 // Get friend requests for a user
 router.get('/friend/requests/:username', async (req, res) => {

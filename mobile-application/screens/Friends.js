@@ -7,23 +7,90 @@ export default function Friends({ navigation, route }) {
 
     const [request, setRequest] = useState('');
     const [allRequests, setAllRequests] = useState([]);
+    const [hideList, setHideList] = useState(false);
 
     useEffect(() => {
         const fetchRequests = async () => {
-            try {
-                let username = route.params;
-                const response = await axios.get(`http://192.168.4.15:3000/friend/requests/${username}`);
-                setAllRequests(response.data.requests);
-            } catch (error) {
-                console.error("Failed to fetch friend requests", error);
+            
+            let username = route.params;
+            const response = await axios.get(`http://172.25.70.192:3000/friend/requests/${username}`);
+            setAllRequests(response.data.requests);
+
+            if (!response) {
+                console.log("user does not have any requests!");
             }
+            
         };
 
         fetchRequests();
     }, []);
 
+    const handleAccept = (item) => {
+        const url = "http://172.25.70.192:3000/acceptUser";
+        const accept_user = {
+            request_username: item,
+            username: route.params
+        }
+
+        axios
+            .post(url, accept_user)
+            .then((response) => {
+                const result = response.data;
+                setHideList(true); // Not sure if I need this because can move it from the list.
+            })
+            .catch(error => {
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                    console.log("there is an error!!");
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    console.log(error.request);
+                    console.log("there is an error!!");
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message);
+                }
+            })
+    }
+
+    const handleReject = (item) => {
+        const url = "http://172.25.70.192:3000/rejectUser";
+        const accept_user = {
+            reject_username: item,
+            username: route.params
+        }
+
+        axios
+            .post(url, accept_user)
+            .then((response) => {
+                const result = response.data;
+                setHideList(true); // Not sure if I need this because can move it from the list.
+            })
+            .catch(error => {
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                    console.log("there is an error!!");
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    console.log(error.request);
+                    console.log("there is an error!!");
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message);
+                }
+            })
+    }
+
     const sendFriendRequest = () => {
-        const url = "http://192.168.4.15:3000/friend";
+        const url = "http://172.25.70.192:3000/friend";
 
         // Sets details of the username that is being requested. 
         const request_user = {
@@ -111,7 +178,7 @@ export default function Friends({ navigation, route }) {
                         <Pressable style={styles.accept_btn} onPress={() => handleAccept(item)}>
                             <Text style={styles.acceptRejectText}>Accept</Text>
                         </Pressable>
-                        <Pressable style={styles.reject_btn} onPress={() => handleAccept(item)}>
+                        <Pressable style={styles.reject_btn} onPress={() => handleReject(item)}>
                             <Text style={styles.acceptRejectText}>Reject</Text>
                         </Pressable>
                         {/* Add a reject button similarly */}
