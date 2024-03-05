@@ -42,10 +42,6 @@ export default function MapScreen( {navigation} ) {
       } else {
         updatePreferences.delete(title);
       }
-
-      console.log("in function");
-      console.log(updatePreferences);
-      
       return updatePreferences;
     });
   }

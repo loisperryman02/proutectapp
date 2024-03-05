@@ -265,8 +265,6 @@ router.post("/rejectUser", async (req, res) => {
 // Get friend requests for a user
 router.get('/friend/requests/:username', async (req, res) => {
     const { username } = req.params;
-    console.log("username!!");
-    console.log(username);
   
     try {
       const user = await Friend.findOne({ username: username });
@@ -307,6 +305,41 @@ router.post('/updates', (req, res) => {
         })
     })
 })
-  
+
+// Route to fetch the updates feed
+router.get('/updates/:username', async (req, res) => {
+    console.log("trying!");
+    console.log(req.params.username);
+    const current_user = req.params.username;
+    console.log("CURRENT USER!");
+    console.log(current_user);
+
+    try {
+        const user = await Friend.findOne({ username: current_user });
+        console.log(user.friends);
+
+        if (user && user.friends.length > 0) {
+            const updates = await fetchFriendsUpdates(user.friends);
+            
+            res.status(200).json({ success: true, updates });
+        } else {
+            let updates = "There are no updates to display.";
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "An error occurred while fetching the updates feed." });
+    }
+});
+
+async function fetchFriendsUpdates(friend_usernames) {
+    // Implementation as shown before
+    const updates = await Updates.find({ 
+        username: { $in: friend_usernames }
+    })
+
+    console.log(updates);
+    return updates
+}
+
 
 module.exports = router;

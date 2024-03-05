@@ -31,7 +31,7 @@ export default function HomeScreen({ navigation, route }) {
           </Text>
         </Pressable>
 
-        <Pressable style={styles.navigation}>
+        <Pressable style={styles.navigation} onPress={() => navigation.navigate("Updates", username)}>
           <Text style={styles.button_text}>
             View updates
           </Text>

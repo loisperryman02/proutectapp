@@ -9,7 +9,7 @@ export default function HomeScreen({ navigation }) {
   const [msg, setMsg] = useState();
 
   const handleLogin = () => {
-    const url = "http://172.25.70.192:3000/login";
+    const url = "http://10.0.0.142:3000/login";
     const details = {
       username: email,
       password: password
