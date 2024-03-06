@@ -10,7 +10,7 @@ export default function Updates({ navigation, route }) {
     useEffect(() => {
         const fetchUpdates = async () => {
             
-            const response = await axios.get(`http://10.0.0.142:3000/updates/${username}`);
+            const response = await axios.get(`http://192.168.4.15:3000/updates/${username}`);
             setUpdates(response.data.updates);
             if (!response) {
                 console.log("User does not have any requests!");

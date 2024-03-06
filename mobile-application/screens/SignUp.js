@@ -10,7 +10,7 @@ export default function SignUp({ navigation }) {
   const [keyboardVisible, setKeyboardVisible] = React.useState(false);
 
   const handleSignUp = () => {
-    const url = "http://10.0.0.142:3000/signup";
+    const url = "http://192.168.4.15:3000/signup";
     let userDetails = {
       name : name,
       username: username,

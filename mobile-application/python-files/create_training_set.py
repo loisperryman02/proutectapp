@@ -140,6 +140,7 @@ def get_crimes_in_range(all_crime_data, long_min, long_max, lat_min, lat_max, cr
     
     if not crimes_in_range.empty:
         average_severity_score = crimes_in_range['Severity Score'].mean()
+        print(average_severity_score)
     else:
         average_severity_score = 0
 
@@ -161,11 +162,11 @@ def get_public_space_data(public_space_data, latitude, longitude, tolerance=0.00
 # Convert the strings to tuples of floats
 all_coordinates = [(float(lat), float(lon)) for lat, lon in (s.split(',') for s in all_locations)]
 
-crime_data_2021 = pd.read_csv('C:\\Users\\loisp\\Documents\\Year3\\Dissertation\\Proutect\\Proutect\\csv-json-files\\crimes_in_range_2021.csv')
-crime_data_2022 = pd.read_csv('C:\\Users\\loisp\\Documents\\Year3\\Dissertation\\Proutect\\Proutect\\csv-json-files\\crimes_in_range_2022.csv')
-crime_data_2023 = pd.read_csv('C:\\Users\\loisp\\Documents\\Year3\\Dissertation\\Proutect\\Proutect\\csv-json-files\\crimes_in_range_2023.csv')
+crime_data_2021 = pd.read_csv("C:\\Users\\User\\Documents\\GitHub\\proutectapp\\csv-json-files\\crimes_in_range_2021.csv")
+crime_data_2022 = pd.read_csv("C:\\Users\\User\\Documents\\GitHub\\proutectapp\\csv-json-files\\crimes_in_range_2022.csv")
+crime_data_2023 = pd.read_csv("C:\\Users\\User\\Documents\\GitHub\\proutectapp\\csv-json-files\\crimes_in_range_2023.csv")
 
-all_public_space_data = pd.read_csv('C:\\Users\\loisp\\Documents\\Year3\\Dissertation\\Proutect\\Proutect\\csv-json-files\\public_spaces_data_350.csv')
+all_public_space_data = pd.read_csv("C:\\Users\\User\\Documents\\GitHub\\proutectapp\\csv-json-files\\public_spaces_data_350.csv")
 
 # Gets a dictionary of all crimes, public space data for each coordinate in a 350m radius 
 def create_dict(all_crime_data, all_coordinates, coordinate_dict, crime_severity_scores):
@@ -186,8 +187,9 @@ def calculate_safety_score(m_c, c_s, w_c, s_s, p_s, m_p, w_p, d_b):
   
     # Crime score calculation
     # Checks that m_c and c_s are over 0, to avoid division by 0 errors
+    print(s_s)
     if c_s > 0:
-        crime_score = ((m_c - c_s) / m_c) * w_c * (s_s / 10)
+        crime_score = ((m_c - c_s) / m_c) * w_c * ((10 - s_s) / 10)
     else:
         crime_score = 80
 
@@ -222,8 +224,11 @@ def create_training_set(coordinates, scores, total_crimes, crime_weight, total_p
             'Latitude': latitude, 
             'Longitude': longitude,
             'Year': year, 
-            'Crime Score': crime_num / total_crimes,
-            'Crime Severity Score': sev_score / 10,
+            # High crime number --> low crime score --> low safety score 
+            'Crime Score': (total_crimes - crime_num) / total_crimes,
+            # High severity score --> low severity score --> low safety score
+            'Crime Severity Score': (10 - sev_score) / 10,
+            # high public spaces --> high public space score --> high safety score 
             'Public Space Score': public_spaces_num / total_public_spaces,
             "Safety Score": safety_score
         })
@@ -234,7 +239,9 @@ def create_training_set(coordinates, scores, total_crimes, crime_weight, total_p
     updated_df.to_csv(output_file, index=False)
 
 
-output_file = 'C:\\Users\\loisp\\Documents\\Year3\\Dissertation\\Proutect\\Proutect\\csv-json-files\\training_set.csv'
+#output_file = 'C:\\Users\\loisp\\Documents\\Year3\\Dissertation\\Proutect\\Proutect\\csv-json-files\\training_set.csv'
+
+output_file = "C:\\Users\\User\\Documents\\GitHub\\proutectapp\\csv-json-files\\training_set_new.csv"
 
 # Defines the crime and public space weight. 
 # Add up to 90, with the daytime bonus being 10, this will add up to 100. 

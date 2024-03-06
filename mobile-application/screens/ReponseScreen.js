@@ -8,7 +8,7 @@ export default function ResponsePage({ navigation, route }) {
 
     // note: IP address changes. 
     const handleFeedback = () => {
-        const url = "http://10.0.0.142:3000/response";
+        const url = "http://192.168.4.15:3000/response";
         console.log("trying server.");
         const responseInfo = {
           coordinates: route.params.coordinates, // Spreads the coordinates and date

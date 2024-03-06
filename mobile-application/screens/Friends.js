@@ -12,7 +12,7 @@ export default function Friends({ navigation, route }) {
         const fetchRequests = async () => {
             
             let username = route.params;
-            const response = await axios.get(`http://10.0.0.142:3000/friend/requests/${username}`);
+            const response = await axios.get(`http://192.168.4.15:3000/friend/requests/${username}`);
             setAllRequests(response.data.requests);
 
             if (!response) {
@@ -25,7 +25,7 @@ export default function Friends({ navigation, route }) {
     }, []);
 
     const handleAccept = (item) => {
-        const url = "http://10.0.0.142:3000/acceptUser";
+        const url = "http://192.168.4.15:3000/acceptUser";
         const accept_user = {
             request_username: item,
             username: route.params
@@ -61,7 +61,7 @@ export default function Friends({ navigation, route }) {
     }
 
     const handleReject = (item) => {
-        const url = "http://10.0.0.142:3000/rejectUser";
+        const url = "http://192.168.4.15:3000/rejectUser";
         const accept_user = {
             reject_username: item,
             username: route.params
@@ -95,7 +95,7 @@ export default function Friends({ navigation, route }) {
     }
 
     const sendFriendRequest = () => {
-        const url = "http://10.0.0.142:3000/friend";
+        const url = "http://192.168.4.15:3000/friend";
 
         // Sets details of the username that is being requested. 
         const request_user = {

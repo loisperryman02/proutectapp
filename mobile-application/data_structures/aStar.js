@@ -136,11 +136,6 @@ function costFunction(edge, preferences) {
     let distance_weight = 0.5;
     let safety_weight = 0.5;
 
-
-    console.log(edge.distance);
-
-
-
     if (preferences.size == 1) {
         if (preferences.has("Efficiency")) {
             distance_weight =  0.8;
