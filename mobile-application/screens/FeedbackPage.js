@@ -12,7 +12,7 @@ export default function FeedbackPage({ navigation, route }) {
   });
 
   const handleFeedback = () => {
-    const url = "http://192.168.4.15:3000/feedback";
+    const url = "http://172.25.11.245:3000/feedback";
     console.log("trying server.");
     const feedbackInfo = {
       ...additionalInfo, // Spreads the id, coordinates, and date

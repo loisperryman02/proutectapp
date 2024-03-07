@@ -13,7 +13,7 @@ export default function PostUpdate({ navigation, route }) {
 
     // note: IP address changes. 
     const postUpdate = () => {
-        const url = "http://192.168.4.15:3000/updates";
+        const url = "http://172.25.11.245:3000/updates";
 
         // Gets today's date/time for the update. 
         const today = new Date();

@@ -140,9 +140,7 @@ export default function MapScreen( {navigation} ) {
         return {
           distance: json.routes[0].legs[0].distance.value,
         };
-      } else {
-        // //console.log"distance not found");
-      }
+      } 
     } catch (error) {
       console.error(error);
     }
