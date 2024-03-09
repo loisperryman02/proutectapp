@@ -7,9 +7,10 @@ export default function HomeScreen({ navigation }) {
   const [password, onChangePassword] = useState('');
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [msg, setMsg] = useState();
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = () => {
-    const url = "http://172.25.11.245:3000/login";
+    const url = "http://172.25.19.235:3000/login";
     const details = {
       username: email,
       password: password
@@ -24,26 +25,10 @@ export default function HomeScreen({ navigation }) {
           
         })
         .catch(error => {
-          
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message);
-          }
-      })
-  }
 
-  const handleMessage = (message, type = "FAILED") => {
-    setMsg(message);
-    setMsgType(type);
+          setErrorMessage('Invalid login details.');
+        
+      })
   }
 
   const handleHomeNavigation = (details) => {
@@ -71,7 +56,6 @@ export default function HomeScreen({ navigation }) {
       <View style={!keyboardVisible ? styles.top_container : styles.top_container_smaller }>
         {!keyboardVisible && (
           <View style={styles.image_container}>
-
             <Image style={styles.image} resizeMode="contain" source={require('../assets/Protrekt.png')} />
           </View>
            )}
@@ -110,6 +94,7 @@ export default function HomeScreen({ navigation }) {
 
         
         <View style={styles.button_container}>
+        {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
           <Pressable style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Login</Text>
           </Pressable>
@@ -126,16 +111,6 @@ export default function HomeScreen({ navigation }) {
     </View>
   );
 }
-
-// const styles = StyleSheet.create({
-//   // Existing styles...
-//   bottom_container_expanded: {
-//     flex: 0.70, // Increase the height of the bottom container
-//   },
-//   // Add your existing styles here
-// });
-
-
 
 const styles = StyleSheet.create({
   bottom_container_expanded: {
@@ -250,5 +225,12 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center",
     marginTop: "10%"
+  },
+  errorText: {
+    color: "red",
+    fontFamily: "Arial",
+    fontWeight: "bold",
+    fontSize: 15,
+    marginBottom: 10
   }
 });

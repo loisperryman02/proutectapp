@@ -13,7 +13,7 @@ export default function PostUpdate({ navigation, route }) {
 
     // note: IP address changes. 
     const postUpdate = () => {
-        const url = "http://172.25.11.245:3000/updates";
+        const url = "http://172.25.19.235:3000/updates";
 
         // Gets today's date/time for the update. 
         const today = new Date();
@@ -30,6 +30,8 @@ export default function PostUpdate({ navigation, route }) {
           .then((response) => {
               const result = response.data;
               const {status, data} = result;
+
+              navigation.navigate("Home", username);
               if (status !== "SUCCESS") {
                 // set some error message...
                 console.log("Unsuccessful!");

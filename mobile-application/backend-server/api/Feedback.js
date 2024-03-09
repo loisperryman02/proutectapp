@@ -64,8 +64,6 @@ router.post('/response', (req, res) => {
         response
     });
 
-   console.log(newResponse);
-
     newResponse.save().then(result => {
         res.json({
             status: "SUCCESS",
@@ -113,17 +111,25 @@ router.post("/login", async (req, res) => {
 })
 
 router.post("/signup", async (req, res) => {
-    let { name, username, password } = req.body;
+    let { name, username, password, passwordtwo } = req.body;
     name = name.trim();
     username = username.trim();
     password = password.trim();
+    passwordtwo = passwordtwo.trim();
+
+
     try {
         let user = await User.findOne({ username: username });
+
         if (user) {
-            return res.status(400).json({ message: "User Already Exists" });
+            return res.status(400).json({ message: "Username already exists." });
         }
 
+        if (password !== passwordtwo) {
+            return res.status(400).json({ message: "Passwords do not match." });
+        }
 
+    
 
         NewUser = new User({
             name,

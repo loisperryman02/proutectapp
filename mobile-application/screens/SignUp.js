@@ -8,13 +8,15 @@ export default function SignUp({ navigation }) {
   const [password, onChangePassword] = React.useState('');
   const [passwordtwo, onChangePasswordTwo] = React.useState('');
   const [keyboardVisible, setKeyboardVisible] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState('');
 
   const handleSignUp = () => {
-    const url = "http://172.25.11.245:3000/signup";
+    const url = "http://172.25.19.235:3000/signup";
     let userDetails = {
       name : name,
       username: username,
-      password: password
+      password: password,
+      passwordtwo: passwordtwo
     };
 
     console.log("user details:");
@@ -27,11 +29,7 @@ export default function SignUp({ navigation }) {
         })
         .catch(error => {
             if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
+                setErrorMessage(error.response.data.message);
               } else if (error.request) {
                 // The request was made but no response was received
                 console.log(error.request);
@@ -101,6 +99,7 @@ export default function SignUp({ navigation }) {
             />
         </View>
         <View style={styles.button_container}>
+        {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
           <Pressable 
             style={styles.button}
             onPress={handleSignUp}>
@@ -197,5 +196,12 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 45,
         paddingBottom: 10
+    },
+    errorText: {
+      color: "red",
+      fontFamily: "Arial",
+      fontWeight: "bold",
+      fontSize: 15,
+      marginBottom: 10
     }
 });
