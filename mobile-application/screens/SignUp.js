@@ -25,9 +25,12 @@ export default function SignUp({ navigation }) {
     axios
         .post(url, userDetails)
         .then((response) => {
+            console.log("worked");
             navigation.navigate("Login");
+         
         })
         .catch(error => {
+        console.log("not working...")
             if (error.response) {
                 setErrorMessage(error.response.data.message);
               } else if (error.request) {

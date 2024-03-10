@@ -87,7 +87,7 @@ export default function PostUpdate({ navigation, route }) {
           <Pressable 
             style={styles.button}
             onPress={postUpdate}>
-            <Text style={styles.buttonText}>Post update.</Text>
+            <Text style={styles.buttonText}>Post</Text>
           </Pressable>
         </View>
         <View style={styles.links_container}>

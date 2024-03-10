@@ -117,6 +117,7 @@ router.post("/signup", async (req, res) => {
     password = password.trim();
     passwordtwo = passwordtwo.trim();
 
+    console.log("reaching end!!");
 
     try {
         let user = await User.findOne({ username: username });

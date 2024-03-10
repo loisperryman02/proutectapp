@@ -1,13 +1,12 @@
 import * as React from 'react';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { Text, StyleSheet, View, Dimensions, Button, TouchableOpacity, Pressable, KeyboardAvoidingView } from 'react-native';
+import { Text, StyleSheet, View, Dimensions, Button, TouchableOpacity, Pressable, KeyboardAvoidingView, Alert } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Constants from 'expo-constants';
 import MapViewDirections from 'react-native-maps-directions';
 import polyline from '@mapbox/polyline';
-import RenderHtml from 'react-native-render-html';
 import { findNearestSafetyScore, daytimeKDTree, eveningKDTree, findNearestPoints } from '../data_structures/KDTree.js';
 import { aStar } from '../data_structures/aStar';
  
@@ -32,7 +31,22 @@ export default function MapScreen( {navigation} ) {
   const [ googleCoords, setGoogleCoords ] = React.useState();
   const [ chosenCoords, setChosenCoordinates ] = React.useState();
 
-  const [preferences, setPreferences] = React.useState(new Set());
+  const [ preferences, setPreferences ] = React.useState(new Set());
+
+  const [ routeSafetyScore, setRouteSafetyScore ] = React.useState(0);
+
+  // Inside your component
+  React.useEffect(() => {
+    console.log(safeRouteChecked);
+    if (safeRouteChecked && routeSafetyScore < 60) {
+      Alert.alert(
+        'Caution: Low Safety Score!',
+        "The safety score for this route is very low. Consider taking a taxi to your destination instead.",
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+        { cancelable: false }
+      );
+    }
+  }, [safeRouteChecked && routeSafetyScore]); // This useEffect depends on routeSafetyScore
 
   const updatePreferences = (title, isChecked) => {
     setPreferences(currentPreferences => {
@@ -60,34 +74,14 @@ export default function MapScreen( {navigation} ) {
   const GOOGLE_API_KEY = 'AIzaSyANbMSuLyZUXaTxfw35cB0WF7Is43fMmyc';
   const { width } = Dimensions.get('window');
 
-  // Fetch nearby places function, gets nearest places 
-  const fetchNearbyPlaces = async (latitude, longitude) => {
-    try {
-      const placesResponse = await fetch(
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=200&type=point_of_interest&key=${GOOGLE_API_KEY}`
-      );
-      const json = await placesResponse.json();
-      const topThreePlaces = json.results.slice(0, 3); 
-
-      return topThreePlaces.map(place => ({
-        latitude: place.geometry.location.lat,
-        longitude: place.geometry.location.lng,
-        name: place.name
-      }));
-        
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-  };
-  
-
   React.useEffect(() => {
     if (start && mapRef.current) {
       mapRef.current.animateToRegion(start, 1000); // Animate to the new region
     }
   }, [start]); // This effect runs when 'start' changes
 
+  // initial html step instructions are assigned HERE
+  // as soon as start and destination are formed
   React.useEffect(() => {
     if (start && destination) {
       getDirections(start, destination);
@@ -201,14 +195,16 @@ export default function MapScreen( {navigation} ) {
         nodes.set(endNode, {id: endNode, edges: []});
       }
 
-      let midpoint = calculateMidpoint(step.start_location.lat, step.start_location.lng, step.end_location.lat, step.end_location.lng);
       
+      start_safety_score = findNearestSafetyScore(step.start_location.lat, step.start_location.lng, kdtree);
+      end_safety_score = findNearestSafetyScore(step.end_location.lat, step.end_location.lng, kdtree);
+      avg_score = (start_safety_score + end_safety_score) / 2
       // Add edges to graph -> these will be the distances between the nodes of the orginal graph. 
       const edge = {
         from: startNode,
         to: endNode,
         distance: step.distance.value,
-        safetyScore: findNearestSafetyScore(midpoint.latitude, midpoint.longitude, kdtree)
+        safetyScore: avg_score
       };
 
       edges.push(edge);
@@ -370,16 +366,31 @@ export default function MapScreen( {navigation} ) {
     
             let safestRoute = aStar(startNode, destinationNode, nodes, preferences);
 
+            console.log(safestRoute);
+            
             // Need to get safest route in format to display route on screen. 
             setCoordinates([]);
             const coordinates = []
+
+            let current_kdtree = getCurrentKDTree();
+            let total_safety_score = 0;
 
             safestRoute.forEach(node => {
               let step = node.split(",");
               const splitCoordinates = { latitude: parseFloat(step[0]), longitude: parseFloat(step[1]) };
               // Push these objects into the coordinates array
-              coordinates.push(splitCoordinates);           
+              coordinates.push(splitCoordinates);    
+
+              console.log("Safety score: ", findNearestSafetyScore(parseFloat(step[0]), parseFloat(step[1]), current_kdtree));
+              
+              total_safety_score += findNearestSafetyScore(parseFloat(step[0]), parseFloat(step[1]), current_kdtree)
+          
             });
+
+            setRouteSafetyScore(total_safety_score / (coordinates.length));
+
+            console.log("this is route safety score!");
+            console.log(routeSafetyScore);
 
             setCoordinates(coordinates);
 
@@ -704,7 +715,7 @@ export default function MapScreen( {navigation} ) {
 
           
                 <CheckBox
-                  title="Pink Route - Suggested by Proutect"
+                  title={`Pink Route - Suggested by Proutect. Safety Score: ${routeSafetyScore}`}
                   checked={safeRouteChecked}
                   onPress={() => {
                     setSafeRouteChecked(!safeRouteChecked);

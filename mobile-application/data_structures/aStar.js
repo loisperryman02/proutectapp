@@ -9,8 +9,6 @@ export function aStar(startNode, goalNode, nodes, preferences) {
     let gScore = {}; // Cost from start to node
     let fScore = {}; // estimated cost from start to goal through node
 
-    console.log("-------------------------------STARTING A*------------------------------");
-
     openSet.add(startNode.id);
 
     // Sets it to the highest possible value, so it can be updated later
@@ -52,9 +50,7 @@ export function aStar(startNode, goalNode, nodes, preferences) {
             }
 
             if (neighbourId === goalNode.id) {
-                // console.log("Found goal id!");
                 cameFrom.set(neighbourId, current);
-                // console.log(cameFrom);
                 return reconstructPath(cameFrom, neighbour);
             }
             
@@ -80,7 +76,6 @@ export function aStar(startNode, goalNode, nodes, preferences) {
                 };
 
             }
-            
             
         }
     }
@@ -131,7 +126,7 @@ function heuristicCostEstimate(currentNode, goalNode) {
 // The cost function will be altered depending on user preferences
 // The user may prefer a more efficient, safe or busy route
 
-function costFunction(edge, preferences) {
+function costFunction(edge, preferences, total_safety_s) {
 
     let distance_weight = 0.5;
     let safety_weight = 0.5;
@@ -146,6 +141,8 @@ function costFunction(edge, preferences) {
         }
     }
 
+
+
     let gScore = ((edge.distance * distance_weight) + (parseFloat(1/edge.safetyScore) * safety_weight));
 
     return gScore
@@ -157,8 +154,6 @@ function costFunction(edge, preferences) {
 function reconstructPath(cameFrom, goal) {
     let goalId = goal.id;
     let totalPath = [goalId];
-    // console.log("total path");
-    // console.log(totalPath);
 
     while (cameFrom.has(goalId)) {
         let predessecorNode = cameFrom.get(goalId);
