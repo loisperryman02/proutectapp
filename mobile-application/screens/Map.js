@@ -18,7 +18,6 @@ export default function MapScreen( {navigation} ) {
   const [ isTextFocused, setIsTextFocused] = React.useState(false);
 
   const [ efficientChecked, setEfficientChecked ] = React.useState(false);
-  const [ busyChecked, setBusyChecked ] = React.useState(false);
   const [ safeChecked, setSafeChecked ] = React.useState(false);
 
   const [ safeRouteChecked, setSafeRouteChecked ] = React.useState(false);
@@ -38,10 +37,10 @@ export default function MapScreen( {navigation} ) {
   // Inside your component
   React.useEffect(() => {
     console.log(safeRouteChecked);
-    if (safeRouteChecked && routeSafetyScore < 60) {
+    if (safeRouteChecked && routeSafetyScore < 50) {
       Alert.alert(
         'Caution: Low Safety Score!',
-        "The safety score for this route is very low. Consider taking a taxi to your destination instead.",
+        "The safety score for this route is below 50. Consider taking a taxi to your destination instead.",
         [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
         { cancelable: false }
       );
@@ -71,7 +70,7 @@ export default function MapScreen( {navigation} ) {
   };
   
   const mapRef = React.useRef(null);
-  const GOOGLE_API_KEY = 'AIzaSyANbMSuLyZUXaTxfw35cB0WF7Is43fMmyc';
+  const GOOGLE_API_KEY = 'AIzaSyCCN6kt-BF8ATlQRafsS13uf_TCuLiwjvY';
   const { width } = Dimensions.get('window');
 
   React.useEffect(() => {
@@ -143,27 +142,8 @@ export default function MapScreen( {navigation} ) {
   const getCurrentKDTree = () => {
     const currentHour = new Date().getHours();
     // Define the hours that constitute 'daytime' and 'evening'
-    return (currentHour >= 6 && currentHour < 18) ? daytimeKDTree : eveningKDTree;
+    return eveningKDTree;
   };
-
-  function calculateMidpoint(lat1, lon1, lat2, lon2) {
-    // Convert latitude and longitude from degrees to radians
-    lat1 = deg2rad(lat1);
-    lon1 = deg2rad(lon1);
-    lat2 = deg2rad(lat2);
-    lon2 = deg2rad(lon2);
-  
-    // Calculate the average latitude and longitude
-    let avgLat = (lat1 + lat2) / 2;
-    let avgLon = (lon1 + lon2) / 2;
-  
-    return { latitude: avgLat, longitude: avgLon };
-  }
-  
-  // Helper function to convert degrees to radians
-  function deg2rad(degrees) {
-    return degrees * (Math.PI / 180);
-  }
 
   const buildGraph = async (routeInfo) => {
     let nodes = new Map();
@@ -387,6 +367,8 @@ export default function MapScreen( {navigation} ) {
           
             });
 
+            console.log(total_safety_score);
+
             setRouteSafetyScore(total_safety_score / (coordinates.length));
 
             console.log("this is route safety score!");
@@ -589,14 +571,7 @@ export default function MapScreen( {navigation} ) {
                       updatePreferences("Safe", !safeChecked);
                   }}
                 />
-                <CheckBox
-                  title="Busy"
-                  checked={busyChecked}
-                  onPress={() => {
-                    setBusyChecked(!busyChecked);
-                    updatePreferences("Busy", !busyChecked);
-                  }}
-                />
+  
               </View>
               
             </View>
@@ -669,14 +644,7 @@ export default function MapScreen( {navigation} ) {
                       updatePreferences("Safe", !safeChecked);
                   }}
                 />
-                <CheckBox
-                  title="Busy"
-                  checked={busyChecked}
-                  onPress={() => {
-                    setBusyChecked(!busyChecked);
-                    updatePreferences("Busy", !busyChecked);
-                  }}
-                />
+              
               </View>
               
             </View>

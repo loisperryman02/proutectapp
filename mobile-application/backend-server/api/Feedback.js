@@ -121,6 +121,7 @@ router.post("/signup", async (req, res) => {
 
     try {
         let user = await User.findOne({ username: username });
+        console.log("finding user");
 
         if (user) {
             return res.status(400).json({ message: "Username already exists." });
@@ -129,7 +130,6 @@ router.post("/signup", async (req, res) => {
         if (password !== passwordtwo) {
             return res.status(400).json({ message: "Passwords do not match." });
         }
-
     
 
         NewUser = new User({
@@ -167,16 +167,19 @@ router.post("/friend", async (req, res) => {
     let friend = await Friend.findOne({ username: friend_username });
     console.log("finding friend");
     console.log(friend);
+    console.log("found friend");
 
     if (friend) {
+        friend.requests.push(username);
+        await friend.save();
         // Checks that the current user has not already had a request from this user.
         // Ensures that users are not already friends. 
-        if (!friend.requests.includes(username) && (!friends.friends.inlcudes(username))) {
-            friend.requests.push(username);
-            await friend.save();
-        } else {
-            console.log("You have already sent a request to this user.")
-        }
+        // if (!friend.requests.includes(username) && (!friend.friends.includes(username))) {
+            
+            
+        // } else {
+        //     return res.status(400).json({ message: "You are already friends with this user or have sent them a pending request. " });
+        // }
     } else {
         // If the user hasn't had any friend requests, make a new entry for Schema.
         friend = new Friend({

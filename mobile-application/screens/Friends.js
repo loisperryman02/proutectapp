@@ -7,12 +7,13 @@ export default function Friends({ navigation, route }) {
 
     const [request, setRequest] = useState('');
     const [allRequests, setAllRequests] = useState([]);
+    const [errorMessage, setErrorMessage] = React.useState('');
 
     useEffect(() => {
         const fetchRequests = async () => {
             
             let username = route.params;
-            const response = await axios.get(`http://172.25.19.235:3000/friend/requests/${username}`);
+            const response = await axios.get(`http://172.25.14.12:3000/friend/requests/${username}`);
             setAllRequests(response.data.requests);
 
             if (!response) {
@@ -25,7 +26,7 @@ export default function Friends({ navigation, route }) {
     }, []);
 
     const handleAccept = (item) => {
-        const url = "http://172.25.19.235:3000/acceptUser";
+        const url = "http://172.25.14.12:3000/acceptUser";
         const accept_user = {
             request_username: item,
             username: route.params
@@ -40,28 +41,18 @@ export default function Friends({ navigation, route }) {
                 const updatedRequests = allRequests.filter(request => request !== item);
                 console.log(updatedRequests);
                 setAllRequests(updatedRequests);
+                navigation.navigate("Home", username);
             })
             .catch(error => {
-                if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                    console.log("there is an error!!");
-                } else if (error.request) {
-                    // The request was made but no response was received
-                    console.log(error.request);
-                    console.log("there is an error!!");
-                } else {
-                    // Something happened in setting up the request that triggered an Error
-                    console.log('Error', error.message);
-                }
+              if (error.response) {
+                setErrorMessage(error.response.data.message);
+              }
+                         
             })
     }
 
     const handleReject = (item) => {
-        const url = "http://172.25.19.235:3000/rejectUser";
+        const url = "http://172.25.14.12:3000/rejectUser";
         const accept_user = {
             reject_username: item,
             username: route.params
@@ -76,26 +67,20 @@ export default function Friends({ navigation, route }) {
                 setAllRequests(updatedRequests);
             })
             .catch(error => {
-                if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                    console.log("there is an error!!");
-                } else if (error.request) {
-                    // The request was made but no response was received
-                    console.log(error.request);
-                    console.log("there is an error!!");
-                } else {
-                    // Something happened in setting up the request that triggered an Error
-                    console.log('Error', error.message);
-                }
+              if (error.response) {
+                setErrorMessage(error.response.data.message);
+              } else if (error.request) {
+                // The request was made but no response was received
+                console.log(error.request);
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
+              }
             })
     }
 
     const sendFriendRequest = () => {
-        const url = "http://172.25.19.235:3000/friend";
+        const url = "http://172.25.14.12:3000/friend";
 
         // Sets details of the username that is being requested. 
         const request_user = {
@@ -107,21 +92,15 @@ export default function Friends({ navigation, route }) {
             .post(url, request_user)
             .then((response) => {
               const result = response.data;
-            //   handleHomeNavigation(details);               
+              // navigation.navigate("Home", route.params);            
             })
             .catch(error => {
-              
+
               if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-                console.log("there is an error!!");
+                setErrorMessage(error.response.data.message);
               } else if (error.request) {
                 // The request was made but no response was received
                 console.log(error.request);
-                console.log("there is an error!!");
               } else {
                 // Something happened in setting up the request that triggered an Error
                 console.log('Error', error.message);

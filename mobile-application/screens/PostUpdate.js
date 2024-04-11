@@ -5,22 +5,21 @@ import axios from 'axios';
 export default function PostUpdate({ navigation, route }) {
     
     let [update, setUpdate] = React.useState(''); 
-    const username = route.params;
-
+    
     // Gets today's date/time for the update. 
     const today = new Date();
     const formattedDate = today.toISOString().substring(0, 10);
 
     // note: IP address changes. 
     const postUpdate = () => {
-        const url = "http://172.25.19.235:3000/updates";
+        const url = "http://172.25.14.12:3000/updates";
 
         // Gets today's date/time for the update. 
         const today = new Date();
         const formattedDate = today.toISOString().substring(0, 10);
 
         const update_info = {
-          username: username, 
+          username: route.params, 
           date: formattedDate,
           update: update 
         };
@@ -30,8 +29,7 @@ export default function PostUpdate({ navigation, route }) {
           .then((response) => {
               const result = response.data;
               const {status, data} = result;
-
-              navigation.navigate("Home", username);
+              
               if (status !== "SUCCESS") {
                 // set some error message...
                 console.log("Unsuccessful!");

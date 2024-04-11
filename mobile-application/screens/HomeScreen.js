@@ -5,6 +5,7 @@ import axios from "axios";
 export default function HomeScreen({ navigation, route }) {
 
   const username = route.params.username;
+  
 
   return (
     <View style={styles.background}>

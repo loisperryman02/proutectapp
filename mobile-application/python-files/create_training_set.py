@@ -135,9 +135,8 @@ def get_crimes_in_range(all_crime_data, long_min, long_max, lat_min, lat_max, cr
     
     # Add severity score for each crime
     crimes_in_range['Severity Score'] = crimes_in_range['Crime type'].map(crime_severity_scores)
-    # print(crimes_in_range)
+   
     # Calculate average severity score for the crimes in the range
-    
     if not crimes_in_range.empty:
         average_severity_score = crimes_in_range['Severity Score'].mean()
         print(average_severity_score)
@@ -175,7 +174,6 @@ def create_dict(all_crime_data, all_coordinates, coordinate_dict, crime_severity
         # Gets lat/lon range within a 350m radius
         lat_range, lon_range = get_lat_lon_ranges(each[0], each[1], 350)
         # Saves the crimes within a 350m radius of each coordinate
-        # all_crime_data
         coordinate_dict[each][0], coordinate_dict[each][1] = get_crimes_in_range(all_crime_data, lon_range[0], lon_range[1], lat_range[0], lat_range[1], crime_severity_scores)
         coordinate_dict[each][2] = get_public_space_data(all_public_space_data, each[0], each[1])
     return coordinate_dict
@@ -216,7 +214,6 @@ def create_training_set(coordinates, scores, total_crimes, crime_weight, total_p
         longitude = coordinate[1]
         
         safety_score = calculate_safety_score(total_crimes, crime_num, crime_weight, sev_score, public_spaces_num, total_public_spaces, public_space_weight, 0)
-        # evening_safety_score = calculate_safety_score(total_crimes, crime_num, crime_weight, sev_score, public_spaces_num, total_public_spaces, public_space_weight, -5)
         
         # Just do safety score for now, then add or remove 5 depending on the time. 
         # Can do this in real-time evaluation, as we only want one target variable for the ML model. 

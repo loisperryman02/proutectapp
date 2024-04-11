@@ -60,7 +60,7 @@ export function aStar(startNode, goalNode, nodes, preferences) {
             // Sum of gScore of current node, and the cost of current node and neighbour (considering distance and safety score)
             let temporaryGScore = gScore[current.id] + temporaryCost;
             
-            let temporaryFScore = temporaryGScore + heuristicCostEstimate(neighbour, goal);
+            let temporaryFScore = temporaryGScore + heuristicCostEstimate(neighbour, goal, preferences);
 
             // This checks if the tentative gScore for neighbour node is better than previously recorded
             // If neighbour node hasn't been encountered before, infinity is assigned to gScore
@@ -119,8 +119,17 @@ function deg2rad(degrees) {
 }
 
 
-function heuristicCostEstimate(currentNode, goalNode) {
-    return haversineDistance(currentNode.id, goalNode.id);
+function heuristicCostEstimate(currentNode, goalNode, preferences) {
+    let distance_weight = 0.5;
+
+    if (preferences.size == 1) {
+        if (preferences.has("Efficiency")) {
+            distance_weight =  0.8;
+        } else {
+            distance_weight =  0.2;
+        }
+    }
+    return haversineDistance(currentNode.id, goalNode.id) * distance_weight;
 }
 
 // The cost function will be altered depending on user preferences
@@ -141,9 +150,16 @@ function costFunction(edge, preferences, total_safety_s) {
         }
     }
 
+    // The lowest possible safety score should result in the highest penalty. 
+    if (edge.safetyScore == 0) {
+        let safety_score = safety_weight;
+    } else if (edge.safetyScore = 100)  {
+        let safety_score = 0;
+    } else {
+        let safety_score = parseFloat(1/edge.safetyScore) * safety_weight;
+    }
 
-
-    let gScore = ((edge.distance * distance_weight) + (parseFloat(1/edge.safetyScore) * safety_weight));
+    let gScore = ((edge.distance * distance_weight) + safety_score);
 
     return gScore
 }

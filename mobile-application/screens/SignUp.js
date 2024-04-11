@@ -11,16 +11,13 @@ export default function SignUp({ navigation }) {
   const [errorMessage, setErrorMessage] = React.useState('');
 
   const handleSignUp = () => {
-    const url = "http://172.25.19.235:3000/signup";
+    const url = "http://172.25.14.12:3000/signup";
     let userDetails = {
       name : name,
       username: username,
       password: password,
       passwordtwo: passwordtwo
     };
-
-    console.log("user details:");
-    console.log(userDetails);
     
     axios
         .post(url, userDetails)
@@ -30,7 +27,6 @@ export default function SignUp({ navigation }) {
          
         })
         .catch(error => {
-        console.log("not working...")
             if (error.response) {
                 setErrorMessage(error.response.data.message);
               } else if (error.request) {

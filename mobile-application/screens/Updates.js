@@ -10,7 +10,7 @@ export default function Updates({ navigation, route }) {
     useEffect(() => {
         const fetchUpdates = async () => {
             
-            const response = await axios.get(`http://172.25.11.245:3000/updates/${username}`);
+            const response = await axios.get(`http://172.25.14.12:3000/updates/${username}`);
             setUpdates(response.data.updates);
             if (!response) {
                 console.log("User does not have any requests!");
@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
     margin: "2.5%",
     borderRadius: "10%",
     paddingTop: "13%",
-    marginTop: "5%"
+    marginTop: "5%",
+    paddingBottom: "5%"
   },
   navigation: {
     height: "20%",
@@ -106,9 +107,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: 300,
     marginTop: "15%",
-    borderRadius: "20px",
     paddingLeft: "10%",
-    paddingTop: "5%"
+    paddingTop: "3%"
+
   },
   updateText: {
     width: "100%",

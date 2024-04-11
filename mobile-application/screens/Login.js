@@ -10,7 +10,7 @@ export default function HomeScreen({ navigation }) {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = () => {
-    const url = "http://172.25.19.235:3000/login";
+    const url = "http://172.25.14.12:3000/login";
     const details = {
       username: email,
       password: password
@@ -21,6 +21,7 @@ export default function HomeScreen({ navigation }) {
         .post(url, details)
         .then((response) => {
           const result = response.data;
+          setErrorMessage(null);
           handleHomeNavigation(details); 
           
         })
