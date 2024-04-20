@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
 
 const Feedback = require('./../models/Feedback.js');
@@ -18,9 +17,6 @@ router.post('/feedback', (req, res) => {
     q2 = q2;
     q3 = q3;
     q4 = q4;
-
-    // doesn't matter if there is any empty entries in the database for this case. 
-    // but here would be verification for different entries if needed.
 
     // Creates a new feedback object. 
     const newFeedback  = new Feedback({
@@ -50,12 +46,9 @@ router.post('/feedback', (req, res) => {
 // Route writen response feedback endpoint
 router.post('/response', (req, res) => {
     let {coordinates, date, response} = req.body;
-    console.log(response);
     coordinates = coordinates.trim();
     date = date.trim();
     response = response.trim();
-
-    console.log(response);
     
     // Creates a new response object. 
     const newResponse  = new Response({
@@ -318,15 +311,10 @@ router.post('/updates', (req, res) => {
 
 // Route to fetch the updates feed
 router.get('/updates/:username', async (req, res) => {
-    console.log("trying!");
-    console.log(req.params.username);
     const current_user = req.params.username;
-    console.log("CURRENT USER!");
-    console.log(current_user);
 
     try {
         const user = await Friend.findOne({ username: current_user });
-        console.log(user.friends);
 
         if (user && user.friends.length > 0) {
             const updates = await fetchFriendsUpdates(user.friends);
@@ -336,7 +324,6 @@ router.get('/updates/:username', async (req, res) => {
             let updates = "There are no updates to display.";
         }
     } catch (err) {
-        console.error(err);
         res.status(500).json({ message: "An error occurred while fetching the updates feed." });
     }
 });
@@ -347,7 +334,6 @@ async function fetchFriendsUpdates(friend_usernames) {
         username: { $in: friend_usernames }
     })
 
-    console.log(updates);
     return updates
 }
 

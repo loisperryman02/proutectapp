@@ -130,7 +130,7 @@ coordinate_dict = dict()
 for each in all_coordinates:
     coordinate_dict[each] = []
     # Gets lat/lon range within a 250m radius
-    lat_range, lon_range = get_lat_lon_ranges(each[0], each[1], 500)
+    lat_range, lon_range = get_lat_lon_ranges(each[0], each[1], 350)
     # Saves number of crimes of each coordinate to the dictionary, with a 250m radius
     coordinate_dict[each].append(num_crimes_in_range(all_crime_data, lon_range[0], lon_range[1], lat_range[0], lat_range[1]))
     coordinate_dict[each].append(num_crimes_in_range(all_public_space_data, lon_range[0], lon_range[1], lat_range[0], lat_range[1]))

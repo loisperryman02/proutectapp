@@ -133,7 +133,6 @@ def get_crimes_in_range(all_crime_data, long_min, long_max, lat_min, lat_max, cr
 
     crimes_in_range = crimes_in_range.copy()
     
-    # Add severity score for each crime
     crimes_in_range['Severity Score'] = crimes_in_range['Crime type'].map(crime_severity_scores)
    
     # Calculate average severity score for the crimes in the range
@@ -158,7 +157,6 @@ def get_public_space_data(public_space_data, latitude, longitude, tolerance=0.00
     return count
 
 
-# Convert the strings to tuples of floats
 all_coordinates = [(float(lat), float(lon)) for lat, lon in (s.split(',') for s in all_locations)]
 
 crime_data_2021 = pd.read_csv("C:\\Users\\User\\Documents\\GitHub\\proutectapp\\csv-json-files\\crimes_in_range_2021.csv")
@@ -235,8 +233,6 @@ def create_training_set(coordinates, scores, total_crimes, crime_weight, total_p
     updated_df = pd.concat([existing_df, new_df], ignore_index=True)
     updated_df.to_csv(output_file, index=False)
 
-
-#output_file = 'C:\\Users\\loisp\\Documents\\Year3\\Dissertation\\Proutect\\Proutect\\csv-json-files\\training_set.csv'
 
 output_file = "C:\\Users\\User\\Documents\\GitHub\\proutectapp\\csv-json-files\\training_set_new.csv"
 
