@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
-import MapScreen from '../Map'; // Adjust the import path as necessary
+import MapScreen from '../Map';
 import axios from 'axios';
-import MockedNavigator from './MockedNavigator'; // If you use a navigation mock
+import MockedNavigator from './MockedNavigator';
 
 // Mocks
 jest.mock('axios');
@@ -18,7 +18,6 @@ jest.mock('react-native-maps-directions', () => 'MapViewDirections');
 
 describe('MapScreen', () => {
   beforeEach(() => {
-    // Setup initial state and mocks
     axios.get.mockResolvedValue({
       data: {
         routes: [
@@ -54,5 +53,4 @@ describe('MapScreen', () => {
     });
   });
 
-  // Additional tests for each feature like updating preferences, handling map interactions, etc.
 });

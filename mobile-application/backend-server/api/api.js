@@ -149,28 +149,21 @@ router.post("/friend", async (req, res) => {
     }
 
     let friend = await Friend.findOne({ username: friend_username });
-    console.log("finding friend");
-    console.log(friend);
-    console.log("found friend");
-
+    
     if (friend) {
-        friend.requests.push(username);
-        await friend.save();
-        // Checks that the current user has not already had a request from this user.
-        // Ensures that users are not already friends. 
-        // if (!friend.requests.includes(username) && (!friend.friends.includes(username))) {
-            
-            
-        // } else {
-        //     return res.status(400).json({ message: "You are already friends with this user or have sent them a pending request. " });
-        // }
+        if (!friend.requests.includes(friend_username)) {
+            friend.requests.push(username);
+            await friend.save();
+        } else{
+            return res.status(400).json({ message: "You have sent this user a request already. " });
+        }
+       
     } else {
-        // If the user hasn't had any friend requests, make a new entry for Schema.
+        
         friend = new Friend({
-        username: friend_username,
-        friends: [],
-        requests: [username], // Initialize with the requester
-        updates: []
+            username: friend_username,
+            friends: [],
+            requests: [username]
         });
 
         await friend.save();
