@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 
+require('dotenv').config();
 
 const UserSchema = new Schema({
     name: "String",

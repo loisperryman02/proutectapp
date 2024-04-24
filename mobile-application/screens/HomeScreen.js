@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Pressable, TextInput, Image, Keyboard } from 'react-native';
-import axios from "axios";
+import React from 'react';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 
 export default function HomeScreen({ navigation, route }) {
 
   const username = route.params.username;
-  
 
   return (
     <View style={styles.background}>

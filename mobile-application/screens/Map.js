@@ -34,7 +34,6 @@ export default function MapScreen( {navigation} ) {
 
   const [ routeSafetyScore, setRouteSafetyScore ] = React.useState(0);
 
-  // Inside your component
   React.useEffect(() => {
     console.log(safeRouteChecked);
     if (safeRouteChecked && routeSafetyScore < 50) {
@@ -71,23 +70,19 @@ export default function MapScreen( {navigation} ) {
   
   const mapRef = React.useRef(null);
   const GOOGLE_API_KEY = 'AIzaSyCCN6kt-BF8ATlQRafsS13uf_TCuLiwjvY';
-  const { width } = Dimensions.get('window');
 
   React.useEffect(() => {
     if (start && mapRef.current) {
-      mapRef.current.animateToRegion(start, 1000); // Animate to the new region
+      mapRef.current.animateToRegion(start, 1000); 
     }
-  }, [start]); // This effect runs when 'start' changes
+  }, [start]);
 
-  // initial html step instructions are assigned HERE
-  // as soon as start and destination are formed
   React.useEffect(() => {
     if (start && destination) {
       getDirections(start, destination);
     }
   }, [start, destination]);
 
-  // Decoding example
   const decodePolyline = (points) => {
     return polyline.decode(points).map(point => ({
       latitude: point[0],
@@ -116,7 +111,7 @@ export default function MapScreen( {navigation} ) {
         });
       
       }
-      // //console.log"roue info up")
+
     } catch (error) {
       console.error(error);
     }
@@ -141,17 +136,17 @@ export default function MapScreen( {navigation} ) {
 
   const getCurrentKDTree = () => {
     const currentHour = new Date().getHours();
-    // Define the hours that constitute 'daytime' and 'evening'
-    return eveningKDTree;
+    if (currentHour >= 18 || currentHour < 6) {
+      return eveningKDTree;
+    } else {
+      return daytimeKDTree;
+    }
   };
-
+  
   const buildGraph = async (routeInfo) => {
     let nodes = new Map();
     const edges = [];
     const kdtree = getCurrentKDTree();
-
-    console.log("finding coordinates");
-    console.log(routeInfo.coordinates);
 
     // Sets start node and end node of original route - coordinates from route not the actual coordinates of places 
     let originalStartNodeID = `${routeInfo.steps[0].data.start_location.lat},${routeInfo.steps[0].data.start_location.lng}`;
@@ -174,7 +169,6 @@ export default function MapScreen( {navigation} ) {
       if (!nodes.has(endNode)) {
         nodes.set(endNode, {id: endNode, edges: []});
       }
-
       
       start_safety_score = findNearestSafetyScore(step.start_location.lat, step.start_location.lng, kdtree);
       end_safety_score = findNearestSafetyScore(step.end_location.lat, step.end_location.lng, kdtree);
@@ -324,7 +318,7 @@ export default function MapScreen( {navigation} ) {
 
         return [nodes, originalStartNodeID, originalDestinationID ];
 
-      };
+  };
 
      
 
@@ -348,7 +342,6 @@ export default function MapScreen( {navigation} ) {
 
             console.log(safestRoute);
             
-            // Need to get safest route in format to display route on screen. 
             setCoordinates([]);
             const coordinates = []
 
@@ -367,13 +360,7 @@ export default function MapScreen( {navigation} ) {
           
             });
 
-            console.log(total_safety_score);
-
             setRouteSafetyScore(total_safety_score / (coordinates.length));
-
-            console.log("this is route safety score!");
-            console.log(routeSafetyScore);
-
             setCoordinates(coordinates);
 
         }
@@ -381,7 +368,6 @@ export default function MapScreen( {navigation} ) {
         console.error("ERROR IN FIND AND SET SAFEST ROUTE:", error);
       }
     };
-    // //console.logroute);
     findAndSetSafestRoute();
 }, [routeInfo]);
 
@@ -449,20 +435,11 @@ export default function MapScreen( {navigation} ) {
             apikey = {GOOGLE_API_KEY}
             strokeWidth = {3}
             strokeColor = "blue"
-            mode = "WALKING"
-            onReady={result => {
-              //console.log'Distance:', result.distance, 'km');
-              //console.log'Duration:', result.duration, 'min');
-            }}            
+            mode = "WALKING"          
           />
         )}
 
       </MapView>
-
-      <View style>
-          
-
-      </View>
 
       <View style={[
                     styles.bottomContainer, 
@@ -483,7 +460,6 @@ export default function MapScreen( {navigation} ) {
       
       {isPressed ? (      
 
-        // New search bar when active
         <View style={styles.searchContainer}>  
 
           <View style={styles.titleContainer}>
@@ -591,7 +567,6 @@ export default function MapScreen( {navigation} ) {
                 onPress = {() => {
                   handleExpansion();
                   setStartJourney(true);
-                  // setRoute(true);
                   }} 
                   style={styles.routeButton}
                 >
@@ -667,7 +642,6 @@ export default function MapScreen( {navigation} ) {
         ) : startJourney ? (
 
           <>
-
           <View style = {styles.checkRouteTitleContainer}>
               
               <Text style = {styles.routeCheckText}>
@@ -677,10 +651,7 @@ export default function MapScreen( {navigation} ) {
           </View>
     
           <View style = {styles.checkRouteContainer}>
-          
-
           <View style = {styles.routeCheckBoxes}>
-
           
                 <CheckBox
                   title={`Pink Route - Suggested by Proutect. Safety Score: ${routeSafetyScore}`}
@@ -707,7 +678,7 @@ export default function MapScreen( {navigation} ) {
                 />
           </View>
 
-              </View>
+          </View>
 
           <View style = {styles.finishedJourneyContainer}>
 
@@ -728,8 +699,7 @@ export default function MapScreen( {navigation} ) {
 
 
         ) : !startJourney && !isPressed && (
-          // Original content
-          
+       
           <View style = {styles.searchBarContainer}> 
           <Icon style={styles.searchIcon} name="search" />
             <Text style = {styles.searchInput}>
@@ -739,15 +709,6 @@ export default function MapScreen( {navigation} ) {
         )}
     
       </View>
-
-      {/* <View style={styles.directionsContainer}>
-        {routeInfo.steps.map((step, index) => (
-          step.instructions ? 
-          <RenderHtml key={index} contentWidth={width} source={{ html: step.instructions }} /> :
-          null
-        ))}
-      </View> */}
-
     </View>
   );
 }

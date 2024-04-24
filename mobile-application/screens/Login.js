@@ -26,9 +26,11 @@ export default function HomeScreen({ navigation }) {
           
         })
         .catch(error => {
-
-          setErrorMessage('Invalid login details.');
-        
+          if (error.response) {
+            setErrorMessage(error.response.data.message);
+          } else {
+            setErrorMessage('Error with Login System');
+          }
       })
   }
 
@@ -38,10 +40,10 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardVisible(true); // Keyboard is visible
+      setKeyboardVisible(true); 
     });
     const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardVisible(false); // Keyboard is hidden
+      setKeyboardVisible(false); 
     });
 
     return () => {
@@ -51,22 +53,18 @@ export default function HomeScreen({ navigation }) {
   }, []);
 
   return (
-    <View style={styles.background}>
-      {/* Conditionally render the top container based on keyboard visibility */}
-      
-      <View style={!keyboardVisible ? styles.top_container : styles.top_container_smaller }>
+    <View style={styles.background}>      
+      <View data-testid = "top_container" style={!keyboardVisible ? styles.top_container : styles.top_container_smaller }>
         {!keyboardVisible && (
           <View style={styles.image_container}>
             <Image style={styles.image} resizeMode="contain" source={require('../assets/Protrekt.png')} />
           </View>
            )}
         </View>
-     
 
-      {/* Adjust the bottom container's flex based on keyboard visibility */}
-      <View style={!keyboardVisible ? styles.bottom_container : styles.bottom_container_expanded }>
+      <View data-testid = "bottom_container" style={!keyboardVisible ? styles.bottom_container : styles.bottom_container_expanded }>
         <View style={!keyboardVisible ? styles.title_container : styles.title_container_expand }>
-          <Text style={styles.login_title}>Login</Text>
+          <Text style={styles.login_title}>Login Page</Text>
           <Text style={styles.login_subtitle}>Sign in to start your journey.</Text>
         </View>
         <View style={styles.input_container}>

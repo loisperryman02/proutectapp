@@ -7,20 +7,19 @@ export default function FeedbackPage({ navigation, route }) {
   const today = new Date().toISOString();
 
   const [additionalInfo, setAdditionalInfo] = React.useState({
-    coordinates: JSON.stringify(route.params), // You'll need to obtain or set these values
-    date: today // Format: YYYY-MM-DD or however your backend expects it
+    coordinates: JSON.stringify(route.params), 
+    date: today 
   });
 
   const handleFeedback = () => {
     const url = "http://172.25.14.12:3000/feedback";
 
     const feedbackInfo = {
-      ...additionalInfo, // Spreads the id, coordinates, and date
-      ...ratings, // Spreads the q1, q2, q3, q4 ratings
+      ...additionalInfo,
+      ...ratings, 
     };
-    console.log(feedbackInfo);
     axios
-      .post(url, feedbackInfo, {timeout: 30000})
+      .post(url, feedbackInfo)
       .then((response) => {
           const result = response.data;
           const {status, data} = result;

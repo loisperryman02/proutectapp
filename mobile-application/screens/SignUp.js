@@ -22,7 +22,6 @@ export default function SignUp({ navigation }) {
     axios
         .post(url, userDetails)
         .then((response) => {
-            console.log("worked");
             navigation.navigate("Login");
          
         })
@@ -30,10 +29,8 @@ export default function SignUp({ navigation }) {
             if (error.response) {
                 setErrorMessage(error.response.data.message);
               } else if (error.request) {
-                // The request was made but no response was received
                 console.log(error.request);
               } else {
-                // Something happened in setting up the request that triggered an Error
                 console.log('Error', error.message);
               }
       })

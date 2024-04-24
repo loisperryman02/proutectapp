@@ -162,7 +162,6 @@ export default function Friends({ navigation, route }) {
                         <Pressable style={styles.reject_btn} onPress={() => handleReject(item)}>
                             <Text style={styles.acceptRejectText}>Reject</Text>
                         </Pressable>
-                        {/* Add a reject button similarly */}
                     </View>
                     )}
                 />

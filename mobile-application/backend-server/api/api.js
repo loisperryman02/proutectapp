@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 
-const Feedback = require('./../models/Feedback.js');
-const Response = require('./../models/Response.js');
+const Feedback = require('../models/Feedback.js');
+const Response = require('../models/Response.js');
 const User = require('../models/User.js');
 const Friend = require('../models/Friend.js');
 const Updates = require('../models/Updates.js')
@@ -73,7 +73,6 @@ router.post('/response', (req, res) => {
 })
 
 router.post("/login", async (req, res) => {
-    console.log("trying!!!");
     let { username, password } = req.body;
     username = username.trim();
     password = password.trim();
@@ -83,18 +82,15 @@ router.post("/login", async (req, res) => {
 
     try {
         const user = await User.findOne({ username: username });
-        console.log(user);
         if (!user) {
             return res.status(400).json({ message: "User not found" });
         }
 
-        // Compare the hashed password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
-        // Here, implement token generation or session management as needed
         res.json({ message: "Login successful" });
     } catch (err) {
         console.error(err);
@@ -110,12 +106,9 @@ router.post("/signup", async (req, res) => {
     password = password.trim();
     passwordtwo = passwordtwo.trim();
 
-    console.log("reaching end!!");
-
     try {
         let user = await User.findOne({ username: username });
-        console.log("finding user");
-
+        
         if (user) {
             return res.status(400).json({ message: "Username already exists." });
         }
@@ -123,7 +116,6 @@ router.post("/signup", async (req, res) => {
         if (password !== passwordtwo) {
             return res.status(400).json({ message: "Passwords do not match." });
         }
-    
 
         NewUser = new User({
             name,
@@ -139,7 +131,6 @@ router.post("/signup", async (req, res) => {
         console.error(err);
         res.status(500).json({ message: "Server error" });
     }
-
 })
 
 router.post("/friend", async (req, res) => {
