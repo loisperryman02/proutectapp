@@ -27,7 +27,6 @@ it('displays error message when two different passwords are entered', async () =
 
   fireEvent.changeText(getByPlaceholderText('Password'), 'wronguser');
   fireEvent.changeText(getByPlaceholderText('Confirm Password'), 'wrongpassword');
-
   fireEvent.press(getByText('Register'));
 
   await waitFor(() => {

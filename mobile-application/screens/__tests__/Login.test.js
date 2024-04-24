@@ -7,11 +7,9 @@ jest.mock('axios');
 
 describe('HomeScreen', () => {
   it('renders all text and placeholder', () => {
-    // Mock navigation and route props
     const navigationMock = { navigate: jest.fn() };
-    const routeMock = { params: { username: 'testUser' } }; // Adjust based on actual expected params
+    const routeMock = { params: { username: 'testUser' } }; 
 
-    // Use the mock props in the render method
     const { getByPlaceholderText, getByText } = render(<HomeScreen navigation={navigationMock} route={routeMock} />);
     expect(getByPlaceholderText('Username')).toBeTruthy();
     expect(getByPlaceholderText('Password')).toBeTruthy();

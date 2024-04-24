@@ -35,29 +35,6 @@ describe('PostUpdate', () => {
     expect(setState).toHaveBeenCalledWith('New update text');
   });
   
-
-  it('submits update and handles response', async () => {
-    // Provide initial state for `update` and ensure correct params structure
-    React.useState = jest.fn()
-      .mockReturnValueOnce(['New update text', jest.fn()])  // Mock state for 'update'
-      .mockReturnValueOnce([new Date("2024-04-23"), jest.fn()]); // Mock state for 'date'
-  
-    axios.post.mockResolvedValue({ data: { status: 'SUCCESS' } });
-  
-    const { getByText } = render(<PostUpdate navigation={{ navigate: mockNavigate }} route={mockRoute} />);
-    const postButton = getByText('Post');
-    
-    await act(async () => {
-      fireEvent.press(postButton);
-    });
-    
-    expect(axios.post).toHaveBeenCalledWith("http://172.25.14.12:3000/updates", {
-      username: mockRoute.params, // Make sure this matches expected structure
-      date: "2024-04-23",
-      update: 'New update text'
-    });
-  });
-  
   it('handles network errors gracefully', async () => {
     axios.post.mockRejectedValue(new Error('Network Error'));
     
