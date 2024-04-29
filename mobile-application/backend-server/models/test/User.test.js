@@ -9,7 +9,7 @@ afterAll(async () => {
   await mongoose.disconnect();
 });
 
-test('inserts new user into database', async () => {
+test('inserts a new user into database', async () => {
   const testUser = new User({ name: 'Test User', username: 'testuser', password: 'password' });
   await testUser.save();
 

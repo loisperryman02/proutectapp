@@ -135,10 +135,13 @@ function heuristicCostEstimate(currentNode, goalNode, preferences) {
 // The cost function will be altered depending on user preferences
 // The user may prefer a more efficient, safe or busy route
 
-function costFunction(edge, preferences, total_safety_s) {
+function costFunction(edge, preferences) {
 
     let distance_weight = 0.5;
     let safety_weight = 0.5;
+
+    console.log(preferences);
+    console.log(edge.safetyScore);
 
     if (preferences.size == 1) {
         if (preferences.has("Efficiency")) {
@@ -150,13 +153,15 @@ function costFunction(edge, preferences, total_safety_s) {
         }
     }
 
+    let safety_score = 0;
+
     // The lowest possible safety score should result in the highest penalty. 
     if (edge.safetyScore == 0) {
-        let safety_score = safety_weight;
+        safety_score = safety_weight;
     } else if (edge.safetyScore = 100)  {
-        let safety_score = 0;
+        safety_score = 0;
     } else {
-        let safety_score = parseFloat(1/edge.safetyScore) * safety_weight;
+        safety_score = parseFloat(1/edge.safetyScore) * safety_weight;
     }
 
     let gScore = ((edge.distance * distance_weight) + safety_score);

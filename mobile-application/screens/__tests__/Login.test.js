@@ -5,7 +5,7 @@ import axios from 'axios';
 
 jest.mock('axios');
 
-describe('HomeScreen', () => {
+describe('Login', () => {
   it('renders all text and placeholder', () => {
     const navigationMock = { navigate: jest.fn() };
     const routeMock = { params: { username: 'testUser' } }; 
@@ -44,8 +44,6 @@ it('navigates to the sign up page on when user presses the register button', asy
     expect(navigationMock.navigate).toHaveBeenCalledWith("SignUp");
   });
 });
-
-
 
 it('displays error message on incorrect login details', async () => {
   const navigationMock = { navigate: jest.fn() };

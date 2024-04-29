@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Pressable, TextInput, Image, Keyboard } from 'react-native';
 import axios from "axios";
 
-export default function HomeScreen({ navigation }) {
+export default function Login({ navigation }) {
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
   const [keyboardVisible, setKeyboardVisible] = useState(false);
@@ -10,7 +10,7 @@ export default function HomeScreen({ navigation }) {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = () => {
-    const url = "http://172.25.14.12:3000/login";
+    const url = "http://172.25.63.205:3000/login";
     const details = {
       username: email,
       password: password
@@ -99,9 +99,8 @@ export default function HomeScreen({ navigation }) {
           </Pressable>
         </View>
         <View style={styles.links_container}>
-          <Text style={styles.login_subtitle}>Forgot password?</Text>
           <Pressable onPress={() => navigation.navigate("SignUp")}>
-            <Text style={styles.login_subtitle}>
+            <Text style={styles.register_subtitle}>
               Register now!
             </Text>
           </Pressable>
@@ -172,6 +171,12 @@ const styles = StyleSheet.create({
     fontFamily: "Arial",
     fontSize: 15,
     paddingBottom: 10
+  },
+  register_subtitle: {
+    color: "#8F8E8E",
+    fontFamily: "Arial",
+    fontSize: 15,
+    marginTop: -15
   },
   button: {
     alignItems: "center",

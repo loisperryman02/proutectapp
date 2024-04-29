@@ -124,7 +124,6 @@ export default function MapScreen( {navigation} ) {
       );
       const json = await response.json();
       if (json.routes.length) {
-        // //console.log"distance data found");
         return {
           distance: json.routes[0].legs[0].distance.value,
         };
@@ -147,6 +146,8 @@ export default function MapScreen( {navigation} ) {
     let nodes = new Map();
     const edges = [];
     const kdtree = getCurrentKDTree();
+
+    console.log(kdtree);
 
     // Sets start node and end node of original route - coordinates from route not the actual coordinates of places 
     let originalStartNodeID = `${routeInfo.steps[0].data.start_location.lat},${routeInfo.steps[0].data.start_location.lng}`;
@@ -316,7 +317,7 @@ export default function MapScreen( {navigation} ) {
 
       }
 
-        return [nodes, originalStartNodeID, originalDestinationID ];
+      return [nodes, originalStartNodeID, originalDestinationID ];
 
   };
 

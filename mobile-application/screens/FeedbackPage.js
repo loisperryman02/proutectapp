@@ -12,7 +12,7 @@ export default function FeedbackPage({ navigation, route }) {
   });
 
   const handleFeedback = () => {
-    const url = "http://172.25.14.12:3000/feedback";
+    const url = "http://172.25.63.205:3000/feedback";
 
     const feedbackInfo = {
       ...additionalInfo,

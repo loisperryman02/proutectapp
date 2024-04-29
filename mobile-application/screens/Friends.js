@@ -13,20 +13,19 @@ export default function Friends({ navigation, route }) {
         const fetchRequests = async () => {
             
             let username = route.params;
-            const response = await axios.get(`http://172.25.14.12:3000/friend/requests/${username}`);
+            const response = await axios.get(`http://172.25.63.205:3000/friend/requests/${username}`);
             setAllRequests(response.data.requests);
 
             if (!response) {
                 console.log("User does not have any requests!");
             }
-            
         };
 
         fetchRequests();
     }, []);
 
     const handleAccept = (item) => {
-        const url = "http://172.25.14.12:3000/acceptUser";
+        const url = "http://172.25.63.205:3000/acceptUser";
         const accept_user = {
             request_username: item,
             username: route.params
@@ -36,8 +35,6 @@ export default function Friends({ navigation, route }) {
             .post(url, accept_user)
             .then((response) => {
                 const result = response.data;
-
-                // Ensures that the list of requests is updated in real-time. 
                 const updatedRequests = allRequests.filter(request => request !== item);
                 console.log(updatedRequests);
                 setAllRequests(updatedRequests);
@@ -52,7 +49,7 @@ export default function Friends({ navigation, route }) {
     }
 
     const handleReject = (item) => {
-        const url = "http://172.25.14.12:3000/rejectUser";
+        const url = "http://172.25.63.205:3000/rejectUser";
         const accept_user = {
             reject_username: item,
             username: route.params
@@ -70,17 +67,15 @@ export default function Friends({ navigation, route }) {
               if (error.response) {
                 setErrorMessage(error.response.data.message);
               } else if (error.request) {
-                // The request was made but no response was received
                 console.log(error.request);
               } else {
-                // Something happened in setting up the request that triggered an Error
                 console.log('Error', error.message);
               }
             })
     }
 
     const sendFriendRequest = () => {
-        const url = "http://172.25.14.12:3000/friend";
+        const url = "http://172.25.63.205:3000/friend";
 
         // Sets details of the username that is being requested. 
         const request_user = {
@@ -92,17 +87,13 @@ export default function Friends({ navigation, route }) {
             .post(url, request_user)
             .then((response) => {
               const result = response.data;
-              // navigation.navigate("Home", route.params);            
             })
             .catch(error => {
-
               if (error.response) {
                 setErrorMessage(error.response.data.message);
               } else if (error.request) {
-                // The request was made but no response was received
                 console.log(error.request);
               } else {
-                // Something happened in setting up the request that triggered an Error
                 console.log('Error', error.message);
               }
           })
@@ -135,6 +126,13 @@ export default function Friends({ navigation, route }) {
                     onChangeText={setRequest}>
                 </TextInput>
             </View>
+
+            <View> 
+              <Text style={styles.errorMsg}>
+                {errorMessage}
+              </Text>
+            </View>
+
             <Pressable style={styles.button} onPress={sendFriendRequest}>
                 <Text style={styles.send_request_btn}> Send friend request </Text>
             </Pressable>
@@ -306,5 +304,13 @@ const styles = StyleSheet.create({
   send_request_btn: {
     color: "#fff",
     fontWeight: "bold"
+  }, 
+  errorMsg: {
+    color: "red",
+    fontFamily: "Arial",
+    fontWeight: "bold",
+    fontSize: 15,
+    marginTop: 5,
+    marginBottom: -10
   }
 });

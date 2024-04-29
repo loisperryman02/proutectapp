@@ -11,7 +11,7 @@ export default function SignUp({ navigation }) {
   const [errorMessage, setErrorMessage] = React.useState('');
 
   const handleSignUp = () => {
-    const url = "http://172.25.14.12:3000/signup";
+    const url = "http://172.25.63.205:3000/signup";
     let userDetails = {
       name : name,
       username: username,

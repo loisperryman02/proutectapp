@@ -10,7 +10,7 @@ beforeAll(async () => {
     await mongoose.disconnect();
   });
 
-test('inserts new user into database', async () => {
+test('inserts a user into the friend database when a user is first created', async () => {
     const friendData = new Friend({ username: 'testuser', friends: [], requests: [] });
     await friendData.save();
 
@@ -19,7 +19,7 @@ test('inserts new user into database', async () => {
     expect(newFriend.username).toEqual('testuser');
 });
 
-test('inserts new friend into database', async () => {
+test('testuser2 is correctly added as a friend of testuser', async () => {
     const friendData = await Friend.findOne({ username: 'testuser' });
 
     if (!friendData.requests.includes("testuser2")) {

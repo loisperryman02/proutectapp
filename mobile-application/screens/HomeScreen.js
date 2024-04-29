@@ -38,7 +38,7 @@ export default function HomeScreen({ navigation, route }) {
 
         <Pressable style={styles.navigation} onPress={() => navigation.navigate("Friends", username)} >
           <Text style={styles.button_text}>
-            View friends
+            Add friends
           </Text>
         </Pressable>
 

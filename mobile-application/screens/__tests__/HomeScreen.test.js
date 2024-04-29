@@ -6,12 +6,12 @@ describe('HomeScreen', () => {
   const routeMock = { params: { username: 'TestUser' } };
   const navigationMock = { navigate: jest.fn() };
 
-  it('should display the welcome message with the username', () => {
+  it('should display message "Welcome username" when user logs in', () => {
     const { getByText } = render(<HomeScreen navigation={navigationMock} route={routeMock} />);
     expect(getByText(`Welcome TestUser`)).toBeTruthy();
   });
 
-  it('should navigate to the Map screen when "Go to maps" is pressed', () => {
+  it('should navigate to the Map screen when "Go to maps" button is pressed', () => {
     const { getByText } = render(<HomeScreen navigation={navigationMock} route={routeMock} />);
     const button = getByText('Go to maps');
     fireEvent.press(button);
@@ -32,9 +32,9 @@ describe('HomeScreen', () => {
     expect(navigationMock.navigate).toHaveBeenCalledWith('Updates', 'TestUser');
   });
 
-  it('should navigate to the Friends screen when "View friends" is pressed', () => {
+  it('should navigate to the Friends screen when user selects "Add friends"', () => {
     const { getByText } = render(<HomeScreen navigation={navigationMock} route={routeMock} />);
-    const button = getByText('View friends');
+    const button = getByText('Add friends');
     fireEvent.press(button);
     expect(navigationMock.navigate).toHaveBeenCalledWith('Friends', 'TestUser');
   });

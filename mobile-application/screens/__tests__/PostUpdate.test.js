@@ -16,7 +16,7 @@ describe('PostUpdate', () => {
     jest.clearAllMocks();
   });
 
-  it('renders correctly', () => {
+  it('all components and text renders correctly', () => {
     const { getByText, getByPlaceholderText } = render(<PostUpdate navigation={{ navigate: mockNavigate }} route={mockRoute} />);
     expect(getByText('Post Update')).toBeTruthy();
     expect(getByPlaceholderText('Type your update here...')).toBeTruthy();
@@ -24,18 +24,15 @@ describe('PostUpdate', () => {
   });
 
   it('updates input text', () => {
-    // Mock the useState to return a jest function
     const setState = jest.fn();
     React.useState = jest.fn(() => ["", setState]);
-  
     const { getByPlaceholderText } = render(<PostUpdate navigation={{ navigate: mockNavigate }} route={mockRoute} />);
     const input = getByPlaceholderText('Type your update here...');
     fireEvent.changeText(input, 'New update text');
-    
     expect(setState).toHaveBeenCalledWith('New update text');
   });
   
-  it('handles network errors gracefully', async () => {
+  it('the page does not navigate if an error message is returned in the api response', async () => {
     axios.post.mockRejectedValue(new Error('Network Error'));
     
     const { getByText } = render(<PostUpdate navigation={{ navigate: mockNavigate }} route={mockRoute} />);
@@ -48,4 +45,5 @@ describe('PostUpdate', () => {
     expect(axios.post).toHaveBeenCalled();
     expect(mockNavigate).not.toHaveBeenCalled(); // Ensure navigation does not occur on error
   });
+
 });

@@ -8,7 +8,6 @@ jest.mock('axios');
 describe('SignUp', () => {
   it('renders all text and placeholder', () => {
     const navigationMock = { navigate: jest.fn() };
-    
     const { getByPlaceholderText, getByText } = render(<SignUp navigation={navigationMock} />);
     expect(getByPlaceholderText('Username')).toBeTruthy();
     expect(getByPlaceholderText('Password')).toBeTruthy();
@@ -67,7 +66,7 @@ it('displays error message when there is a server error', async () => {
   });
 });
 
-it('navigates to the home screen on successful login', async () => {
+it('navigates to the login page after a successful sign up', async () => {
   const navigationMock = { navigate: jest.fn() };
   axios.post.mockResolvedValue({ data: { message: "Sign up Successful" } });
   

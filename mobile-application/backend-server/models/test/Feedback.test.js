@@ -9,7 +9,7 @@ afterAll(async () => {
   await mongoose.disconnect();
 });
 
-test('inserts new user into database', async () => {
+test('inserting a new feedback entry into the database', async () => {
   const feedback = new Feedback({ coordinates: '{52.125, -1.239}', date: new Date().toISOString(), q1: 5, q2: 2, q3: 2, q4: 1 });
   await feedback.save();
 
