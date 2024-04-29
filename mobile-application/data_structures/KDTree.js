@@ -1,6 +1,10 @@
+/** 
+ * This file defines the data structure of the KD tree used in this project, and relevant fun
+ */
+
 import { kdTree } from 'kd-tree-javascript';
 
-
+// Initial dataset
 let safety_scores = 
 [
   {
@@ -1160,6 +1164,7 @@ let safety_scores =
   }
 ];
 
+// Dataset after feedback
 let updated_safety_scores = [
   {
     "Latitude": 52.2721847,
@@ -5083,26 +5088,20 @@ let updated_safety_scores = [
   }
  ]
 
-
  function haversineDistance(coords1, coords2, isMiles = false) {
-  // Earth's radius in kilometers or miles
   const RADIUS_OF_EARTH_IN_KM = 6371;
   const RADIUS_OF_EARTH_IN_MILES = 3959;
-
   const radius = isMiles ? RADIUS_OF_EARTH_IN_MILES : RADIUS_OF_EARTH_IN_KM;
   const lat1 = coords1.latitude;
   const lon1 = coords1.longitude;
   const lat2 = coords2.latitude;
   const lon2 = coords2.longitude;
-
   const latDelta = degreesToRadians(lat2 - lat1);
   const lonDelta = degreesToRadians(lon2 - lon1);
-
   const a = Math.sin(latDelta / 2) * Math.sin(latDelta / 2) +
               Math.cos(degreesToRadians(lat1)) * Math.cos(degreesToRadians(lat2)) *
               Math.sin(lonDelta / 2) * Math.sin(lonDelta / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
   return radius * c;
 }
 
@@ -5114,16 +5113,16 @@ function buildKDTree(data) {
   return new kdTree(data, haversineDistance, ["latitude", "longitude"]);
 }
 
+// Uses inbuilt function to find the nearest safety score to a given coordinate
 export function findNearestSafetyScore(lat, lng, kdtree) {
   let nearest = kdtree.nearest({ latitude: lat, longitude: lng }, 1);
-  return nearest[0][0].safetyScore; // Returns the Safety_Score of the nearest point
+  return nearest[0][0].safetyScore; 
 }
 
+// Finds the closest number of points, specified by the user 
 export function findNearestPoints(lat, lng, kdtree, numPoints) {
-  // Find the 'numPoints' nearest points to the given latitude and longitude
   let nearest = kdtree.nearest({ latitude: lat, longitude: lng }, numPoints);
 
-  // Map the results to an array of objects with latitude, longitude, and safetyScore
   let returned_points = nearest.map(point => ({
     latitude: point[0].latitude,
     longitude: point[0].longitude,
@@ -5133,12 +5132,12 @@ export function findNearestPoints(lat, lng, kdtree, numPoints) {
   return returned_points;
 }
 
-// Plus 5 to SafetyScore for daytime KD tree.
+// Plus 5/0.011927 to SafetyScore for daytime KD tree.
 export const daytimeKDTree = buildKDTree(updated_safety_scores.map(item => ({
   latitude: item.Latitude, longitude: item.Longitude, safetyScore: item.SafetyScore+0.011927
 })));
 
-// Minus 5 from SafetyScore for evening KD tree.
+// Minus 5/0.011927 from SafetyScore for evening KD tree.
 export const eveningKDTree = buildKDTree(updated_safety_scores.map(item => ({
   latitude: item.Latitude, longitude: item.Longitude, safetyScore: item.SafetyScore-0.011927
 })));

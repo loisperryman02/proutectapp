@@ -1,6 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
 
+/**
+ * This displays the home page after a user logs in.
+ * The navigation parameter is required to navigate between pages and the route parameter
+ * holds the username to be displayed on the home screen.
+ */
 export default function HomeScreen({ navigation, route }) {
 
   const username = route.params.username;

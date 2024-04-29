@@ -2,19 +2,21 @@ import React from 'react';
 import { StyleSheet, View, Text, Pressable, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import axios from 'axios';
 
+/**
+ * This page enables a user to post an update so it can be viewed by their friends.
+ * Navigation parameter is needed to navigate to other pages and the route parameter is needed to store user details.
+ */
 export default function PostUpdate({ navigation, route }) {
     
     let [update, setUpdate] = React.useState(''); 
     
-    // Gets today's date/time for the update. 
     const today = new Date();
     const formattedDate = today.toISOString().substring(0, 10);
 
-    // note: IP address changes. 
+    // This function handles sending the update posted by the user to the database via the API endpoint.
     const postUpdate = () => {
         const url = "http://172.25.63.205:3000/updates";
 
-        // Gets today's date/time for the update. 
         const today = new Date();
         const formattedDate = today.toISOString().substring(0, 10);
 
@@ -44,6 +46,7 @@ export default function PostUpdate({ navigation, route }) {
         })
       }
 
+    // Keyboard is hidden when user touches any other part of the screen.
     const DismissKeyboardView = ({ children }) => (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             {children}
@@ -69,7 +72,6 @@ export default function PostUpdate({ navigation, route }) {
               <Text style={styles.subtitle}> Update your friends and let them know you are safe! </Text>
           </View>
         </DismissKeyboardView>
-
         
         <View style={styles.input_container}>
            <TextInput 

@@ -1,20 +1,21 @@
+/**
+ * This file holds the A* search algorithm used to find the safest route in a graph.
+ */
 
-// A* Graph Search algorithm. 
-
-// Need to sort out objects and how they are accessed in this file.
 export function aStar(startNode, goalNode, nodes, preferences) {
-    let openSet = new Set(); // starts with start node
-    let exploredSet = new Set(); // defines already explored nodes
-    let cameFrom = new Map(); // reconstructs path later
-    let gScore = {}; // Cost from start to node
-    let fScore = {}; // estimated cost from start to goal through node
+    let openSet = new Set(); 
+    let exploredSet = new Set(); 
+    let cameFrom = new Map(); 
+    let gScore = {}; // output of cost function
+    let fScore = {}; // output of heuristic function
 
+    // Open set starts at start node
     openSet.add(startNode.id);
 
-    // Sets it to the highest possible value, so it can be updated later
     gScore[startNode.id] = 0;
     fScore[startNode.id] = 0;
 
+    // Sets goal node as destination location.
     goal = {
         id: goalNode.id,
         edges: goalNode.edges
@@ -25,7 +26,7 @@ export function aStar(startNode, goalNode, nodes, preferences) {
         lowestFScore = Infinity;
         let currentId = null;
 
-        // Loops through openSet, gets the node with the lowest fScore and sets it to current 
+        // Loops through openSet, gets the node with the lowest fScore and sets it as the current node
         openSet.forEach(nodeId => {
             if (fScore[nodeId] < lowestFScore) {
                 currentId = nodeId;
@@ -33,14 +34,14 @@ export function aStar(startNode, goalNode, nodes, preferences) {
             }
         });
 
-        // if no current node, break out of loop. 
+        // If there is no current node to explore then break out of the loop as there must be no other nodes to explore.
         if (currentId == null) continue;
 
         current = nodes.get(currentId);
-
         openSet.delete(currentId);
         exploredSet.add(currentId);
 
+        // Explores all neighbours of current node to find the lowest cost one.
         for (let edge of current.edges) {
             let neighbourId = edge.to;
             let neighbour = nodes.get(neighbourId);
@@ -54,17 +55,17 @@ export function aStar(startNode, goalNode, nodes, preferences) {
                 return reconstructPath(cameFrom, neighbour);
             }
             
+            // Calls the cost function
             let temporaryCost = costFunction(edge, preferences);
 
-            // Calculates a temporary gScore for neighbour node 
-            // Sum of gScore of current node, and the cost of current node and neighbour (considering distance and safety score)
+            // Calculates the total cost (gscore) for the current neighbour
             let temporaryGScore = gScore[current.id] + temporaryCost;
             
+            // Calculates the total predicted cost from neighbour to the goal node, by summing the gscore cost and the heuristic cost.
             let temporaryFScore = temporaryGScore + heuristicCostEstimate(neighbour, goal, preferences);
 
-            // This checks if the tentative gScore for neighbour node is better than previously recorded
-            // If neighbour node hasn't been encountered before, infinity is assigned to gScore
-
+            // If the total predicted cost (fscore) is lower than the existing one for this neighbour node, then the lowest cost route is updated. 
+            // If the neighbour node hasn't been encountered before, then its gscore is assigned to infinity.
             if (!fScore[neighbourId] || temporaryFScore < fScore[neighbourId]) {
 
                 cameFrom.set(neighbour.id, current);
@@ -74,9 +75,7 @@ export function aStar(startNode, goalNode, nodes, preferences) {
                 if (!openSet.has(neighbourId)) {
                     openSet.add(neighbourId);
                 };
-
             }
-            
         }
     }
 
@@ -86,10 +85,8 @@ export function aStar(startNode, goalNode, nodes, preferences) {
 
 function haversineDistance(coords1, coords2, isMiles = false) {
     
-    // Earth's radius in kilometers or miles
     const RADIUS_OF_EARTH_IN_KM = 6371;
-    const RADIUS_OF_EARTH_IN_MILES = 3959;
-  
+    const RADIUS_OF_EARTH_IN_MILES = 3959; 
     const radius = isMiles ? RADIUS_OF_EARTH_IN_MILES : RADIUS_OF_EARTH_IN_KM;
 
     firstCoordinates = coords1.split(",");
@@ -112,13 +109,11 @@ function haversineDistance(coords1, coords2, isMiles = false) {
     return radius * c;
   }
 
-  
-// Helper function to convert degrees to radians
 function deg2rad(degrees) {
     return degrees * (Math.PI / 180);
 }
 
-
+// Defines the heuristic cost function, which applies the same weights as the cost function to ensure that it does not overestimate the cost.
 function heuristicCostEstimate(currentNode, goalNode, preferences) {
     let distance_weight = 0.5;
 
@@ -132,16 +127,10 @@ function heuristicCostEstimate(currentNode, goalNode, preferences) {
     return haversineDistance(currentNode.id, goalNode.id) * distance_weight;
 }
 
-// The cost function will be altered depending on user preferences
-// The user may prefer a more efficient, safe or busy route
-
+// The cost function is altered depending on the user preferences selected. The weights of the cost function are adjusted accordingly. 
 function costFunction(edge, preferences) {
-
     let distance_weight = 0.5;
     let safety_weight = 0.5;
-
-    console.log(preferences);
-    console.log(edge.safetyScore);
 
     if (preferences.size == 1) {
         if (preferences.has("Efficiency")) {
@@ -169,9 +158,11 @@ function costFunction(edge, preferences) {
     return gScore
 }
 
-// Iterates backwards from the goal node to the start node using cameFrom map
-// cameFrom map -> keeps track of the best predessecor for each node
-// This function gets the entire sequence of steps taken once the goal is found. 
+/**
+ * This function returns the optimal route from the start node to the goal node. 
+ * It iterates backwards from the goal node to the start node using the data stored in the cameFrom map,
+ * which keeps track of the best predecessor for each node. The function returns the entire sequence of steps taken.
+ */
 function reconstructPath(cameFrom, goal) {
     let goalId = goal.id;
     let totalPath = [goalId];

@@ -2,20 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, FlatList, Pressable, TextInput, Image, Keyboard } from 'react-native';
 import axios from "axios";
 
+
+/**
+ * This page enables a user to view updates posted by their friends. 
+ * Navigation parameter is needed to navigate to other pages and the route parameter is needed to access user details.
+ */
 export default function Updates({ navigation, route }) {
 
     const [updates, setUpdates] = useState([]);
     const username = route.params;
 
+    // This function calls the API endpoint and fetches any updates that their friends have posted.
     useEffect(() => {
         const fetchUpdates = async () => {
-            
             const response = await axios.get(`http://172.25.63.205:3000/updates/${username}`);
             setUpdates(response.data.updates);
             if (!response) {
                 console.log("User does not have any updates!");
-            }
-            
+            }      
         };
         fetchUpdates();
     }, []); 
@@ -23,34 +27,27 @@ export default function Updates({ navigation, route }) {
 
     return (
         <View style={styles.background}>
+          <View style={styles.top_container}>
+              <View style={styles.title_container}>
+              <Text style={styles.title_text}>
+                  Updates
+              </Text>
+              </View>
+          </View>
 
-        <View style={styles.top_container}>
-            <View style={styles.title_container}>
-            <Text style={styles.title_text}>
-                Updates
-            </Text>
-            </View>
-        </View>
-
-        <View style={styles.bottom_container}>
-          
-     
-            <FlatList
-                data={updates}
-                keyExtractor={item => item._id.toString()}
-                renderItem={({ item }) => (
-                  <View style={styles.update_container}>
-                        <Text style={styles.updateText}> Update: {item.update}</Text>
-                        <Text style={styles.updateText}> By: {item.username}</Text>
-                        <Text style={styles.updateText}> Date: {new Date(item.date).toLocaleDateString()}</Text>
-                  </View>
-                )}
-            />
-
-               
-       
-        </View>
-    
+          <View style={styles.bottom_container}>
+              <FlatList
+                  data={updates}
+                  keyExtractor={item => item._id.toString()}
+                  renderItem={({ item }) => (
+                    <View style={styles.update_container}>
+                          <Text style={styles.updateText}> Update: {item.update}</Text>
+                          <Text style={styles.updateText}> By: {item.username}</Text>
+                          <Text style={styles.updateText}> Date: {new Date(item.date).toLocaleDateString()}</Text>
+                    </View>
+                  )}
+              />
+          </View>
         </View>
     );
 }

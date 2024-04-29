@@ -2,6 +2,10 @@ import React from 'react';
 import { StyleSheet, View, Text, Pressable, TextInput, Keyboard } from 'react-native';
 import axios from "axios";
 
+/**
+ * This page is responsible for creating a new account for a user after they have signed up.
+ * Navigation parameter is needed to navigate to other pages and the route parameter is needed to store user details.
+ */
 export default function SignUp({ navigation }) {
   const [username, onChangeUserName] = React.useState('');
   const [name, onChangeName] = React.useState('');
@@ -10,6 +14,9 @@ export default function SignUp({ navigation }) {
   const [keyboardVisible, setKeyboardVisible] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
 
+  /**
+   * This function sends the user data to be stored in the database, via the API endpoint.
+   */
   const handleSignUp = () => {
     const url = "http://172.25.63.205:3000/signup";
     let userDetails = {
@@ -23,7 +30,6 @@ export default function SignUp({ navigation }) {
         .post(url, userDetails)
         .then((response) => {
             navigation.navigate("Login");
-         
         })
         .catch(error => {
             if (error.response) {
@@ -36,12 +42,13 @@ export default function SignUp({ navigation }) {
       })
   }
 
+  // Hides the keyboard when it is not in use.
   React.useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardVisible(true); // Keyboard is visible
+      setKeyboardVisible(true); 
     });
     const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardVisible(false); // Keyboard is hidden
+      setKeyboardVisible(false); 
     });
 
     return () => {

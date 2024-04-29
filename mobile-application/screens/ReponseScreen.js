@@ -2,20 +2,22 @@ import React from 'react';
 import { StyleSheet, View, Text, Pressable, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import axios from 'axios';
 
+/**
+ * This function handles storing a response posted by a user about a route. 
+ * Navigation parameter is needed to navigate to other pages and the route parameter is needed to store user details.
+ */
 export default function ResponsePage({ navigation, route }) {
     
     let [tempInput, setTempInput] = React.useState(''); 
 
-    console.log(route.params);
-
-    // note: IP address changes. 
+    // This function sends a resposne about a route to the database via the correct API endpoint
     const handleFeedback = () => {
         const url = "http://172.25.63.205:3000/response";
         console.log("trying server.");
         const responseInfo = {
-          coordinates: route.params.coordinates, // Spreads the coordinates and date
+          coordinates: route.params.coordinates, 
           date: route.params.date,
-          response: tempInput // adds the reponse from text input.
+          response: tempInput 
         };
         axios
           .post(url, responseInfo)
@@ -23,19 +25,18 @@ export default function ResponsePage({ navigation, route }) {
               const result = response.data;
               const {status, data} = result;
               if (status !== "SUCCESS") {
-                // set some error message...
                 console.log("Unsuccessful!");
               } else {
-                // not sure if we need to pass data.
                 navigation.navigate("Map");
               }
             })
           .catch(error => {
-            console.log("There is an error1");
-          console.log(error);
+            console.log("There is an error.");
+            console.log(error);
         })
       }
 
+    // Keyboard is hidden when user touches any other part of the screen.
     const DismissKeyboardView = ({ children }) => (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             {children}

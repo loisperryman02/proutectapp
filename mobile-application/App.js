@@ -13,6 +13,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
+/**
+ * This page is essential to enable navigation throughout the application. 
+ * The Stack Navigator enables new screens to be pushed onto the stack, and when users navigate to another screen
+ * it is pushed onto the stack, and when users return to a previous screen the current screen is popped off of the stack.
+ */
 export default function App() {
   return (
     <NavigationContainer>

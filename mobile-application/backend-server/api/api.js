@@ -8,7 +8,7 @@ const User = require('../models/User.js');
 const Friend = require('../models/Friend.js');
 const Updates = require('../models/Updates.js')
 
-// Route feedback endpoint 
+// Endpoint for storing route feedback.
 router.post('/feedback', (req, res) => {
     let {coordinates, date, q1, q2, q3, q4} = req.body;
     coordinates = coordinates.trim();
@@ -17,8 +17,7 @@ router.post('/feedback', (req, res) => {
     q2 = q2;
     q3 = q3;
     q4 = q4;
-
-    // Creates a new feedback object. 
+ 
     const newFeedback  = new Feedback({
         coordinates,
         date,
@@ -43,14 +42,13 @@ router.post('/feedback', (req, res) => {
     })
 })
 
-// Route writen response feedback endpoint
+// Endpoint for storing written responses.
 router.post('/response', (req, res) => {
     let {coordinates, date, response} = req.body;
     coordinates = coordinates.trim();
     date = date.trim();
     response = response.trim();
-    
-    // Creates a new response object. 
+
     const newResponse  = new Response({
         coordinates,
         date,
@@ -72,13 +70,11 @@ router.post('/response', (req, res) => {
     })
 })
 
+// Endpoint for fetching and verifying user data. 
 router.post("/login", async (req, res) => {
     let { username, password } = req.body;
     username = username.trim();
     password = password.trim();
-
-    console.log(username);
-    console.log(password);
 
     try {
         const user = await User.findOne({ username: username });
@@ -99,6 +95,7 @@ router.post("/login", async (req, res) => {
 
 })
 
+// Endpoint for verifying and storing new sign ups.
 router.post("/signup", async (req, res) => {
     let { name, username, password, passwordtwo } = req.body;
     name = name.trim();
@@ -124,8 +121,6 @@ router.post("/signup", async (req, res) => {
         });
 
         await NewUser.save();
-
-        // Here, implement token generation or session management as needed
         res.json({ message: "Sign up Successful" });
     } catch (err) {
         console.error(err);
@@ -133,6 +128,7 @@ router.post("/signup", async (req, res) => {
     }
 })
 
+// Endpoint for sending friend requests to the correct user.
 router.post("/friend", async (req, res) => {
     let { friend_username, username } = req.body;
     friend_username = friend_username.trim();
@@ -169,7 +165,6 @@ router.post("/friend", async (req, res) => {
         await friend.save();
     }
 
-    // Adds the current user (one who made the request) to the Friend table if not there already. 
     requester = await Friend.findOne({ username : username });
 
     if (!requester) {
@@ -184,9 +179,9 @@ router.post("/friend", async (req, res) => {
     }
 
     res.status(200).json({ success: true, message: 'Friend request sent.' });
-
 })
 
+// Endpoint for handling accepted friend requests.
 router.post("/acceptUser", async (req, res) => {
     let { request_username, username } = req.body;
     request_username = request_username.trim();
@@ -224,6 +219,7 @@ router.post("/acceptUser", async (req, res) => {
 
 })
 
+// Endpoint for handling rejected requests.
 router.post("/rejectUser", async (req, res) => {
     let { reject_username, username } = req.body;
     reject_username = reject_username.trim();
@@ -249,7 +245,7 @@ router.post("/rejectUser", async (req, res) => {
 
 })
 
-// Get friend requests for a user
+// Fetches a user's friend requests
 router.get('/friend/requests/:username', async (req, res) => {
     const { username } = req.params;
   
@@ -265,13 +261,13 @@ router.get('/friend/requests/:username', async (req, res) => {
     }
   });
 
+// Endpoint for inserting updates to the database.
 router.post('/updates', (req, res) => {
     let {username, date, update} = req.body;
     username = username.trim();
     date = date.trim();
     update = update.trim();
 
-    // Creates a new update object
     const newUpdate  = new Updates({
         username,
         date,
@@ -293,7 +289,7 @@ router.post('/updates', (req, res) => {
     })
 })
 
-// Route to fetch the updates feed
+// Endpoint for displaying updates for a specific user.
 router.get('/updates/:username', async (req, res) => {
     const current_user = req.params.username;
 
@@ -312,14 +308,12 @@ router.get('/updates/:username', async (req, res) => {
     }
 });
 
+// Function that returns the updates posted by a specific user.
 async function fetchFriendsUpdates(friend_usernames) {
-    // Implementation as shown before
     const updates = await Updates.find({ 
         username: { $in: friend_usernames }
     })
-
     return updates
 }
-
 
 module.exports = router;

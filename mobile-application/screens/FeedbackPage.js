@@ -1,7 +1,11 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, Pressable, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 
+/**
+ * This screen is displayed after a user finishes their journey. It prompts the user to enter ratings about 
+ * different safety aspects on the journey. 
+ */
 export default function FeedbackPage({ navigation, route }) {
   
   const today = new Date().toISOString();
@@ -11,6 +15,7 @@ export default function FeedbackPage({ navigation, route }) {
     date: today 
   });
 
+  // Function that sends ratings to correct API endpoint.
   const handleFeedback = () => {
     const url = "http://172.25.63.205:3000/feedback";
 
@@ -24,11 +29,8 @@ export default function FeedbackPage({ navigation, route }) {
           const result = response.data;
           const {status, data} = result;
           if (status !== "SUCCESS") {
-            // set some error message...
             console.log("Unsuccessful!");
           } else {
-            // not sure if we need to pass data.
-            console.log("trying to navigate");
             navigation.navigate("ResponsePage", additionalInfo);
           }
         })
@@ -39,10 +41,10 @@ export default function FeedbackPage({ navigation, route }) {
   }
 
   const [ratings, setRatings] = React.useState({
-    q1: 0, // Question 1 rating
-    q2: 0, // Question 2 rating
-    q3: 0, // Question 3 rating
-    q4: 0, // Question 4 rating
+    q1: 0,
+    q2: 0, 
+    q3: 0, 
+    q4: 0, 
   });
 
   const questionsText = [
@@ -52,7 +54,6 @@ export default function FeedbackPage({ navigation, route }) {
     "4. How accessible were emergency services?"
   ];
 
-  // Labels for each question
   const questionLabels = {
     q1: { 1: 'Extremely unsafe', 5: 'Extremely safe' },
     q2: { 1: 'No street lights', 5: 'Many street lights' },
@@ -60,11 +61,11 @@ export default function FeedbackPage({ navigation, route }) {
     q4: { 1: 'Not accessible', 5: 'Very accessible' }
   };
 
-  // Function to update the rating for a question
   const updateRating = (questionKey, rating) => {
     setRatings(prevRatings => ({ ...prevRatings, [questionKey]: rating }));
   };
 
+  // Function to render the rating button correctly and ensure that it responds correctly to user interaction.
   const renderRatingButton = (questionKey, rating) => {
     const isHighlighted = rating <= ratings[questionKey];
     const originalViewStyle = isHighlighted ? styles.clicked_container: styles.number_container;
@@ -76,7 +77,7 @@ export default function FeedbackPage({ navigation, route }) {
     return (
       <View key={`${questionKey}-${rating}`} style={styles.ratingButtonContainer} > 
       <TouchableOpacity
-        key={`${questionKey}-${rating}`} // Unique key for each button
+        key={`${questionKey}-${rating}`} 
         onPress={() => updateRating(questionKey, rating)}
         style={originalViewStyle}>
         <Text style={originalTextStyle}>{rating}</Text>
@@ -85,7 +86,6 @@ export default function FeedbackPage({ navigation, route }) {
       </View>
     );
   };
-  
   
   return (
 

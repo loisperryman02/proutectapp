@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Pressable, TextInput, Image, Keyboard } from 'react-native';
 import axios from "axios";
 
+/**
+ * This page is the one initially displayed to the user when opening the application.
+ * It handles login credentials and navigates user to the home page if they are valid,
+ * or sign up page if the user wants to register a new account. 
+ */
 export default function Login({ navigation }) {
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
@@ -9,6 +14,7 @@ export default function Login({ navigation }) {
   const [msg, setMsg] = useState();
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Checks the login credentials entered by the user and sends them to the API endpoint to be checked with the database.
   const handleLogin = () => {
     const url = "http://172.25.63.205:3000/login";
     const details = {
@@ -23,7 +29,6 @@ export default function Login({ navigation }) {
           const result = response.data;
           setErrorMessage(null);
           handleHomeNavigation(details); 
-          
         })
         .catch(error => {
           if (error.response) {
@@ -38,6 +43,7 @@ export default function Login({ navigation }) {
     navigation.navigate("Home", details);
   };
 
+  // Hides the keyboard when the user clicks off of the input text boxes, and shows it when user selects text box.
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardVisible(true); 

@@ -3,27 +3,32 @@ import { StyleSheet, View, Text, Pressable, TextInput, FlatList, Keyboard } from
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import axios from "axios";
 
+/**
+ * This screen handles sending, accepting and rejecting friend requests. 
+ * It can be accessed by the user through the home page after logging in. 
+ * The parameter navigation is required for page navigation, and route holds user details
+ * from the previous pages.
+ */
 export default function Friends({ navigation, route }) {
 
     const [request, setRequest] = useState('');
     const [allRequests, setAllRequests] = useState([]);
     const [errorMessage, setErrorMessage] = React.useState('');
 
+    // Fetches any friend requests that the current user may have from the database using the API endpoint. 
     useEffect(() => {
         const fetchRequests = async () => {
-            
             let username = route.params;
             const response = await axios.get(`http://172.25.63.205:3000/friend/requests/${username}`);
             setAllRequests(response.data.requests);
-
             if (!response) {
                 console.log("User does not have any requests!");
             }
         };
-
         fetchRequests();
     }, []);
 
+    // Updates the user's friend and request list if they accept a user using API endpoint. 
     const handleAccept = (item) => {
         const url = "http://172.25.63.205:3000/acceptUser";
         const accept_user = {
@@ -36,7 +41,6 @@ export default function Friends({ navigation, route }) {
             .then((response) => {
                 const result = response.data;
                 const updatedRequests = allRequests.filter(request => request !== item);
-                console.log(updatedRequests);
                 setAllRequests(updatedRequests);
                 navigation.navigate("Home", username);
             })
@@ -48,6 +52,7 @@ export default function Friends({ navigation, route }) {
             })
     }
 
+    // Updates the user's friend and request list if they reject a user using API endpoint.
     const handleReject = (item) => {
         const url = "http://172.25.63.205:3000/rejectUser";
         const accept_user = {
@@ -60,7 +65,6 @@ export default function Friends({ navigation, route }) {
             .then((response) => {
                 const result = response.data;
                 const updatedRequests = allRequests.filter(request => request !== item);
-                console.log(updatedRequests);
                 setAllRequests(updatedRequests);
             })
             .catch(error => {
@@ -74,10 +78,10 @@ export default function Friends({ navigation, route }) {
             })
     }
 
+    // If a user sends a friend request, the database is updated by using the API endpoint and the user is added to the list of requests.
     const sendFriendRequest = () => {
         const url = "http://172.25.63.205:3000/friend";
 
-        // Sets details of the username that is being requested. 
         const request_user = {
             username: route.params,
             friend_username: request
