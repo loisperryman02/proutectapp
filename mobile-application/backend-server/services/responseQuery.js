@@ -4,19 +4,16 @@ const IndividualResponse = require('../models/IndividualResponse.js');
 const connectDB = require('C:/Users/User/Documents/GitHub/proutectapp/mobile-application/backend-server/config/db.js');
 const { default: mongoose } = require('mongoose');
 
-async function transformResponses() {
+// Splits the route coordinates array into individual fields and stores each coordinate with its written response. 
+async function splitRouteCoordinates() {
     try {
       await connectDB();
-  
-      // Step 2: Read entries from the original collection
+
       const responseEntries = await Response.find({});
   
       for (const entry of responseEntries) {
-        // Parse the coordinates and assign values
         const coordinates = JSON.parse(entry.coordinates);
-        console.log("trying");
         for (const { latitude, longitude } of coordinates) {
-          // Insert transformed data into the new collection
           const eachResponse = new IndividualResponse({
             latitude: latitude,
             longitude: longitude,
@@ -36,19 +33,23 @@ async function transformResponses() {
     mongoose.disconnect();
   }
 
-async function groupByCoordinatesAndAggregate() {
+  /**
+   * Joins the database that has just been split by coordinates, so each 
+   * coordinate is stored with an array of written responses (All from each route that the coordiante has been in.)
+   */
+async function joinByCoordinate() {
   try {
     await connectDB();
     const aggregatedResults = await IndividualResponse.aggregate([
       {
         $group: {
-          _id: { latitude: "$latitude", longitude: "$longitude" }, // Group by both latitude and longitude
+          _id: { latitude: "$latitude", longitude: "$longitude" }, 
           responseList: { $push: "$response" },
           dateList: { $push: "$date" }
         }
       },
       {
-        $out: "individualresponses" // Output the results into the AggregatedResponses collection
+        $out: "individualresponses" 
       }
     ]);
 
@@ -58,10 +59,5 @@ async function groupByCoordinatesAndAggregate() {
   mongoose.disconnect();
 }
 
-// transformResponses()
-// groupByCoordinatesAndAggregate();
-
-  
-//   // Call the function
-// transformResponses();
+// Functions can be called here.
   

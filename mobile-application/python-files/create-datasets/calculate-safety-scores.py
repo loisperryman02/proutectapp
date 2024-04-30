@@ -3,24 +3,14 @@ import numpy as np
 from datetime import datetime, timedelta, date
 
 def get_lat_lon_ranges(lat, lon, radius):
-    # Earth's radius in meters
     EARTH_RADIUS = 6378137
-
-    # Convert latitude and longitude from degrees to radians
     lat_rad = np.radians(lat)
-
-    # Calculate deltas
     dLat = radius/EARTH_RADIUS
     dLon = radius/(EARTH_RADIUS * np.cos(lat_rad))
-
-    # Convert deltas from radians to degrees
     dLat_deg = np.degrees(dLat)
     dLon_deg = np.degrees(dLon)
-
-    # Define ranges
     lat_range = (lat - dLat_deg, lat + dLat_deg)
     lon_range = (lon - dLon_deg, lon + dLon_deg)
-
     return lat_range, lon_range
 
 
@@ -121,9 +111,8 @@ crime_severity_scores = {
     "Other crime" : 1
 }
 
-# Function to get a spreadsheet of total crimes in a specified range
+# Function to return crimes in a specified range
 def get_crimes_in_range(all_crime_data, long_min, long_max, lat_min, lat_max, crime_severity_scores):
-    # Filter the data to only include crimes within the specified ranges
     crimes_in_range = all_crime_data[
         (all_crime_data['Longitude'] >= long_min) & 
         (all_crime_data['Longitude'] <= long_max) & 
@@ -135,7 +124,7 @@ def get_crimes_in_range(all_crime_data, long_min, long_max, lat_min, lat_max, cr
     
     crimes_in_range['Severity Score'] = crimes_in_range['Crime type'].map(crime_severity_scores)
    
-    # Calculate average severity score for the crimes in the range
+    # Calculates average severity score for the crimes in the range
     if not crimes_in_range.empty:
         average_severity_score = crimes_in_range['Severity Score'].mean()
         print(average_severity_score)
@@ -148,9 +137,7 @@ def get_public_space_data(public_space_data, latitude, longitude, tolerance=0.00
     count = 0
 
     for index, row in public_space_data.iterrows():
-        # Check if both latitude and longitude are within the specified tolerance
         lat, lon = row['Location'].split(",")
-        
         if lat == str(latitude) and lon == str(longitude):
             count+=1
 
@@ -169,9 +156,7 @@ all_public_space_data = pd.read_csv("C:\\Users\\User\\Documents\\GitHub\\proutec
 def create_dict(all_crime_data, all_coordinates, coordinate_dict, crime_severity_scores):
     for each in all_coordinates:
         coordinate_dict[each] = [0, 0, 0]
-        # Gets lat/lon range within a 350m radius
         lat_range, lon_range = get_lat_lon_ranges(each[0], each[1], 350)
-        # Saves the crimes within a 350m radius of each coordinate
         coordinate_dict[each][0], coordinate_dict[each][1] = get_crimes_in_range(all_crime_data, lon_range[0], lon_range[1], lat_range[0], lat_range[1], crime_severity_scores)
         coordinate_dict[each][2] = get_public_space_data(all_public_space_data, each[0], each[1])
     return coordinate_dict
@@ -206,8 +191,6 @@ def calculate_safety_score(m_c, c_s, w_c, s_s, p_s, m_p, w_p, d_b):
 # Function to update safety score
 def create_training_set(coordinates, scores, total_crimes, crime_weight, total_public_spaces, public_space_weight, year):
     all_safety_scores = []
-    all_metrics = []
-    # Loop through each coordinate in the hash map
     for coordinate, (crime_num, sev_score, public_spaces_num) in coordinates.items():
         latitude = coordinate[0]
         longitude = coordinate[1]

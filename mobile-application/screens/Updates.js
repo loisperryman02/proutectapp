@@ -11,11 +11,12 @@ export default function Updates({ navigation, route }) {
 
     const [updates, setUpdates] = useState([]);
     const username = route.params;
+    const IP_ADDRESS = "";
 
     // This function calls the API endpoint and fetches any updates that their friends have posted.
     useEffect(() => {
         const fetchUpdates = async () => {
-            const response = await axios.get(`http://172.25.63.205:3000/updates/${username}`);
+            const response = await axios.get(`http://${IP_ADDRESS}/updates/${username}`);
             setUpdates(response.data.updates);
             if (!response) {
                 console.log("User does not have any updates!");

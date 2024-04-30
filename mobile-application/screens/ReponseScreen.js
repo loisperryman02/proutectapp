@@ -10,9 +10,12 @@ export default function ResponsePage({ navigation, route }) {
     
     let [tempInput, setTempInput] = React.useState(''); 
 
+    // Enter your personal IP address here that has permission to connect to the database.
+    const IP_ADDRESS = "";
+
     // This function sends a resposne about a route to the database via the correct API endpoint
     const handleFeedback = () => {
-        const url = "http://172.25.63.205:3000/response";
+        const url = `http://${IP_ADDRESS}/response`;
         console.log("trying server.");
         const responseInfo = {
           coordinates: route.params.coordinates, 

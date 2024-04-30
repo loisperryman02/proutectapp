@@ -13,12 +13,13 @@ export default function SignUp({ navigation }) {
   const [passwordtwo, onChangePasswordTwo] = React.useState('');
   const [keyboardVisible, setKeyboardVisible] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
+  const IP_ADDRESS = "";
 
   /**
    * This function sends the user data to be stored in the database, via the API endpoint.
    */
   const handleSignUp = () => {
-    const url = "http://172.25.63.205:3000/signup";
+    const url = `http://${IP_ADDRESS}/signup`;
     let userDetails = {
       name : name,
       username: username,

@@ -1,9 +1,10 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react-native';
-import Updates from '../Updates'; // Adjust the import path as necessary
+import Updates from '../Updates'; 
 import axios from 'axios';
 
 jest.mock('axios');
+const IP_ADDRESS = "";
 
 beforeEach(() => {
     axios.get.mockResolvedValue({
@@ -38,7 +39,7 @@ describe('Updates', () => {
     render(<Updates navigation={mockNavigation} route={mockRoute} />);
     
     await waitFor(() => {
-      expect(axios.get).toHaveBeenCalledWith(`http://192.168.1.131:3000/updates/testUser`);
+      expect(axios.get).toHaveBeenCalledWith(`http://${IP_ADDRESS}/updates/testUser`);
     });
   });
 

@@ -15,11 +15,13 @@ export default function Friends({ navigation, route }) {
     const [allRequests, setAllRequests] = useState([]);
     const [errorMessage, setErrorMessage] = React.useState('');
 
+    const IP_ADDRESS = "";
+
     // Fetches any friend requests that the current user may have from the database using the API endpoint. 
     useEffect(() => {
         const fetchRequests = async () => {
             let username = route.params;
-            const response = await axios.get(`http://172.25.63.205:3000/friend/requests/${username}`);
+            const response = await axios.get(`http://${IP_ADDRESS}/friend/requests/${username}`);
             setAllRequests(response.data.requests);
             if (!response) {
                 console.log("User does not have any requests!");
@@ -30,7 +32,7 @@ export default function Friends({ navigation, route }) {
 
     // Updates the user's friend and request list if they accept a user using API endpoint. 
     const handleAccept = (item) => {
-        const url = "http://172.25.63.205:3000/acceptUser";
+        const url = `http://${IP_ADDRESS}/acceptUser`;
         const accept_user = {
             request_username: item,
             username: route.params
@@ -54,7 +56,7 @@ export default function Friends({ navigation, route }) {
 
     // Updates the user's friend and request list if they reject a user using API endpoint.
     const handleReject = (item) => {
-        const url = "http://172.25.63.205:3000/rejectUser";
+        const url = `http://${IP_ADDRESS}/rejectUser`;
         const accept_user = {
             reject_username: item,
             username: route.params
@@ -80,7 +82,7 @@ export default function Friends({ navigation, route }) {
 
     // If a user sends a friend request, the database is updated by using the API endpoint and the user is added to the list of requests.
     const sendFriendRequest = () => {
-        const url = "http://172.25.63.205:3000/friend";
+        const url = `http://${IP_ADDRESS}/friend`;
 
         const request_user = {
             username: route.params,

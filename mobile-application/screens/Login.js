@@ -14,9 +14,11 @@ export default function Login({ navigation }) {
   const [msg, setMsg] = useState();
   const [errorMessage, setErrorMessage] = useState('');
 
+  const IP_ADDRESS = "";
+
   // Checks the login credentials entered by the user and sends them to the API endpoint to be checked with the database.
   const handleLogin = () => {
-    const url = "http://172.25.63.205:3000/login";
+    const url = `http://${IP_ADDRESS}/login`;
     const details = {
       username: email,
       password: password

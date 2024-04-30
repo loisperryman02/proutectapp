@@ -9,6 +9,7 @@ import axios from 'axios';
 export default function FeedbackPage({ navigation, route }) {
   
   const today = new Date().toISOString();
+  IP_ADDRESS = "172.25.63.205:3000";
 
   const [additionalInfo, setAdditionalInfo] = React.useState({
     coordinates: JSON.stringify(route.params), 
@@ -17,7 +18,7 @@ export default function FeedbackPage({ navigation, route }) {
 
   // Function that sends ratings to correct API endpoint.
   const handleFeedback = () => {
-    const url = "http://172.25.63.205:3000/feedback";
+    const url = `http://${IP_ADDRESS}/feedback"`
 
     const feedbackInfo = {
       ...additionalInfo,

@@ -1,10 +1,11 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
-import ResponsePage from '../ReponseScreen';  // Adjust the import path as necessary
+import ResponsePage from '../ReponseScreen';  
 import axios from 'axios';
 import { TextInput } from 'react-native';
 
 jest.mock('axios');
+const IP_ADDRESS = ""
 
 describe('ResponsePage', () => {
   const mockNavigate = jest.fn();
@@ -46,7 +47,7 @@ describe('ResponsePage', () => {
     fireEvent.press(button);
 
     await waitFor(() => {
-      expect(axios.post).toHaveBeenCalledWith("http://192.168.1.131:3000/response", {
+      expect(axios.post).toHaveBeenCalledWith(`http://${IP_ADDRESS}/response`, {
         coordinates: 'someCoordinates',
         date: '2024-04-23',
         response: ''  

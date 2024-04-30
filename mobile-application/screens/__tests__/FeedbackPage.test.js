@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, fireEvent, act, waitFor} from '@testing-library/react-native';
-import FeedbackPage from '../FeedbackPage'; // Adjust the import path as necessary
-import axios from 'axios';
+import FeedbackPage from '../FeedbackPage';
 
 jest.mock('axios');
 
@@ -26,15 +25,14 @@ describe('FeedbackPage', () => {
 
   it('updates rating on button press', () => {
     const { getAllByText } = render(<FeedbackPage navigation={mockNavigation} route={mockRoute} />);
-    const ratingButtons = getAllByText('1'); // Assuming '1' is visible on the buttons
+    const ratingButtons = getAllByText('1'); 
 
     act(() => {
-      fireEvent.press(ratingButtons[0]); // Press the first rating button
+      fireEvent.press(ratingButtons[0]);
     });
 
-    // Assuming some text changes or something in the component to reflect the rating change
     expect(ratingButtons[0].props.style).toEqual({
-      color: 'white' // Check if the style changes to clicked
+      color: 'white' 
     });
   });
 });

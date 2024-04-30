@@ -1,8 +1,9 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
-const User = require('../User'); // Adjust path to your User model
+const User = require('../User'); 
 
 beforeAll(async () => {
-  await mongoose.connect("mongodb+srv://loisperryman02:25.P3rryp3opl3@cluster0.ctt8oou.mongodb.net/?retryWrites=true&w=majority");
+  await mongoose.connect(process.env.MONGODB_URI);
 });
 
 afterAll(async () => {

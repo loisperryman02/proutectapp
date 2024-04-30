@@ -12,10 +12,11 @@ export default function PostUpdate({ navigation, route }) {
     
     const today = new Date();
     const formattedDate = today.toISOString().substring(0, 10);
+    const IP_ADDRESS = "";
 
     // This function handles sending the update posted by the user to the database via the API endpoint.
     const postUpdate = () => {
-        const url = "http://172.25.63.205:3000/updates";
+        const url = `http://${IP_ADDRESS}/updates`;
 
         const today = new Date();
         const formattedDate = today.toISOString().substring(0, 10);

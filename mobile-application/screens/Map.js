@@ -7,8 +7,8 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import Constants from 'expo-constants';
 import MapViewDirections from 'react-native-maps-directions';
 import polyline from '@mapbox/polyline';
-import { findNearestSafetyScore, daytimeKDTree, eveningKDTree, findNearestPoints } from '../data_structures/KDTree.js';
-import { aStar } from '../data_structures/aStar';
+import { findNearestSafetyScore, daytimeKDTree, eveningKDTree, findNearestPoints } from '../data-structures/KDTree.js';
+import { aStar } from '../data-structures/aStar';
  
 /**
  * This page handles all Map views that are displayed to the user. 
